@@ -1,0 +1,89 @@
+﻿#region License
+// Copyright (c) Niklas Wendel 2016
+// 
+// Licensed under the Apache License, Version 2.0 (the "License"); 
+// you may not use this file except in compliance with the License. 
+// You may obtain a copy of the License at 
+// 
+// http://www.apache.org/licenses/LICENSE-2.0 
+// 
+// Unless required by applicable law or agreed to in writing, software 
+// distributed under the License is distributed on an "AS IS" BASIS, 
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+// See the License for the specific language governing permissions and 
+// limitations under the License.
+#endregion
+using System;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+
+namespace FluentRegistration.Registration
+{
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public static class AllInstallers
+    {
+
+        #region From Assembly
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assembly"></param>
+        /// <returns></returns>
+        public static IInstaller[] FromAssembly(Assembly assembly)
+        {
+            if (assembly == null)
+            {
+                throw new ArgumentNullException(nameof(assembly));
+            }
+
+            var allTypes = assembly.GetTypes();
+            var installerTypes = allTypes
+                .Where(x => typeof(IInstaller).GetTypeInfo().IsAssignableFrom(x))
+                .Select(x => Activator.CreateInstance(x))
+                .Cast<IInstaller>()
+                .ToArray();
+            return installerTypes;
+        }
+
+        #endregion
+
+        #region From Assembly Containing
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static IInstaller[] FromAssemblyContaining<T>()
+        {
+            return FromAssembly(typeof(T).GetTypeInfo().Assembly);
+        }
+
+        #endregion
+
+        #region From This Assembly
+
+#if !NETSTANDARD1_5
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public static IInstaller[] FromThisAssembly()
+        {
+            return FromAssembly(Assembly.GetCallingAssembly());
+        }
+
+#endif
+
+        #endregion
+
+    }
+
+}
