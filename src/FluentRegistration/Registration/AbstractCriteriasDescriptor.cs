@@ -135,6 +135,10 @@ namespace FluentRegistration.Registration
             var lifetimeAction = _lifetimeActionLookup[_lifetimeDescriptor.GetLifetime()];
             foreach (var type in SelectedTypes)
             {
+                if(_filter != null && !_filter(type))
+                {
+                    continue;
+                }
                 if(_whereFilters.Count != 0 && !_whereFilters.Any(filter => filter(type)))
                 {
                     continue;

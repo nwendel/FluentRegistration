@@ -41,7 +41,7 @@ namespace FluentRegistration.Registration
                 throw new ArgumentNullException(nameof(assembly));
             }
 
-            var fromAssemblyDescriptor = new FromAssemblyDescriptor(assembly, IsNonAbstractClass());
+            var fromAssemblyDescriptor = new FromAssemblyDescriptor(assembly, IsNonAbstractClass);
             return fromAssemblyDescriptor;
         }
 
@@ -88,7 +88,7 @@ namespace FluentRegistration.Registration
         /// <returns></returns>
         public static FromTypesDescriptor FromTypes(IEnumerable<Type> types)
         {
-            return new FromTypesDescriptor(types, IsNonAbstractClass());
+            return new FromTypesDescriptor(types, IsNonAbstractClass);
         }
         /// <summary>
         /// 
@@ -97,7 +97,7 @@ namespace FluentRegistration.Registration
         /// <returns></returns>
         public static FromTypesDescriptor FromTypes(params Type[] types)
         {
-            return new FromTypesDescriptor(types, IsNonAbstractClass());
+            return new FromTypesDescriptor(types, IsNonAbstractClass);
         }
 
         #endregion
@@ -109,14 +109,11 @@ namespace FluentRegistration.Registration
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        internal static Predicate<Type> IsNonAbstractClass()
+        internal static Predicate<Type> IsNonAbstractClass => type =>
         {
-            return type =>
-            {
-                var typeInfo = type.GetTypeInfo();
-                return typeInfo.IsClass && !typeInfo.IsAbstract;
-            };
-        }
+            var typeInfo = type.GetTypeInfo();
+            return typeInfo.IsClass && !typeInfo.IsAbstract;
+        };
 
         #endregion
 
