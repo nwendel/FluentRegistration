@@ -24,14 +24,38 @@ namespace FluentRegistration.Tests.Registration
     /// <summary>
     /// 
     /// </summary>
-    public class InvalidInstallationTests
+    public class InvalidInstallTests
     {
 
         /// <summary>
         /// 
         /// </summary>
         [Fact]
-        public void ThrowsOnNullAssembly()
+        public void ThrowsOnNullServiceCollection()
+        {
+            ServiceCollection tested = null;
+
+            Assert.Throws<ArgumentNullException>("self",
+                () => tested.Install(new IInstaller[0]));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void ThrowsOnNullInstallers()
+        {
+            var tested = new ServiceCollection();
+
+            Assert.Throws<ArgumentNullException>("installers",
+                () => tested.Install(null));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void ThrowsOnAllInstallersFromAssemblyNullAssembly()
         {
             var tested = new ServiceCollection();
 
