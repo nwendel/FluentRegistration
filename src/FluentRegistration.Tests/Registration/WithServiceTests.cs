@@ -66,7 +66,27 @@ namespace FluentRegistration.Tests.Registration
             {
                 Assert.Equal(typeof(IServiceWithDefaultInterface), service.ServiceType);
                 Assert.Equal(typeof(ServiceWithDefaultInterface), service.ImplementationType);
-                Assert.Equal(ServiceLifetime.Singleton, service.Lifetime);
+            });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void CanRegisterWithSpecificInterface()
+        {
+            var tested = new ServiceCollection();
+
+            tested.Register(AllClasses
+                    .FromAssemblyContaining<AllClassesInSameNamespaceTests>()
+                    .BasedOn<SimpleService>()
+                    .WithService.Interface<ISimpleService>());
+
+            Assert.Equal(1, tested.Count);
+            Assert.All(tested, service =>
+            {
+                Assert.Equal(typeof(ISimpleService), service.ServiceType);
+                Assert.Equal(typeof(SimpleService), service.ImplementationType);
             });
         }
 
