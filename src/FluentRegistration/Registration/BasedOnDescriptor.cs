@@ -48,18 +48,6 @@ namespace FluentRegistration.Registration
             _basedOn = basedOn;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="fromDescriptor"></param>
-        /// <param name="basedOn"></param>
-        /// <param name="filters"></param>
-        internal BasedOnDescriptor(AbstractFromDescriptor fromDescriptor, Type basedOn, Predicate<Type> filter) : base(filter)
-        {
-            _fromDescriptor = fromDescriptor;
-            _basedOn = basedOn;
-        }
-
         #endregion
 
         #region Selected Types
