@@ -21,7 +21,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("FluentRegistration")]
 [assembly: AssemblyProduct("FluentRegistration")]
 [assembly: AssemblyCopyright("Copyright Niklas Wendel 2016")]
-[assembly: CLSCompliant(true)]
+//[assembly: CLSCompliant(true)]
 [assembly: ComVisible(false)]
 
 [assembly: AssemblyVersion("1.0.1.0")]
