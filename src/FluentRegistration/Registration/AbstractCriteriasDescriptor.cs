@@ -143,7 +143,7 @@ namespace FluentRegistration.Registration
                 {
                     continue;
                 }
-                if (_exceptFilters.Count != 0 && _exceptFilters.Any(filter => !filter(type)))
+                if (_exceptFilters.Count != 0 && _exceptFilters.Any(filter => filter(type)))
                 {
                     continue;
                 }
