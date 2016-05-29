@@ -43,6 +43,7 @@ namespace FluentRegistration.Tests.Registration
 
             var serviceOne = serviceProvider.GetService<IServiceOne>();
             var serviceTwo = serviceProvider.GetService<IServiceTwo>();
+            Assert.NotNull(serviceOne);
             Assert.Same(serviceOne, serviceTwo);
         }
 

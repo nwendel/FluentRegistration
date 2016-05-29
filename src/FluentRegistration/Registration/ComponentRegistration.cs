@@ -148,7 +148,7 @@ namespace FluentRegistration.Registration
                 }
             }
 
-            var services = _services ?? _servicesSelector(_implementedBy.GetType());
+            var services = _services ?? _servicesSelector(_implementedBy);
             if(services.Count() == 0)
             {
                 // No interfaces found
