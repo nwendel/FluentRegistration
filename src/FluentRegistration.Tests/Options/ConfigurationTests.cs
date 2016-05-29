@@ -78,6 +78,45 @@ namespace FluentRegistration.Tests.Options
                     .ImplementedBy<SimpleService>()));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void CanIgnoreNoServiesRegistration()
+        {
+            var tested = new ServiceCollection();
+            tested.ConfigureFluentRegistration(o =>
+            {
+                o.RegistrationsWithoutServicesBehavior = RegistrationsWithoutServicesBehavior.Ignore;
+            });
+
+            tested.Register(AllClasses
+                .FromAssemblyContaining<ConfigurationTests>()
+                .BasedOn<ServiceWithoutInterface>()
+                .WithService.DefaultInterface());
+
+            Assert.Equal(0, tested.Count);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void ThrowsOnNoServiesRegistration()
+        {
+            var tested = new ServiceCollection();
+            tested.ConfigureFluentRegistration(o =>
+            {
+                o.RegistrationsWithoutServicesBehavior = RegistrationsWithoutServicesBehavior.ThrowException;
+            });
+
+            Assert.Throws<RegistrationException>(
+            () => tested.Register(AllClasses
+                .FromAssemblyContaining<ConfigurationTests>()
+                .BasedOn<ServiceWithoutInterface>()
+                .WithService.DefaultInterface()));
+        }
+
     }
 
 }
