@@ -90,6 +90,27 @@ namespace FluentRegistration.Tests.Registration
             });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void CanRegisterWithFirstInterface()
+        {
+            var tested = new ServiceCollection();
+
+            tested.Register(AllClasses
+                    .FromAssemblyContaining<AllClassesInSameNamespaceTests>()
+                    .BasedOn<ServiceWithTwoInterfaces>()
+                    .WithService.FirstInterface());
+
+            Assert.Equal(1, tested.Count);
+            Assert.All(tested, service =>
+            {
+                Assert.Equal(typeof(IServiceOne), service.ServiceType);
+                Assert.Equal(typeof(ServiceWithTwoInterfaces), service.ImplementationType);
+            });
+        }
+
     }
 
 }
