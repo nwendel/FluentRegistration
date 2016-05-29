@@ -19,6 +19,7 @@ namespace FluentRegistration.Tests.TestClasses
     /// <summary>
     /// 
     /// </summary>
+    [RegisterComponent]
     public class SimpleService : ISimpleService
     {
 

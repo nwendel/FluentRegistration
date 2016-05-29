@@ -13,29 +13,16 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
+using System;
+
 namespace FluentRegistration.Tests.TestClasses
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public class ServiceWithDefaultInterface : IIncorrectInterface, IServiceWithDefaultInterface
+    public class RegisterComponentAttribute : Attribute
     {
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public void AnotherOperation()
-        {
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public void Operation()
-        {
-        }
-
     }
 
 }
