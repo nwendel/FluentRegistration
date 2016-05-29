@@ -94,7 +94,7 @@ namespace FluentRegistration.Registration
                 var firstInterface = typeInfo.GetInterfaces().FirstOrDefault();
                 if (firstInterface == null)
                 {
-                    return null;
+                    return new Type[0];
                 }
                 return new[] { firstInterface };
             };

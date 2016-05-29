@@ -111,6 +111,22 @@ namespace FluentRegistration.Tests.Registration
             });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void CanRegisterWithFirstInterfaceNoImplementedInetrface()
+        {
+            var tested = new ServiceCollection();
+
+            tested.Register(AllClasses
+                    .FromAssemblyContaining<AllClassesInSameNamespaceTests>()
+                    .BasedOn<ServiceWithoutInterface>()
+                    .WithService.FirstInterface());
+
+            Assert.Equal(0, tested.Count);
+        }
+
     }
 
 }
