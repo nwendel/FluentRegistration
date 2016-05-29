@@ -15,27 +15,26 @@
 #endregion
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
-using FluentRegistration.Registration;
 using FluentRegistration.Tests.TestClasses;
 
-namespace FluentRegistration.Tests.Registration
+namespace FluentRegistration.Tests.Installation
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public class AllInstallersTests
+    public class InstallTests
     {
 
         /// <summary>
         /// 
         /// </summary>
         [Fact]
-        public void CanInstallFromAssembly()
+        public void CanInstall()
         {
             var tested = new ServiceCollection();
 
-            tested.Install(AllInstallers.FromAssemblyContaining<AllInstallersTests>());
+            tested.Install<SimpleInstaller>();
 
             Assert.Equal(1, tested.Count);
             Assert.All(tested, service =>
