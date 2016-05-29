@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
+using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
@@ -38,6 +39,28 @@ namespace FluentRegistration.Tests.Registration
 
             tested.Register(AllClasses
                 .FromTypes(typeof(AllClassesFromTypesTests).GetTypeInfo().Assembly.GetTypes())
+                .Where(Component.IsInSameNamespaceAs<ServiceInAnotherNamespace>())
+                .WithService.AllInterfaces());
+
+            Assert.Equal(1, tested.Count);
+            Assert.All(tested, service =>
+            {
+                Assert.Equal(typeof(IServiceInAnotherNamespace), service.ServiceType);
+                Assert.Equal(typeof(ServiceInAnotherNamespace), service.ImplementationType);
+            });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void CanRegisterList()
+        {
+            var tested = new ServiceCollection();
+
+            var types = typeof(AllClassesFromTypesTests).GetTypeInfo().Assembly.GetTypes().ToList();
+            tested.Register(AllClasses
+                .FromTypes(types)
                 .Where(Component.IsInSameNamespaceAs<ServiceInAnotherNamespace>())
                 .WithService.AllInterfaces());
 
