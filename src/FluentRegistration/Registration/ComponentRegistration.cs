@@ -111,7 +111,7 @@ namespace FluentRegistration.Registration
         {
             return UsingFactoryMethod(provider =>
             {
-                var factory = provider.GetRequiredService<IServiceFactory<TImplementation>>();
+                var factory = provider.GetRequiredService<TFactory>();
                 var implementation = factory.Create();
                 return implementation;
             });

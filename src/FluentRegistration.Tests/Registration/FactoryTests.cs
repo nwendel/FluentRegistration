@@ -32,12 +32,12 @@ namespace FluentRegistration.Tests.Registration
         /// 
         /// </summary>
         [Fact]
-        public void CanRegisterNoLifetime()
+        public void CanRegisterUsingFactory()
         {
             var tested = new ServiceCollection();
 
             tested.Register(Component
-                .For<IServiceFactory<SimpleService>>()
+                .For<SimpleServiceServiceFactory>()
                 .ImplementedBy<SimpleServiceServiceFactory>());
             tested.Register(Component
                     .For<ISimpleService>()
@@ -46,6 +46,24 @@ namespace FluentRegistration.Tests.Registration
             var service = serviceProvider.GetService<ISimpleService>();
 
             Assert.Same(SimpleServiceServiceFactory.SimpleService, service);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void CanRegisterUsingFactoryMethod()
+        {
+            var tested = new ServiceCollection();
+
+            var simpleService = new SimpleService();
+            tested.Register(Component
+                    .For<ISimpleService>()
+                    .UsingFactoryMethod(() => simpleService));
+            var serviceProvider = tested.BuildServiceProvider();
+            var service = serviceProvider.GetService<ISimpleService>();
+
+            Assert.Same(simpleService, service);
         }
 
     }
