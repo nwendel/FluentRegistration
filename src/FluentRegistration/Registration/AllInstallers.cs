@@ -34,7 +34,7 @@ namespace FluentRegistration.Registration
         /// </summary>
         /// <param name="assembly"></param>
         /// <returns></returns>
-        public static IInstaller[] FromAssembly(Assembly assembly)
+        public static IServiceInstaller[] FromAssembly(Assembly assembly)
         {
             if (assembly == null)
             {
@@ -43,9 +43,9 @@ namespace FluentRegistration.Registration
 
             var allTypes = assembly.GetTypes();
             var installerTypes = allTypes
-                .Where(x => typeof(IInstaller).GetTypeInfo().IsAssignableFrom(x))
+                .Where(x => typeof(IServiceInstaller).GetTypeInfo().IsAssignableFrom(x))
                 .Select(x => Activator.CreateInstance(x))
-                .Cast<IInstaller>()
+                .Cast<IServiceInstaller>()
                 .ToArray();
             return installerTypes;
         }
@@ -59,7 +59,7 @@ namespace FluentRegistration.Registration
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static IInstaller[] FromAssemblyContaining<T>()
+        public static IServiceInstaller[] FromAssemblyContaining<T>()
         {
             return FromAssembly(typeof(T).GetTypeInfo().Assembly);
         }
@@ -75,7 +75,7 @@ namespace FluentRegistration.Registration
         /// </summary>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.NoInlining)]
-        public static IInstaller[] FromThisAssembly()
+        public static IServiceInstaller[] FromThisAssembly()
         {
             return FromAssembly(Assembly.GetCallingAssembly());
         }

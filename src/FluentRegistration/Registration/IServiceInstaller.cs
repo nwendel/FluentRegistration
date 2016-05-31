@@ -21,7 +21,7 @@ namespace FluentRegistration.Registration
     /// <summary>
     /// 
     /// </summary>
-    public interface IInstaller
+    public interface IServiceInstaller
     {
 
         #region Install

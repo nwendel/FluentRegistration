@@ -22,7 +22,7 @@ namespace FluentRegistration.Tests.TestClasses
     /// <summary>
     /// 
     /// </summary>
-    public class SimpleInstaller : IInstaller
+    public class SimpleInstaller : IServiceInstaller
     {
 
         /// <summary>

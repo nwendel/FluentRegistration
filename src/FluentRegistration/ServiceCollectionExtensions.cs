@@ -61,7 +61,7 @@ namespace FluentRegistration
         /// <typeparam name="TInstaller"></typeparam>
         /// <param name="self"></param>
         public static void Install<TInstaller>(this IServiceCollection self)
-            where TInstaller : IInstaller, new()
+            where TInstaller : IServiceInstaller, new()
         {
             var installer = new TInstaller();
             self.Install(installer);
@@ -72,7 +72,7 @@ namespace FluentRegistration
         /// </summary>
         /// <param name="self"></param>
         /// <param name="installers"></param>
-        public static void Install(this IServiceCollection self, params IInstaller[] installers)
+        public static void Install(this IServiceCollection self, params IServiceInstaller[] installers)
         {
             if (self == null)
             {

@@ -36,7 +36,7 @@ namespace FluentRegistration.Tests.Registration
             ServiceCollection tested = null;
 
             Assert.Throws<ArgumentNullException>("self",
-                () => tested.Install(new IInstaller[0]));
+                () => tested.Install(new IServiceInstaller[0]));
         }
 
         /// <summary>
