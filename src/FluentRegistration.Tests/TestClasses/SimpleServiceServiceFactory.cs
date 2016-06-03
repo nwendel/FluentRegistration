@@ -22,12 +22,12 @@ namespace FluentRegistration.Tests.TestClasses
     /// <summary>
     /// 
     /// </summary>
-    public class SimpleServiceServiceFactory : IServiceFactory<SimpleService>
+    public class SimpleServiceServiceFactory : IServiceFactory<ISimpleService>
     {
 
         public static SimpleService SimpleService = new SimpleService();
 
-        public SimpleService Create()
+        public ISimpleService Create()
         {
             return SimpleService;
         }

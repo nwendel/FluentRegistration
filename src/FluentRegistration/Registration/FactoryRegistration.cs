@@ -22,14 +22,13 @@ namespace FluentRegistration.Registration
     /// <summary>
     /// 
     /// </summary>
-    public class InstanceRegistration : IRegistration, IFluentInterface
+    public class FactoryRegistration : IRegistration, IFluentInterface
     {
 
         #region Fields
 
         private readonly Type[] _services;
-        private readonly ServicesSelector _servicesSelector;
-        private readonly object _instance;
+        private readonly Func<IServiceProvider, object> _factoryMethod;
 
         #endregion
 
@@ -38,13 +37,12 @@ namespace FluentRegistration.Registration
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="instance"></param>
+        /// <param name="factoryMethod"></param>
         /// <param name="servicesSelector"></param>
         /// <param name="services"></param>
-        internal InstanceRegistration(object instance, ServicesSelector servicesSelector, params Type[] services)
+        internal FactoryRegistration(Func<IServiceProvider, object> factoryMethod, params Type[] services)
         {
-            _instance = instance;
-            _servicesSelector = servicesSelector;
+            _factoryMethod = factoryMethod;
             _services = services;
         }
 
@@ -58,10 +56,9 @@ namespace FluentRegistration.Registration
         /// <param name="serviceCollection"></param>
         void IRegistration.Register(IServiceCollection serviceCollection)
         {
-            var services = _services ?? _servicesSelector(_instance.GetType());
-            foreach (var service in services)
+            foreach (var service in _services)
             {
-                var serviceDescriptor = new ServiceDescriptor(service, _instance);
+                var serviceDescriptor = new ServiceDescriptor(service, serviceProvider => _factoryMethod(serviceProvider), ServiceLifetime.Transient);
                 serviceCollection.Add(serviceDescriptor);
             }
         }

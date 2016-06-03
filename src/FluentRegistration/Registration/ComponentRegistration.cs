@@ -33,7 +33,6 @@ namespace FluentRegistration.Registration
         private readonly Type[] _services;
         private readonly ServicesSelector _servicesSelector;
         private Type _implementedBy;
-        private Func<IServiceProvider, object> _factoryMethod;
         private readonly LifetimeDescriptor<ComponentRegistration<TService>> _lifetimeDescriptor;
 
         #endregion
@@ -105,9 +104,8 @@ namespace FluentRegistration.Registration
         /// <typeparam name="TFactory"></typeparam>
         /// <typeparam name="TImplementation"></typeparam>
         /// <returns></returns>
-        public ComponentRegistration<TService> UsingFactory<TFactory, TImplementation>()
-            where TImplementation : TService
-            where TFactory : IServiceFactory<TImplementation>
+        public FactoryRegistration UsingFactory<TFactory>()
+            where TFactory : IServiceFactory<TService>
         {
             return UsingFactoryMethod(provider =>
             {
@@ -127,8 +125,7 @@ namespace FluentRegistration.Registration
         /// <typeparam name="TImplementation"></typeparam>
         /// <param name="factoryMethod"></param>
         /// <returns></returns>
-        public ComponentRegistration<TService> UsingFactoryMethod<TImplementation>(Func<TImplementation> factoryMethod)
-            where TImplementation : TService
+        public FactoryRegistration UsingFactoryMethod(Func<TService> factoryMethod)
         {
             return UsingFactoryMethod(provider => factoryMethod());
         }
@@ -139,11 +136,10 @@ namespace FluentRegistration.Registration
         /// <typeparam name="TImplementation"></typeparam>
         /// <param name="factoryMethod"></param>
         /// <returns></returns>
-        public ComponentRegistration<TService> UsingFactoryMethod<TImplementation>(Func<IServiceProvider, TImplementation> factoryMethod)
-            where TImplementation : TService
+        public FactoryRegistration UsingFactoryMethod(Func<IServiceProvider, TService> factoryMethod)
         {
-            _factoryMethod = provider => factoryMethod(provider);
-            return ImplementedBy<TImplementation>();
+            var factoryRegistration = new FactoryRegistration(serviceProvider => factoryMethod(serviceProvider), _services);
+            return factoryRegistration;
         }
 
         #endregion
@@ -155,9 +151,9 @@ namespace FluentRegistration.Registration
         /// </summary>
         /// <param name="instance"></param>
         /// <returns></returns>
-        public InstanceRegistration Instance(object instance)
+        public FactoryRegistration Instance(object instance)
         {
-            var instanceRegistration = new InstanceRegistration(instance, _servicesSelector, _services);
+            var instanceRegistration = new FactoryRegistration(serviceProvider => instance, _services);
             return instanceRegistration;
         }
 
@@ -220,9 +216,7 @@ namespace FluentRegistration.Registration
             var service = services.First();
             var otherServices = services.Skip(1).ToList();
 
-            var serviceDescriptor = _factoryMethod == null
-                ? new ServiceDescriptor(service, _implementedBy, lifetime)
-                : new ServiceDescriptor(service, _factoryMethod, lifetime);
+            var serviceDescriptor = new ServiceDescriptor(service, _implementedBy, lifetime);
             serviceCollection.Add(serviceDescriptor);
             foreach (var otherService in otherServices)
             {
