@@ -37,11 +37,11 @@ namespace FluentRegistration.Tests.Registration
             var tested = new ServiceCollection();
 
             tested.Register(Component
-                .For<SimpleServiceServiceFactory>()
+                .For<IServiceFactory<ISimpleService>>()
                 .ImplementedBy<SimpleServiceServiceFactory>());
             tested.Register(Component
                     .For<ISimpleService>()
-                    .UsingFactory<SimpleServiceServiceFactory>());
+                    .UsingFactory());
             var serviceProvider = tested.BuildServiceProvider();
             var service = serviceProvider.GetService<ISimpleService>();
 

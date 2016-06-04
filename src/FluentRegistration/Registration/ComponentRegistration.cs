@@ -101,6 +101,16 @@ namespace FluentRegistration.Registration
         /// <summary>
         /// 
         /// </summary>
+        /// <returns></returns>
+        public FactoryRegistration UsingFactory()
+        {
+            var factoryRegistration = UsingFactory<IServiceFactory<TService>>();
+            return factoryRegistration;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <typeparam name="TFactory"></typeparam>
         /// <typeparam name="TImplementation"></typeparam>
         /// <returns></returns>
