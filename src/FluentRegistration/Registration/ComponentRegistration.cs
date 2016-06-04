@@ -151,14 +151,13 @@ namespace FluentRegistration.Registration
         /// </summary>
         /// <param name="instance"></param>
         /// <returns></returns>
-        public FactoryRegistration Instance(object instance)
+        public InstanceRegistration Instance(object instance)
         {
-            var instanceRegistration = new FactoryRegistration(serviceProvider => instance, _services);
+            var instanceRegistration = new InstanceRegistration(instance, _servicesSelector, _services);
             return instanceRegistration;
         }
 
         #endregion
-
 
         #region Lifetime
 

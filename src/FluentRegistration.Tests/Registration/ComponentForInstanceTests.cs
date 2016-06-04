@@ -40,11 +40,34 @@ namespace FluentRegistration.Tests.Registration
                 .For<ISimpleService>()
                 .Instance(simpleService));
 
+            Assert.Equal(1, tested.Count);
+            Assert.All(tested, service =>
+            {
+                Assert.Equal(typeof(ISimpleService), service.ServiceType);
+                Assert.Same(simpleService, service.ImplementationInstance);
+            });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void CanRegisterTwoInterfaces()
+        {
+            var tested = new ServiceCollection();
+
+            var simpleService = new ServiceWithTwoInterfaces();
+            tested.Register(Component
+                .ForAllInterfaces()
+                .Instance(simpleService));
             var serviceProvider = tested.BuildServiceProvider();
             var resolvedService = serviceProvider.GetService<ISimpleService>();
 
-            Assert.Equal(1, tested.Count);
-            Assert.Same(simpleService, resolvedService);
+            Assert.Equal(2, tested.Count);
+            Assert.All(tested, service =>
+            {
+                Assert.Same(simpleService, service.ImplementationInstance);
+            });
         }
 
     }
