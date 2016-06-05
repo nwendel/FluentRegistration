@@ -14,25 +14,38 @@
 // limitations under the License.
 #endregion
 using Microsoft.Extensions.DependencyInjection;
+using Xunit;
+using FluentRegistration;
+using FluentRegistration.Tests.TestClasses;
 
-namespace FluentRegistration.Tests.TestClasses
+namespace FluentRegistration.Tests
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public class SimpleInstaller : IServiceInstaller
+    public class ComponentForInstanceTests
     {
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="serviceCollection"></param>
-        public void Install(IServiceCollection serviceCollection)
+        [Fact]
+        public void CanRegister()
         {
-            serviceCollection.Register(Component
+            var tested = new ServiceCollection();
+
+            var simpleService = new SimpleService();
+            tested.Register(Component
                 .For<ISimpleService>()
-                .ImplementedBy<SimpleService>());
+                .Instance(simpleService));
+
+            Assert.Equal(1, tested.Count);
+            Assert.All(tested, service =>
+            {
+                Assert.Equal(typeof(ISimpleService), service.ServiceType);
+                Assert.Same(simpleService, service.ImplementationInstance);
+            });
         }
 
     }

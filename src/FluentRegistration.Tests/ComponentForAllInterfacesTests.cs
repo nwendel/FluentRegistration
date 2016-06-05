@@ -14,25 +14,37 @@
 // limitations under the License.
 #endregion
 using Microsoft.Extensions.DependencyInjection;
+using Xunit;
+using FluentRegistration;
+using FluentRegistration.Tests.TestClasses;
 
-namespace FluentRegistration.Tests.TestClasses
+namespace FluentRegistration.Tests
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public class SimpleInstaller : IServiceInstaller
+    public class ComponentForAllInterfacesTests : AbstractTests
     {
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="serviceCollection"></param>
-        public void Install(IServiceCollection serviceCollection)
+        [Fact]
+        public void CanRegisterTwoInterfacesSingletonLifetime()
         {
-            serviceCollection.Register(Component
-                .For<ISimpleService>()
-                .ImplementedBy<SimpleService>());
+            var serviceProvider = BuildServiceProvider(x =>
+            {
+                x.Register(Component
+                    .ImplementedBy<ServiceWithTwoInterfaces>()
+                    .WithService.AllInterfaces()
+                    .Lifetime.Singleton);
+            });
+
+            var serviceOne = serviceProvider.GetService<IServiceOne>();
+            var serviceTwo = serviceProvider.GetService<IServiceTwo>();
+            Assert.NotNull(serviceOne);
+            Assert.Same(serviceOne, serviceTwo);
         }
 
     }

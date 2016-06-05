@@ -13,28 +13,17 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
 
-namespace FluentRegistration.Tests.TestClasses
+namespace FluentRegistration.Internal
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public class SimpleInstaller : IServiceInstaller
-    {
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="serviceCollection"></param>
-        public void Install(IServiceCollection serviceCollection)
-        {
-            serviceCollection.Register(Component
-                .For<ISimpleService>()
-                .ImplementedBy<SimpleService>());
-        }
-
-    }
+    /// <param name="type"></param>
+    /// <returns></returns>
+    public delegate IEnumerable<Type> ServicesSelector(Type type);
 
 }

@@ -14,25 +14,34 @@
 // limitations under the License.
 #endregion
 using Microsoft.Extensions.DependencyInjection;
+using Xunit;
+using FluentRegistration;
+using FluentRegistration.Tests.TestClasses;
 
-namespace FluentRegistration.Tests.TestClasses
+namespace FluentRegistration.Tests
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public class SimpleInstaller : IServiceInstaller
+    public class ExceptTests
     {
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="serviceCollection"></param>
-        public void Install(IServiceCollection serviceCollection)
+        [Fact]
+        public void CanExclude()
         {
-            serviceCollection.Register(Component
-                .For<ISimpleService>()
-                .ImplementedBy<SimpleService>());
+            var tested = new ServiceCollection();
+
+            tested.Register(AllClasses
+                    .FromAssemblyContaining<AllClassesInSameNamespaceTests>()
+                    .BasedOn<SimpleService>()
+                    .Except(Component.HasAttribute<RegisterComponentAttribute>())
+                    .WithService.AllInterfaces());
+
+            Assert.Equal(0, tested.Count);
         }
 
     }

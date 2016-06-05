@@ -15,25 +15,24 @@
 #endregion
 using Microsoft.Extensions.DependencyInjection;
 
-namespace FluentRegistration.Tests.TestClasses
+namespace FluentRegistration.Internal
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public class SimpleInstaller : IServiceInstaller
+    public interface IRegistration
     {
+
+        #region Register
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="serviceCollection"></param>
-        public void Install(IServiceCollection serviceCollection)
-        {
-            serviceCollection.Register(Component
-                .For<ISimpleService>()
-                .ImplementedBy<SimpleService>());
-        }
+        void Register(IServiceCollection serviceCollection);
+
+        #endregion
 
     }
 

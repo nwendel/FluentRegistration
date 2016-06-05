@@ -17,7 +17,7 @@ using System;
 using Microsoft.Extensions.DependencyInjection;
 using AttachedProperties;
 using FluentRegistration.Options;
-using FluentRegistration.Registration;
+using FluentRegistration.Internal;
 
 namespace FluentRegistration
 {

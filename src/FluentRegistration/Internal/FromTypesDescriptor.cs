@@ -13,27 +13,51 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
 
-namespace FluentRegistration.Tests.TestClasses
+namespace FluentRegistration.Internal
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public class SimpleInstaller : IServiceInstaller
+    public class FromTypesDescriptor : AbstractFromDescriptor
     {
+
+        #region Fields
+
+        private readonly IEnumerable<Type> _types;
+
+        #endregion
+
+        #region Constrcutor
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="serviceCollection"></param>
-        public void Install(IServiceCollection serviceCollection)
+        /// <param name="types"></param>
+        internal FromTypesDescriptor(IEnumerable<Type> types, Predicate<Type> filter) : base(filter)
         {
-            serviceCollection.Register(Component
-                .For<ISimpleService>()
-                .ImplementedBy<SimpleService>());
+            _types = types;
         }
+
+        #endregion
+
+        #region Selected Types
+
+        /// <summary>
+        /// 
+        /// </summary>
+        protected internal override IEnumerable<Type> SelectedTypes
+        {
+            get
+            {
+                return _types;
+            }
+        }
+
+        #endregion
 
     }
 
