@@ -48,28 +48,6 @@ namespace FluentRegistration.Tests.Registration
             });
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [Fact]
-        public void CanRegisterTwoInterfaces()
-        {
-            var tested = new ServiceCollection();
-
-            var simpleService = new ServiceWithTwoInterfaces();
-            tested.Register(Component
-                .ForAllInterfaces()
-                .Instance(simpleService));
-            var serviceProvider = tested.BuildServiceProvider();
-            var resolvedService = serviceProvider.GetService<ISimpleService>();
-
-            Assert.Equal(2, tested.Count);
-            Assert.All(tested, service =>
-            {
-                Assert.Same(simpleService, service.ImplementationInstance);
-            });
-        }
-
     }
 
 }

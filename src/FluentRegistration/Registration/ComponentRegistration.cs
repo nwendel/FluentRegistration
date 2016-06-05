@@ -31,7 +31,6 @@ namespace FluentRegistration.Registration
         #region Fields
 
         private readonly Type[] _services;
-        private readonly ServicesSelector _servicesSelector;
         private Type _implementedBy;
         private readonly LifetimeDescriptor<ComponentRegistration<TService>> _lifetimeDescriptor;
 
@@ -56,16 +55,6 @@ namespace FluentRegistration.Registration
         {
             _lifetimeDescriptor = new LifetimeDescriptor<ComponentRegistration<TService>>(this);
             _services = services;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="servicesSelector"></param>
-        internal ComponentRegistration(ServicesSelector servicesSelector)
-        {
-            _lifetimeDescriptor = new LifetimeDescriptor<ComponentRegistration<TService>>(this);
-            _servicesSelector = servicesSelector;
         }
 
         #endregion
@@ -163,7 +152,7 @@ namespace FluentRegistration.Registration
         /// <returns></returns>
         public InstanceRegistration Instance(object instance)
         {
-            var instanceRegistration = new InstanceRegistration(instance, _servicesSelector, _services);
+            var instanceRegistration = new InstanceRegistration(instance, _services);
             return instanceRegistration;
         }
 
@@ -206,8 +195,7 @@ namespace FluentRegistration.Registration
                 }
             }
 
-            var services = _services ?? _servicesSelector(_implementedBy);
-            if(services.Count() == 0)
+            if(_services.Count() == 0)
             {
                 // No interfaces found
                 var options = serviceCollection.GetAttachedValue(ServiceCollectionAttachedProperties.Options) ?? FluentRegistrationOptions.Default;
@@ -222,8 +210,8 @@ namespace FluentRegistration.Registration
 
             var lifetime = _lifetimeDescriptor.GetLifetime();
 
-            var service = services.First();
-            var otherServices = services.Skip(1).ToList();
+            var service = _services.First();
+            var otherServices = _services.Skip(1).ToList();
 
             var serviceDescriptor = new ServiceDescriptor(service, _implementedBy, lifetime);
             serviceCollection.Add(serviceDescriptor);
@@ -251,14 +239,6 @@ namespace FluentRegistration.Registration
         /// </summary>
         /// <param name="services"></param>
         internal ComponentRegistration(params Type[] services) : base(services)
-        {
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="servicesSelector"></param>
-        internal ComponentRegistration(ServicesSelector servicesSelector) : base(servicesSelector)
         {
         }
 

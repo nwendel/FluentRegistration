@@ -36,8 +36,8 @@ namespace FluentRegistration.Tests.Registration
             var serviceProvider = BuildServiceProvider(x =>
             {
                 x.Register(Component
-                    .ForAllInterfaces()
                     .ImplementedBy<ServiceWithTwoInterfaces>()
+                    .WithService.AllInterfaces()
                     .Lifetime.Singleton);
             });
 

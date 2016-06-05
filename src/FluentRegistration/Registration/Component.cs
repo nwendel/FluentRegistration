@@ -59,15 +59,18 @@ namespace FluentRegistration.Registration
 
         #endregion
 
-        #region For All Interfaces
+        #region Implemented By
 
         /// <summary>
         /// 
         /// </summary>
+        /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static ComponentRegistration ForAllInterfaces()
+        public static AbstractCriteriasDescriptor ImplementedBy<T>()
         {
-            return new ComponentRegistration(x => x.GetTypeInfo().GetInterfaces());
+            return AllClasses
+                .FromAssemblyContaining<T>()
+                .Where(x => x == typeof(T));
         }
 
         #endregion
