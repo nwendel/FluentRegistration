@@ -2,7 +2,7 @@
   "title": "FluentRegistration",
   "description": "FluentRegistration",
   "copyright": "Niklas Wendel 2016",
-  "version": "1.0.2-*",
+  "version": "1.0.3-*",
 
   "dependencies": {
     "AttachedProperties": "1.2.0",
