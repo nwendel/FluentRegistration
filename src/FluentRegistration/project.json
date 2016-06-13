@@ -13,12 +13,14 @@
     "netstandard1.5": {
       "imports": "dnxcore50",
       "dependencies": {
-        "System.Reflection.Extensions": "4.0.1-rc2-24027"
+        "System.Reflection.Extensions": "4.0.1-rc2-24027",
+        "System.Runtime": "4.1.0-rc2-24027"
       }
     },
     "net46": {
       "dependencies": {
-        "System.Reflection.Extensions": "4.0.0.0"
+        "System.Reflection.Extensions": "4.0.0.0",
+        "System.Runtime": "4.0.20.0"
       }
     }
   },
