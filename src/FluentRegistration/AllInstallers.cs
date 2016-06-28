@@ -68,7 +68,7 @@ namespace FluentRegistration
 
         #region From This Assembly
 
-#if !NETSTANDARD1_5
+#if !NETSTANDARD1_6
         
         /// <summary>
         /// 

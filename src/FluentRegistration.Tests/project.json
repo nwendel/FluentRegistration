@@ -1,11 +1,14 @@
 {
   "version": "1.0.0-*",
   "testRunner": "xunit",
+  "buildOptions": {
+    "warningsAsErrors": true
+  },
   "dependencies": {
     "xunit": "2.1.0",
     "dotnet-test-xunit": "1.0.0-rc2-build10015",
-    "FluentRegistration": "1.0.4-*",
-    "Microsoft.Extensions.DependencyInjection": "1.0.0-rc2-final",
+    "FluentRegistration": "1.0.5-*",
+    "Microsoft.Extensions.DependencyInjection": "1.0.0",
     "OpenCover": "4.6.519",
     "coveralls.net": "0.7.0-beta0001"
   },
@@ -14,7 +17,7 @@
       "dependencies": {
         "Microsoft.NETCore.App": {
           "type": "platform",
-          "version": "1.0.0-rc2-3002702"
+          "version": "1.0.0"
         }
       },
       "imports": [
