@@ -15,7 +15,6 @@
 #endregion
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
-using FluentRegistration;
 using FluentRegistration.Tests.TestClasses;
 
 namespace FluentRegistration.Tests
@@ -88,6 +87,22 @@ namespace FluentRegistration.Tests
                 Assert.Equal(typeof(IGenericInterface<object>), service.ServiceType);
                 Assert.Equal(typeof(ImplementsGenericInterface), service.ImplementationType);
             });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void CanNotRegisterAbstractClass()
+        {
+            var tested = new ServiceCollection();
+
+            tested.Register(AllClasses
+                .FromAssemblyContaining<AllClassesBasedOnTests>()
+                .BasedOn<IAbstractImplementationInterface>()
+                .WithService.AllInterfaces());
+
+            Assert.Equal(0, tested.Count);
         }
 
     }

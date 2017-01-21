@@ -15,6 +15,7 @@
 #endregion
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace FluentRegistration.Internal
 {
@@ -28,6 +29,7 @@ namespace FluentRegistration.Internal
         #region Fields
 
         private readonly IEnumerable<Type> _types;
+        private Predicate<Type> _filter;
 
         #endregion
 
@@ -40,6 +42,8 @@ namespace FluentRegistration.Internal
         internal FromTypesDescriptor(IEnumerable<Type> types, Predicate<Type> filter) : base(filter)
         {
             _types = types;
+            // TODO: Hack to fix filtering
+            _filter = filter;
         }
 
         #endregion
@@ -53,7 +57,8 @@ namespace FluentRegistration.Internal
         {
             get
             {
-                return _types;
+                var filteredTypes = _types.Where(x => _filter(x)).ToList();
+                return filteredTypes;
             }
         }
 

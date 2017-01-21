@@ -15,6 +15,7 @@
 #endregion
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace FluentRegistration.Internal
@@ -29,6 +30,7 @@ namespace FluentRegistration.Internal
         #region Fields
 
         private Assembly _assembly;
+        private Predicate<Type> _filter;
 
         #endregion
 
@@ -42,6 +44,8 @@ namespace FluentRegistration.Internal
         internal FromAssemblyDescriptor(Assembly assembly, Predicate<Type> filter) : base(filter)
         {
             _assembly = assembly;
+            // TODO: Hack to fix filtering
+            _filter = filter;
         }
 
         #endregion
@@ -56,7 +60,8 @@ namespace FluentRegistration.Internal
             get
             {
                 var types = _assembly.GetTypes();
-                return types;
+                var filteredTypes = types.Where(x => _filter(x)).ToList();
+                return filteredTypes;
             }
         }
 
