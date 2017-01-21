@@ -7,7 +7,7 @@
   "dependencies": {
     "xunit": "2.2.0-beta2-build3300",
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
-    "FluentRegistration": "1.0.5-*",
+    "FluentRegistration": "1.0.6-*",
     "Microsoft.Extensions.DependencyInjection": "1.0.0",
     "OpenCover": "4.6.519",
     "coveralls.net": "0.7.0-beta0001"

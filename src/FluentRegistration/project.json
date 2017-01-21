@@ -2,7 +2,7 @@
   "title": "FluentRegistration",
   "description": "FluentRegistration",
   "copyright": "Niklas Wendel 2016",
-  "version": "1.0.5-*",
+  "version": "1.0.6-*",
 
   "buildOptions": {
     "warningsAsErrors": true
