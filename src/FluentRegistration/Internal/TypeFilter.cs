@@ -14,7 +14,6 @@
 // limitations under the License.
 #endregion
 using System;
-using System.ComponentModel;
 
 namespace FluentRegistration.Internal
 {
@@ -22,38 +21,59 @@ namespace FluentRegistration.Internal
     /// <summary>
     /// 
     /// </summary>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public interface IFluentInterface
+    public class TypeFilter : ITypeFilter
     {
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        Type GetType();
+        #region Assignable To
 
         /// <summary>
         /// 
         /// </summary>
+        /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        int GetHashCode();
+        public bool AssignableTo<T>()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+        #region In Same Namespace As
 
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="namespace"></param>
         /// <returns></returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        string ToString();
+        public Predicate<Type> InNamespace(string @namespace)
+        {
+            return type => type.Namespace == @namespace;
+        }
+
+        #endregion
+
+        #region Is In Same Namespace As
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="obj"></param>
+        /// <param name="type"></param>
         /// <returns></returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        bool Equals(object obj);
+        public Predicate<Type> InSameNamespaceAs(Type type)
+        {
+            return InNamespace(type.Namespace);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public Predicate<Type> InSameNamespaceAs<T>()
+        {
+            return InSameNamespaceAs(typeof(T));
+        }
+
+        #endregion
 
     }
 

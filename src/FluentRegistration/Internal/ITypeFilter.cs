@@ -13,33 +13,50 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
+using System;
+
 namespace FluentRegistration.Internal
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public interface IRegistration
+    public interface ITypeFilter
     {
 
-        #region For
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="TService"></typeparam>
-        /// <returns></returns>
-        IImplementationSelector<TService> For<TService>();
-
-        #endregion
-
-        #region From Assembly Containing
+        #region Assignable To
 
         /// <summary>
         /// 
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        ITypeSelector FromAssemblyContaining<T>();
+        /// <returns></returns>
+        bool AssignableTo<T>();
+
+        #endregion
+
+        #region In Same Namespace As
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="namespace"></param>
+        /// <returns></returns>
+        Predicate<Type> InNamespace(string @namespace);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        Predicate<Type> InSameNamespaceAs(Type type);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        Predicate<Type> InSameNamespaceAs<T>();
 
         #endregion
 

@@ -13,16 +13,20 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-namespace FluentRegistration.Options
+namespace FluentRegistration.Tests.TestClasses
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public enum MultipleRegistrationsBehavior
+    public interface ISimpleService
     {
-        Ignore,
-        ThrowException
+
+        /// <summary>
+        /// 
+        /// </summary>
+        void Operation();
+
     }
 
 }

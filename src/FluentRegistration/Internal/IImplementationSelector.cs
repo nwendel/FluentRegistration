@@ -13,16 +13,28 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-namespace FluentRegistration.Options
+namespace FluentRegistration.Internal
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public enum MultipleRegistrationsBehavior
+    public interface IImplementationSelector<TService> : IFluentInterface
     {
-        Ignore,
-        ThrowException
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TImplementation"></typeparam>
+        ILifetime ImplementedBy<TImplementation>()
+            where TImplementation : TService;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="instance"></param>
+        void Instance(TService instance);
+
     }
 
 }

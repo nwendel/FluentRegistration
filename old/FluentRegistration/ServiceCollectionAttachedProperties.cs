@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) Niklas Wendel 2016-2017
+// Copyright (c) Niklas Wendel 2016
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); 
 // you may not use this file except in compliance with the License. 
@@ -14,40 +14,26 @@
 // limitations under the License.
 #endregion
 using Microsoft.Extensions.DependencyInjection;
-using Xunit;
-using FluentRegistration;
-using FluentRegistration.Tests.TestClasses;
+using AttachedProperties;
+using FluentRegistration.Options;
 
-namespace FluentRegistration.Tests
+namespace FluentRegistration
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public class ComponentForInstanceTests
+    public static class ServiceCollectionAttachedProperties
     {
+
+        #region Attached Properties
 
         /// <summary>
         /// 
         /// </summary>
-        [Fact]
-        public void CanRegister()
-        {
-            var tested = new ServiceCollection();
+        public static AttachedProperty<IServiceCollection, FluentRegistrationOptions> Options = new AttachedProperty<IServiceCollection, FluentRegistrationOptions>(nameof(Options));
 
-            var simpleService = new SimpleService();
-
-            tested.Register(r => r
-                .For<ISimpleService>()
-                .Instance(simpleService));
-
-            Assert.Equal(1, tested.Count);
-            Assert.All(tested, service =>
-            {
-                Assert.Equal(typeof(ISimpleService), service.ServiceType);
-                Assert.Same(simpleService, service.ImplementationInstance);
-            });
-        }
+        #endregion
 
     }
 

@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) Niklas Wendel 2016-2017
+// Copyright (c) Niklas Wendel 2016
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); 
 // you may not use this file except in compliance with the License. 
@@ -16,8 +16,8 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
 using AttachedProperties;
-using FluentRegistration.Internal;
 using FluentRegistration.Options;
+using FluentRegistration.Internal;
 
 namespace FluentRegistration
 {
@@ -33,22 +33,22 @@ namespace FluentRegistration
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="self"></param>
         /// <param name="registrations"></param>
-        public static void Register(this IServiceCollection self, Action<IRegistration> registrationAction)
+        public static void Register(this IServiceCollection self, params IRegistration[] registrations)
         {
             if (self == null)
             {
                 throw new ArgumentNullException(nameof(self));
             }
-            if (registrationAction == null)
+            if (registrations == null)
             {
-                throw new ArgumentNullException(nameof(registrationAction));
+                throw new ArgumentNullException(nameof(registrations));
             }
 
-            var registration = new Registration();
-            registrationAction(registration);
-            registration.Register(self);
+            foreach (var registration in registrations)
+            {
+                registration.Register(self);
+            }
         }
 
         #endregion
@@ -64,29 +64,29 @@ namespace FluentRegistration
             where TInstaller : IServiceInstaller, new()
         {
             var installer = new TInstaller();
-            installer.Install(self);
+            self.Install(installer);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="self"></param>
-        /// <param name="installationAction"></param>
-        public static void Install(this IServiceCollection self, Action<IInstallation> installationAction)
+        /// <param name="installers"></param>
+        public static void Install(this IServiceCollection self, params IServiceInstaller[] installers)
         {
             if (self == null)
             {
                 throw new ArgumentNullException(nameof(self));
             }
-            if (installationAction == null)
+            if (installers == null)
             {
-                throw new ArgumentNullException(nameof(installationAction));
+                throw new ArgumentNullException(nameof(installers));
             }
 
-            var installation = new Installation(self);
-            installationAction(installation);
-
-
+            foreach (var installer in installers)
+            {
+                installer.Install(self);
+            }
         }
 
         #endregion
@@ -104,7 +104,7 @@ namespace FluentRegistration
             {
                 throw new ArgumentNullException(nameof(self));
             }
-            if (optionsAction == null)
+            if(optionsAction == null)
             {
                 throw new ArgumentNullException(nameof(optionsAction));
             }

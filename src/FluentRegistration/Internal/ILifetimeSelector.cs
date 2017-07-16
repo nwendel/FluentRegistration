@@ -13,16 +13,30 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-namespace FluentRegistration.Options
+namespace FluentRegistration.Internal
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public enum MultipleRegistrationsBehavior
+    public interface ILifetimeSelector
     {
-        Ignore,
-        ThrowException
+
+        /// <summary>
+        /// 
+        /// </summary>
+        void Singleton();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        void Scoped();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        void Transient();
+
     }
 
 }

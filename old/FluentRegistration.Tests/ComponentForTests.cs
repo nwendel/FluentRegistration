@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) Niklas Wendel 2016-2017
+// Copyright (c) Niklas Wendel 2016
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); 
 // you may not use this file except in compliance with the License. 
@@ -15,6 +15,7 @@
 #endregion
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
+using FluentRegistration;
 using FluentRegistration.Tests.TestClasses;
 
 namespace FluentRegistration.Tests
@@ -34,9 +35,9 @@ namespace FluentRegistration.Tests
         {
             var tested = new ServiceCollection();
 
-            tested.Register(r => r
-                .For<ISimpleService>()
-                .ImplementedBy<SimpleService>());
+            tested.Register(Component
+                    .For<ISimpleService>()
+                    .ImplementedBy<SimpleService>());
 
             Assert.Equal(1, tested.Count);
             Assert.All(tested, service =>
@@ -55,10 +56,10 @@ namespace FluentRegistration.Tests
         {
             var tested = new ServiceCollection();
 
-            tested.Register(r => r
-                .For<ISimpleService>()
-                .ImplementedBy<SimpleService>()
-                .Lifetime.Singleton());
+            tested.Register(Component
+                    .For<ISimpleService>()
+                    .ImplementedBy<SimpleService>()
+                    .Lifetime.Singleton);
 
             Assert.Equal(1, tested.Count);
             Assert.All(tested, service =>
@@ -77,10 +78,10 @@ namespace FluentRegistration.Tests
         {
             var tested = new ServiceCollection();
 
-            tested.Register(r => r
+            tested.Register(Component
                 .For<ISimpleService>()
                 .ImplementedBy<SimpleService>()
-                .Lifetime.Scoped());
+                .Lifetime.Scoped);
 
             Assert.Equal(1, tested.Count);
             Assert.All(tested, service =>
@@ -99,10 +100,10 @@ namespace FluentRegistration.Tests
         {
             var tested = new ServiceCollection();
 
-            tested.Register(r => r
-                .For<ISimpleService>()
-                .ImplementedBy<SimpleService>()
-                .Lifetime.Transient());
+            tested.Register(Component
+                    .For<ISimpleService>()
+                    .ImplementedBy<SimpleService>()
+                    .Lifetime.Transient);
 
             Assert.Equal(1, tested.Count);
             Assert.All(tested, service =>
@@ -113,6 +114,26 @@ namespace FluentRegistration.Tests
             });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void CanRegisterForNonGeneric()
+        {
+            var tested = new ServiceCollection();
+
+            tested.Register(Component
+                    .For(typeof(ISimpleService))
+                    .ImplementedBy<SimpleService>());
+
+            Assert.Equal(1, tested.Count);
+            Assert.All(tested, service =>
+            {
+                Assert.Equal(ServiceLifetime.Singleton, service.Lifetime);
+                Assert.Equal(typeof(ISimpleService), service.ServiceType);
+                Assert.Equal(typeof(SimpleService), service.ImplementationType);
+            });
+        }
 
     }
 

@@ -13,16 +13,39 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-namespace FluentRegistration.Options
+using System;
+
+namespace FluentRegistration.Internal
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public enum MultipleRegistrationsBehavior
+    public interface ITypeSelector : IWithServiceInitial, IFluentInterface
     {
-        Ignore,
-        ThrowException
+
+        #region Where
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        ITypeSelector Where(Func<ITypeFilter, Predicate<Type>> predicate);
+
+        #endregion
+
+        #region Except
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        ITypeSelector Except(Func<ITypeFilter, Predicate<Type>> predicate);
+
+        #endregion
+
     }
 
 }

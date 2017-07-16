@@ -13,41 +13,46 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-using Microsoft.Extensions.DependencyInjection;
-using Xunit;
-using FluentRegistration;
-using FluentRegistration.Tests.TestClasses;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
 
-namespace FluentRegistration.Tests
+namespace FluentRegistration.Internal
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public class ComponentForInstanceTests
+    public class AssemblyTypeSelector : AbstractTypeSelector
     {
+
+        #region Fields
+
+        private readonly Assembly _assembly;
+
+        #endregion
+
+        #region Constructor
 
         /// <summary>
         /// 
         /// </summary>
-        [Fact]
-        public void CanRegister()
+        public AssemblyTypeSelector(Assembly assembly)
         {
-            var tested = new ServiceCollection();
-
-            var simpleService = new SimpleService();
-
-            tested.Register(r => r
-                .For<ISimpleService>()
-                .Instance(simpleService));
-
-            Assert.Equal(1, tested.Count);
-            Assert.All(tested, service =>
-            {
-                Assert.Equal(typeof(ISimpleService), service.ServiceType);
-                Assert.Same(simpleService, service.ImplementationInstance);
-            });
+            _assembly = assembly;
         }
+
+        #endregion
+
+        #region Types
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// 
+        public override IEnumerable<Type> Types => _assembly.GetTypes();
+
+        #endregion
 
     }
 

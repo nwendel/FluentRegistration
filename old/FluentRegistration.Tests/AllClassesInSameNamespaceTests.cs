@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) Niklas Wendel 2016-2017
+// Copyright (c) Niklas Wendel 2016
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); 
 // you may not use this file except in compliance with the License. 
@@ -16,7 +16,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using FluentRegistration;
-using FluentRegistration.Tests.TestClasses;
+using FluentRegistration.Tests.TestClasses.AnotherNamespace;
 
 namespace FluentRegistration.Tests
 {
@@ -24,7 +24,7 @@ namespace FluentRegistration.Tests
     /// <summary>
     /// 
     /// </summary>
-    public class ComponentForInstanceTests
+    public class AllClassesInSameNamespaceTests
     {
 
         /// <summary>
@@ -35,20 +35,21 @@ namespace FluentRegistration.Tests
         {
             var tested = new ServiceCollection();
 
-            var simpleService = new SimpleService();
-
-            tested.Register(r => r
-                .For<ISimpleService>()
-                .Instance(simpleService));
+            tested.Register(AllClasses
+                    .FromAssemblyContaining<AllClassesInSameNamespaceTests>()
+                    .Where(Component.IsInSameNamespaceAs<ServiceInAnotherNamespace>())
+                    .WithService.AllInterfaces());
 
             Assert.Equal(1, tested.Count);
             Assert.All(tested, service =>
             {
-                Assert.Equal(typeof(ISimpleService), service.ServiceType);
-                Assert.Same(simpleService, service.ImplementationInstance);
+                Assert.Equal(typeof(IServiceInAnotherNamespace), service.ServiceType);
+                Assert.Equal(typeof(ServiceInAnotherNamespace), service.ImplementationType);
             });
         }
 
     }
 
 }
+
+

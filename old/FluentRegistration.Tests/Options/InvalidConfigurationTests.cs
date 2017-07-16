@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) Niklas Wendel 2016-2017
+// Copyright (c) Niklas Wendel 2016
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); 
 // you may not use this file except in compliance with the License. 
@@ -13,40 +13,41 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
+using System;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
-using FluentRegistration;
-using FluentRegistration.Tests.TestClasses;
 
-namespace FluentRegistration.Tests
+namespace FluentRegistration.Tests.Options
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public class ComponentForInstanceTests
+    public class InvalidConfigurationTests
     {
 
         /// <summary>
         /// 
         /// </summary>
         [Fact]
-        public void CanRegister()
+        public void ThrowsOnNullServiceCollection()
         {
-            var tested = new ServiceCollection();
+            ServiceCollection tested = null;
 
-            var simpleService = new SimpleService();
+            Assert.Throws<ArgumentNullException>("self",
+                () => tested.ConfigureFluentRegistration(o => { }));
+        }
 
-            tested.Register(r => r
-                .For<ISimpleService>()
-                .Instance(simpleService));
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void ThrowsOnNullOptionsAction()
+        {
+            ServiceCollection tested = new ServiceCollection();
 
-            Assert.Equal(1, tested.Count);
-            Assert.All(tested, service =>
-            {
-                Assert.Equal(typeof(ISimpleService), service.ServiceType);
-                Assert.Same(simpleService, service.ImplementationInstance);
-            });
+            Assert.Throws<ArgumentNullException>("optionsAction",
+                () => tested.ConfigureFluentRegistration(null));
         }
 
     }

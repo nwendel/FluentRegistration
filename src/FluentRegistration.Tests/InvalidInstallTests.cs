@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) Niklas Wendel 2016
+// Copyright (c) Niklas Wendel 2016-2017
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); 
 // you may not use this file except in compliance with the License. 
@@ -26,40 +26,40 @@ namespace FluentRegistration.Tests
     public class InvalidInstallTests
     {
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [Fact]
-        public void ThrowsOnNullServiceCollection()
-        {
-            ServiceCollection tested = null;
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        //[Fact]
+        //public void ThrowsOnNullServiceCollection()
+        //{
+        //    ServiceCollection tested = null;
 
-            Assert.Throws<ArgumentNullException>("self",
-                () => tested.Install(new IServiceInstaller[0]));
-        }
+        //    Assert.Throws<ArgumentNullException>("self",
+        //        () => tested.Install(new IServiceInstaller[0]));
+        //}
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [Fact]
-        public void ThrowsOnNullInstallers()
-        {
-            var tested = new ServiceCollection();
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        //[Fact]
+        //public void ThrowsOnNullInstallers()
+        //{
+        //    var tested = new ServiceCollection();
 
-            Assert.Throws<ArgumentNullException>("installers",
-                () => tested.Install(null));
-        }
+        //    Assert.Throws<ArgumentNullException>("installers",
+        //        () => tested.Install(null));
+        //}
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [Fact]
-        public void ThrowsOnAllInstallersFromAssemblyNullAssembly()
-        {
-            var tested = new ServiceCollection();
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        //[Fact]
+        //public void ThrowsOnAllInstallersFromAssemblyNullAssembly()
+        //{
+        //    var tested = new ServiceCollection();
 
-            Assert.Throws<ArgumentNullException>(() => tested.Install(AllInstallers.FromAssembly(null)));
-        }
+        //    Assert.Throws<ArgumentNullException>(() => tested.Install(AllInstallers.FromAssembly(null)));
+        //}
 
     }
 

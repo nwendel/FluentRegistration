@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) Niklas Wendel 2016-2017
+// Copyright (c) Niklas Wendel 2016
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); 
 // you may not use this file except in compliance with the License. 
@@ -13,10 +13,9 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
+using System;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
-using FluentRegistration;
-using FluentRegistration.Tests.TestClasses;
 
 namespace FluentRegistration.Tests
 {
@@ -24,29 +23,42 @@ namespace FluentRegistration.Tests
     /// <summary>
     /// 
     /// </summary>
-    public class ComponentForInstanceTests
+    public class InvalidInstallTests
     {
 
         /// <summary>
         /// 
         /// </summary>
         [Fact]
-        public void CanRegister()
+        public void ThrowsOnNullServiceCollection()
+        {
+            ServiceCollection tested = null;
+
+            Assert.Throws<ArgumentNullException>("self",
+                () => tested.Install(new IServiceInstaller[0]));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void ThrowsOnNullInstallers()
         {
             var tested = new ServiceCollection();
 
-            var simpleService = new SimpleService();
+            Assert.Throws<ArgumentNullException>("installers",
+                () => tested.Install(null));
+        }
 
-            tested.Register(r => r
-                .For<ISimpleService>()
-                .Instance(simpleService));
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void ThrowsOnAllInstallersFromAssemblyNullAssembly()
+        {
+            var tested = new ServiceCollection();
 
-            Assert.Equal(1, tested.Count);
-            Assert.All(tested, service =>
-            {
-                Assert.Equal(typeof(ISimpleService), service.ServiceType);
-                Assert.Same(simpleService, service.ImplementationInstance);
-            });
+            Assert.Throws<ArgumentNullException>(() => tested.Install(AllInstallers.FromAssembly(null)));
         }
 
     }

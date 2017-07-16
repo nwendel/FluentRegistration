@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) Niklas Wendel 2016-2017
+// Copyright (c) Niklas Wendel 2016
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); 
 // you may not use this file except in compliance with the License. 
@@ -13,33 +13,39 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-namespace FluentRegistration.Internal
+namespace FluentRegistration.Options
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public interface IRegistration
+    public class FluentRegistrationOptions
     {
 
-        #region For
+        #region Properties
 
         /// <summary>
         /// 
         /// </summary>
-        /// <typeparam name="TService"></typeparam>
-        /// <returns></returns>
-        IImplementationSelector<TService> For<TService>();
+        public MultipleRegistrationsBehavior MultipleRegistrationsBehavior { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public RegistrationsWithoutServicesBehavior RegistrationsWithoutServicesBehavior { get; set; }
 
         #endregion
 
-        #region From Assembly Containing
+        #region Default
 
         /// <summary>
         /// 
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        ITypeSelector FromAssemblyContaining<T>();
+        public static FluentRegistrationOptions Default = new FluentRegistrationOptions
+        {
+            MultipleRegistrationsBehavior = MultipleRegistrationsBehavior.Ignore,
+            RegistrationsWithoutServicesBehavior = RegistrationsWithoutServicesBehavior.Ignore
+        };
 
         #endregion
 

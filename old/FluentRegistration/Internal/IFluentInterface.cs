@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) Niklas Wendel 2016-2017
+// Copyright (c) Niklas Wendel 2016
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); 
 // you may not use this file except in compliance with the License. 
@@ -13,35 +13,47 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
+using System;
+using System.ComponentModel;
+
 namespace FluentRegistration.Internal
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public interface IRegistration
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public interface IFluentInterface
     {
 
-        #region For
-
         /// <summary>
         /// 
         /// </summary>
-        /// <typeparam name="TService"></typeparam>
         /// <returns></returns>
-        IImplementationSelector<TService> For<TService>();
-
-        #endregion
-
-        #region From Assembly Containing
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        Type GetType();
 
         /// <summary>
         /// 
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        ITypeSelector FromAssemblyContaining<T>();
+        /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        int GetHashCode();
 
-        #endregion
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        string ToString();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        bool Equals(object obj);
 
     }
 

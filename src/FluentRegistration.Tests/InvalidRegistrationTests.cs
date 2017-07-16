@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) Niklas Wendel 2016
+// Copyright (c) Niklas Wendel 2016-2017
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); 
 // you may not use this file except in compliance with the License. 
@@ -32,23 +32,11 @@ namespace FluentRegistration.Tests
         /// 
         /// </summary>
         [Fact]
-        public void ThrowsOnNullServiceCollection()
-        {
-            ServiceCollection tested = null;
-
-            Assert.Throws<ArgumentNullException>("self",
-                () => tested.Register(Component.For<ISimpleService>()));
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Fact]
         public void ThrowsOnNullRegistrations()
         {
             var tested = new ServiceCollection();
 
-            Assert.Throws<ArgumentNullException>("registrations",
+            Assert.Throws<ArgumentNullException>("registrationAction",
                 () => tested.Register(null));
         }
 
@@ -56,73 +44,87 @@ namespace FluentRegistration.Tests
         /// 
         /// </summary>
         [Fact]
-        public void ThrowsOnComponentNoImplementation()
+        public void ThrowsOnNullServiceCollection()
         {
-            var tested = new ServiceCollection();
+            ServiceCollection tested = null;
 
-            Assert.Throws<RegistrationException>(
-                () => tested.Register(Component.For<ISimpleService>()));
+            Assert.Throws<ArgumentNullException>("self",
+                () => tested.Register(r => r
+                    .For<ISimpleService>()
+                    .ImplementedBy<SimpleService>()));
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [Fact]
-        public void ThrowsOnNoWithService()
-        {
-            var tested = new ServiceCollection();
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        //[Fact]
+        //public void ThrowsOnComponentNoImplementation()
+        //{
+        //    var tested = new ServiceCollection();
 
-            Assert.Throws<RegistrationException>(
-                () => tested.Register(AllClasses
-                    .FromAssemblyContaining<InvalidRegistrationTests>()
-                    .BasedOn<ISimpleService>()));
-        }
+        //    Assert.Throws<RegistrationException>(
+        //        () => tested.Register(Component.For<ISimpleService>()));
+        //}
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [Fact]
-        public void ThrowsOnMultipleLifetimes()
-        {
-            var tested = new ServiceCollection();
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        //[Fact]
+        //public void ThrowsOnNoWithService()
+        //{
+        //    var tested = new ServiceCollection();
 
-            Assert.Throws<RegistrationException>(
-                () => tested.Register(AllClasses
-                    .FromAssemblyContaining<InvalidRegistrationTests>()
-                    .BasedOn<ISimpleService>()
-                    .WithService.AllInterfaces()
-                    .Lifetime.Singleton
-                    .Lifetime.Singleton));
-        }
+        //    Assert.Throws<RegistrationException>(
+        //        () => tested.Register(AllClasses
+        //            .FromAssemblyContaining<InvalidRegistrationTests>()
+        //            .BasedOn<ISimpleService>()));
+        //}
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [Fact]
-        public void ThrowsOnMultipleWithService()
-        {
-            var tested = new ServiceCollection();
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        //[Fact]
+        //public void ThrowsOnMultipleLifetimes()
+        //{
+        //    var tested = new ServiceCollection();
 
-            Assert.Throws<RegistrationException>(
-                () => tested.Register(AllClasses
-                    .FromAssemblyContaining<InvalidRegistrationTests>()
-                    .BasedOn<ISimpleService>()
-                    .WithService.AllInterfaces()
-                    .WithService.AllInterfaces()));
-        }
+        //    Assert.Throws<RegistrationException>(
+        //        () => tested.Register(AllClasses
+        //            .FromAssemblyContaining<InvalidRegistrationTests>()
+        //            .BasedOn<ISimpleService>()
+        //            .WithService.AllInterfaces()
+        //            .Lifetime.Singleton
+        //            .Lifetime.Singleton));
+        //}
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [Fact]
-        public void ThrowsOnNullAssembly()
-        {
-            var tested = new ServiceCollection();
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        //[Fact]
+        //public void ThrowsOnMultipleWithService()
+        //{
+        //    var tested = new ServiceCollection();
 
-            Assert.Throws<ArgumentNullException>(
-                () => tested.Register(AllClasses
-                .FromAssembly(null)));
-        }
+        //    Assert.Throws<RegistrationException>(
+        //        () => tested.Register(AllClasses
+        //            .FromAssemblyContaining<InvalidRegistrationTests>()
+        //            .BasedOn<ISimpleService>()
+        //            .WithService.AllInterfaces()
+        //            .WithService.AllInterfaces()));
+        //}
+
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        //[Fact]
+        //public void ThrowsOnNullAssembly()
+        //{
+        //    var tested = new ServiceCollection();
+
+        //    Assert.Throws<ArgumentNullException>(
+        //        () => tested.Register(AllClasses
+        //        .FromAssembly(null)));
+        //}
 
     }
 

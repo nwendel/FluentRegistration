@@ -14,9 +14,6 @@
 // limitations under the License.
 #endregion
 using Microsoft.Extensions.DependencyInjection;
-using Xunit;
-using FluentRegistration;
-using FluentRegistration.Tests.TestClasses;
 
 namespace FluentRegistration.Tests
 {
@@ -24,29 +21,35 @@ namespace FluentRegistration.Tests
     /// <summary>
     /// 
     /// </summary>
-    public class ComponentForInstanceTests
+    public class SyntaxTests
     {
 
         /// <summary>
         /// 
         /// </summary>
-        [Fact]
-        public void CanRegister()
+        public void Asdf()
         {
             var tested = new ServiceCollection();
 
-            var simpleService = new SimpleService();
+            tested.Register(r => r
+                .FromAssemblyContaining<SyntaxTests>()
+                .Where(c => c.InSameNamespaceAs<SyntaxTests>())
+                .Except(c => c.InSameNamespaceAs<SyntaxTests>())
+                .WithService.AllInterfaces()
+                .Lifetime.Transient());
 
             tested.Register(r => r
-                .For<ISimpleService>()
-                .Instance(simpleService));
+                .FromAssemblyContaining<SyntaxTests>()
+                .Where(c => c.InSameNamespaceAs<SyntaxTests>())
+                .Except(c => c.InSameNamespaceAs<SyntaxTests>())
+                .WithService.AllInterfaces()
+                .WithService.AllInterfaces()
+                .Lifetime.Transient());
 
-            Assert.Equal(1, tested.Count);
-            Assert.All(tested, service =>
-            {
-                Assert.Equal(typeof(ISimpleService), service.ServiceType);
-                Assert.Same(simpleService, service.ImplementationInstance);
-            });
+            tested.Register(r => r
+                .FromAssemblyContaining<SyntaxTests>()
+                .WithService.AllInterfaces()
+                .Lifetime.Transient());
         }
 
     }
