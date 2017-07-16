@@ -16,7 +16,7 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
-using FluentRegistration;
+using FluentRegistration.Internal;
 using FluentRegistration.Tests.TestClasses;
 
 namespace FluentRegistration.Tests
@@ -37,7 +37,7 @@ namespace FluentRegistration.Tests
             var tested = new ServiceCollection();
 
             Assert.Throws<ArgumentNullException>("registrationAction",
-                () => tested.Register(null));
+                () => tested.Register((Action<IRegistration>)null));
         }
 
         /// <summary>

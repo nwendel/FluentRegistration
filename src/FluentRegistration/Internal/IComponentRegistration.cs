@@ -19,16 +19,17 @@ namespace FluentRegistration.Internal
     /// <summary>
     /// 
     /// </summary>
-    public interface IRegistration
+    public interface IComponentRegistration
     {
 
-        #region From Assembly Containing
+        #region For
 
         /// <summary>
         /// 
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        ITypeSelector FromAssemblyContaining<T>();
+        /// <typeparam name="TService"></typeparam>
+        /// <returns></returns>
+        IImplementationSelector<TService> For<TService>();
 
         #endregion
 

@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentRegistration", "FluentRegistration\FluentRegistration.csproj", "{B1071370-7D25-4559-97A0-09ED9E2B64FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentRegistration.Tests", "FluentRegistration.Tests\FluentRegistration.Tests.csproj", "{3DCEBAB9-FDBD-4015-A51A-C0D806AC57B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentRegistration.Tests", "FluentRegistration.Tests\FluentRegistration.Tests.csproj", "{3DCEBAB9-FDBD-4015-A51A-C0D806AC57B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

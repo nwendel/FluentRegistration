@@ -35,6 +35,27 @@ namespace FluentRegistration
         /// </summary>
         /// <param name="self"></param>
         /// <param name="registrations"></param>
+        public static void Register(this IServiceCollection self, Action<IComponentRegistration> registrationAction)
+        {
+            if (self == null)
+            {
+                throw new ArgumentNullException(nameof(self));
+            }
+            if (registrationAction == null)
+            {
+                throw new ArgumentNullException(nameof(registrationAction));
+            }
+
+            var registration = new ComponentRegistration();
+            registrationAction(registration);
+            registration.Register(self);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="registrations"></param>
         public static void Register(this IServiceCollection self, Action<IRegistration> registrationAction)
         {
             if (self == null)

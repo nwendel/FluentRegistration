@@ -22,6 +22,28 @@ namespace FluentRegistration.Internal
     /// <summary>
     /// 
     /// </summary>
+    public class ComponentRegistration : IComponentRegistration, IRegister
+    {
+
+        private IRegister _register;
+
+        public IImplementationSelector<TService> For<TService>()
+        {
+            var register = new ComponentRegistration<TService>();
+            _register = register;
+            return register;
+        }
+
+        public void Register(IServiceCollection serviceCollection)
+        {
+            _register.Register(serviceCollection);
+        }
+    }
+
+
+    /// <summary>
+    /// 
+    /// </summary>
     public class ComponentRegistration<TService> : 
         IImplementationSelector<TService>,
         ILifetime,
@@ -31,7 +53,6 @@ namespace FluentRegistration.Internal
 
         #region Fields
 
-        private readonly IServiceCollection _serviceCollection;
         private readonly ILifetimeSelector _lifetimeSelector;
         private Type _serviceType => typeof(TService);
         private Type _implementedByType;
