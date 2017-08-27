@@ -33,7 +33,7 @@ namespace FluentRegistration.Internal
         /// 
         /// </summary>
         /// <param name="instance"></param>
-        void Instance(TService instance);
+        ICompleteRegistration Instance(TService instance);
 
     }
 

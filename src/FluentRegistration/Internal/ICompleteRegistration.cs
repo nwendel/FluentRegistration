@@ -19,24 +19,8 @@ namespace FluentRegistration.Internal
     /// <summary>
     /// 
     /// </summary>
-    public interface ILifetimeSelector
+    public interface ICompleteRegistration
     {
-
-        /// <summary>
-        /// 
-        /// </summary>
-        ICompleteRegistration Singleton();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        ICompleteRegistration Scoped();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        ICompleteRegistration Transient();
-
     }
 
 }

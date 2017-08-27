@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
+using System;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FluentRegistration.Internal
@@ -21,12 +22,19 @@ namespace FluentRegistration.Internal
     /// <summary>
     /// 
     /// </summary>
-    public class LifetimeSelector : ILifetimeSelector, ICompleteRegistration
+    public class ComponentImplementedByRegistration<TService, TImplementation> :
+        ILifetime,
+        IServiceLifetimeAware,
+        ICompleteRegistration,
+        IRegister
+        where TImplementation : TService
     {
 
         #region Fields
 
-        private readonly IServiceLifetimeAware _serviceLifetimeAware;
+        private Type _serviceType => typeof(TService);
+        private Type _implementedByType => typeof(TImplementation);
+        private readonly ILifetimeSelector _lifetimeSelector;
 
         #endregion
 
@@ -35,52 +43,41 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="serviceLifetimeAware"></param>
-        public LifetimeSelector(IServiceLifetimeAware serviceLifetimeAware)
+        public ComponentImplementedByRegistration()
         {
-            _serviceLifetimeAware = serviceLifetimeAware;
+            _lifetimeSelector = new LifetimeSelector(this);
         }
 
         #endregion
 
-        #region Singleton
+        #region Lifetime
 
         /// <summary>
         /// 
         /// </summary>
-        public ICompleteRegistration Singleton()
-        {
-            _serviceLifetimeAware.ServiceLifetime = ServiceLifetime.Singleton;
-            return this;
-            //return new CompleteRegistration();
-        }
+        public ILifetimeSelector Lifetime => _lifetimeSelector;
 
         #endregion
 
-        #region Scoped
+        #region Service Lifetime
 
         /// <summary>
         /// 
         /// </summary>
-        public ICompleteRegistration Scoped()
-        {
-            _serviceLifetimeAware.ServiceLifetime = ServiceLifetime.Scoped;
-            return this;
-            //return new CompleteRegistration();
-        }
+        public ServiceLifetime ServiceLifetime { get ; set; }
 
         #endregion
 
-        #region Transient
+        #region Register
 
         /// <summary>
         /// 
         /// </summary>
-        public ICompleteRegistration Transient()
+        /// <param name="serviceCollection"></param>
+        public void Register(IServiceCollection serviceCollection)
         {
-            _serviceLifetimeAware.ServiceLifetime = ServiceLifetime.Transient;
-            return this;
-            //return new CompleteRegistration();
+            var serviceDescriptor = new ServiceDescriptor(_serviceType, _implementedByType, ServiceLifetime);
+            serviceCollection.Add(serviceDescriptor);
         }
 
         #endregion

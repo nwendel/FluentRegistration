@@ -25,8 +25,19 @@ namespace FluentRegistration.Internal
     public class ComponentRegistration : IComponentRegistration, IRegister
     {
 
+        #region Fields
+
         private IRegister _register;
 
+        #endregion
+
+        #region For
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TService"></typeparam>
+        /// <returns></returns>
         public IImplementationSelector<TService> For<TService>()
         {
             var register = new ComponentRegistration<TService>();
@@ -34,10 +45,21 @@ namespace FluentRegistration.Internal
             return register;
         }
 
+        #endregion
+
+        #region Register
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="serviceCollection"></param>
         public void Register(IServiceCollection serviceCollection)
         {
             _register.Register(serviceCollection);
         }
+
+        #endregion
+
     }
 
 
@@ -46,17 +68,12 @@ namespace FluentRegistration.Internal
     /// </summary>
     public class ComponentRegistration<TService> : 
         IImplementationSelector<TService>,
-        ILifetime,
-        IServiceLifetimeAware,
         IRegister
     {
 
         #region Fields
 
-        private readonly ILifetimeSelector _lifetimeSelector;
-        private Type _serviceType => typeof(TService);
-        private Type _implementedByType;
-        private TService _instance;
+        private IRegister _register;
 
         #endregion
 
@@ -65,10 +82,8 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="serviceCollection"></param>
         public ComponentRegistration()
         {
-            _lifetimeSelector = new LifetimeSelector(this);
         }
 
         #endregion
@@ -83,27 +98,10 @@ namespace FluentRegistration.Internal
         public ILifetime ImplementedBy<TImplementation>()
             where TImplementation : TService
         {
-            _implementedByType = typeof(TImplementation);
-            return this;
+            var implementedByRegistration = new ComponentImplementedByRegistration<TService, TImplementation>();
+            _register = implementedByRegistration;
+            return implementedByRegistration;
         }
-
-        #endregion
-
-        #region Lifetime
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public ILifetimeSelector Lifetime => _lifetimeSelector;
-
-        #endregion
-
-        #region Service Lifetime
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public ServiceLifetime ServiceLifetime { get ; set; }
 
         #endregion
 
@@ -113,9 +111,16 @@ namespace FluentRegistration.Internal
         /// 
         /// </summary>
         /// <param name="instance"></param>
-        public void Instance(TService instance)
+        public ICompleteRegistration Instance(TService instance)
         {
-            _instance = instance;
+            if(instance == null)
+            {
+                throw new ArgumentNullException(nameof(instance));
+            }
+
+            var instanceRegistration = new ComponentInstanceRegistration<TService>(instance);
+            _register = instanceRegistration;
+            return instanceRegistration;
         }
 
         #endregion
@@ -128,16 +133,7 @@ namespace FluentRegistration.Internal
         /// <param name="serviceCollection"></param>
         public void Register(IServiceCollection serviceCollection)
         {
-            if (_instance != null)
-            {
-                var serviceDescriptor = new ServiceDescriptor(_serviceType, _instance);
-                serviceCollection.Add(serviceDescriptor);
-            }
-            else
-            {
-                var serviceDescriptor = new ServiceDescriptor(_serviceType, _implementedByType, ServiceLifetime);
-                serviceCollection.Add(serviceDescriptor);
-            }
+            _register.Register(serviceCollection);
         }
 
         #endregion

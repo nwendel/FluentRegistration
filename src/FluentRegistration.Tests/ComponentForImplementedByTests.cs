@@ -23,7 +23,7 @@ namespace FluentRegistration.Tests
     /// <summary>
     /// 
     /// </summary>
-    public class ComponentForTests
+    public class ComponentForImplementedByTests
     {
 
         /// <summary>

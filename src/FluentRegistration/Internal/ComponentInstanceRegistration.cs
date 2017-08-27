@@ -13,29 +13,53 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
+using System;
+using Microsoft.Extensions.DependencyInjection;
+
 namespace FluentRegistration.Internal
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public interface ILifetimeSelector
+    public class ComponentInstanceRegistration<TService> :
+        ICompleteRegistration,
+        IRegister
     {
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ICompleteRegistration Singleton();
+        #region Fields
+
+        private Type _serviceType => typeof(TService);
+        private readonly TService _instance;
+
+        #endregion
+
+        #region Constructor
 
         /// <summary>
         /// 
         /// </summary>
-        ICompleteRegistration Scoped();
+        /// <param name="instance"></param>
+        public ComponentInstanceRegistration(TService instance)
+        {
+            _instance = instance;
+        }
+
+        #endregion
+
+        #region Register
 
         /// <summary>
         /// 
         /// </summary>
-        ICompleteRegistration Transient();
+        /// <param name="serviceCollection"></param>
+        public void Register(IServiceCollection serviceCollection)
+        {
+            var serviceDescriptor = new ServiceDescriptor(_serviceType, _instance);
+            serviceCollection.Add(serviceDescriptor);
+        }
+
+        #endregion
 
     }
 

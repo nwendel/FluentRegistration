@@ -17,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using FluentRegistration;
 using FluentRegistration.Tests.TestClasses;
+using System;
 
 namespace FluentRegistration.Tests
 {
@@ -47,6 +48,20 @@ namespace FluentRegistration.Tests
                 Assert.Equal(typeof(ISimpleService), service.ServiceType);
                 Assert.Same(simpleService, service.ImplementationInstance);
             });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void ThrowsOnRegisterNullInstance()
+        {
+            var tested = new ServiceCollection();
+
+            Assert.Throws<ArgumentNullException>("instance", () =>
+                tested.Register(r => r
+                    .For<ISimpleService>()
+                    .Instance(null)));
         }
 
     }

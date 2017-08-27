@@ -19,7 +19,9 @@ namespace FluentRegistration.Internal
     /// <summary>
     /// 
     /// </summary>
-    public interface ILifetime : IFluentInterface
+    public interface ILifetime : 
+        ICompleteRegistration,
+        IFluentInterface
     {
 
         #region Lifetime
