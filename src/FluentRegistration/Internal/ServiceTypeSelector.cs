@@ -14,8 +14,7 @@
 // limitations under the License.
 #endregion
 using System;
-using System.Collections.Generic;
-using System.Reflection;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace FluentRegistration.Internal
 {
@@ -23,12 +22,14 @@ namespace FluentRegistration.Internal
     /// <summary>
     /// 
     /// </summary>
-    public class AssemblyTypeSelector : AbstractTypeSelector
+    public class ServiceTypeSelector :
+        IServiceSelector,
+        IRegister
     {
 
         #region Fields
 
-        private readonly Assembly _assembly;
+        private readonly AbstractTypeSelector _typeSelector;
 
         #endregion
 
@@ -37,20 +38,33 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        public AssemblyTypeSelector(Assembly assembly)
+        /// <param name="typeSelector"></param>
+        public ServiceTypeSelector(AbstractTypeSelector typeSelector)
         {
-            _assembly = assembly;
+            _typeSelector = typeSelector;
         }
 
         #endregion
 
-        #region Types
+        public IWithService AllInterfaces()
+        {
+            throw new NotImplementedException();
+        }
+
+        #region Register
 
         /// <summary>
         /// 
         /// </summary>
-        /// 
-        protected override IEnumerable<Type> Types => _assembly.GetTypes();
+        /// <param name="serviceCollection"></param>
+        public void Register(IServiceCollection serviceCollection)
+        {
+            var filteredTypes = _typeSelector.FilteredTypes;
+
+
+
+            throw new NotImplementedException();
+        }
 
         #endregion
 

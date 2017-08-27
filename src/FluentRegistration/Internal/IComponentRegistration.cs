@@ -29,7 +29,7 @@ namespace FluentRegistration.Internal
         /// </summary>
         /// <typeparam name="TService"></typeparam>
         /// <returns></returns>
-        IImplementationSelector<TService> For<TService>();
+        IComponentImplementationSelector<TService> For<TService>();
 
         #endregion
 

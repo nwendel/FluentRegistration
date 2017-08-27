@@ -15,7 +15,6 @@
 #endregion
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
-using FluentRegistration;
 using FluentRegistration.Tests.Classes.AnotherNamespace;
 
 namespace FluentRegistration.Tests

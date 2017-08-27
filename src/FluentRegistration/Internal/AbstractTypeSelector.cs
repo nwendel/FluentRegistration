@@ -16,8 +16,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace FluentRegistration.Internal
 {
@@ -25,20 +25,21 @@ namespace FluentRegistration.Internal
     /// <summary>
     /// 
     /// </summary>
-    public abstract class AbstractTypeSelector : 
+    public abstract class AbstractTypeSelector :
         ITypeSelector,
-        IWithService,
-        IServiceSelector,
-        ILifetime,
-        IServiceLifetimeAware,
+        IWithServiceInitial,
+        //IServiceSelector,
+        //ILifetime,
+        //IServiceLifetimeAware,
         IRegister
     {
 
         #region Fields
 
+        private IRegister _register;
         private List<Predicate<Type>> _wherePredicates = new List<Predicate<Type>>();
         private List<Predicate<Type>> _exceptPredicates = new List<Predicate<Type>>();
-        private readonly ILifetimeSelector _lifetimeSelector;
+        //private readonly ILifetimeSelector _lifetimeSelector;
 
         #endregion
 
@@ -49,7 +50,7 @@ namespace FluentRegistration.Internal
         /// </summary>
         protected AbstractTypeSelector()
         {
-            _lifetimeSelector = new LifetimeSelector(this);
+            //_lifetimeSelector = new LifetimeSelector(this);
         }
 
         #endregion
@@ -60,7 +61,7 @@ namespace FluentRegistration.Internal
         /// 
         /// </summary>
         /// 
-        public abstract IEnumerable<Type> Types { get; }
+        protected abstract IEnumerable<Type> Types { get; }
 
         #endregion
 
@@ -98,12 +99,42 @@ namespace FluentRegistration.Internal
 
         #endregion
 
+        #region Filtered Types
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public IEnumerable<Type> FilteredTypes
+        {
+            get
+            {
+                return Types
+                    .Where(type => 
+                    {
+                        var typeInfo = type.GetTypeInfo();
+                        return typeInfo.IsClass && !typeInfo.IsAbstract;
+                    })
+                    .Where(type => _wherePredicates.Count == 0 || _wherePredicates.Any(filter => filter(type)))
+                    .Where(type => _wherePredicates.Count == 0 || !_exceptPredicates.Any(filter => filter(type)));
+            }
+        }
+
+        #endregion
+
         #region With Service
 
         /// <summary>
         /// 
         /// </summary>
-        public IServiceSelector WithService => this;
+        public IServiceSelector WithService
+        {
+            get
+            {
+                var serviceTypeSelector = new ServiceTypeSelector(this);
+                _register = serviceTypeSelector;
+                return serviceTypeSelector;
+            }
+        }
 
         #endregion
 
@@ -113,10 +144,10 @@ namespace FluentRegistration.Internal
         /// 
         /// </summary>
         /// <returns></returns>
-        public IWithService AllInterfaces()
-        {
-            return this;
-        }
+        //public IWithService AllInterfaces()
+        //{
+        //    return this;
+        //}
 
         #endregion
 
@@ -125,7 +156,7 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        public ILifetimeSelector Lifetime => _lifetimeSelector;
+        //public ILifetimeSelector Lifetime => _lifetimeSelector;
 
         #endregion
 
@@ -134,7 +165,7 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        public ServiceLifetime ServiceLifetime { get; set; }
+        //public ServiceLifetime ServiceLifetime { get; set; }
 
         #endregion
 
@@ -146,40 +177,43 @@ namespace FluentRegistration.Internal
         /// <param name="serviceCollection"></param>
         public void Register(IServiceCollection serviceCollection)
         {
-            var types = Types.Where(x =>
-            {
-                var typeInfo = x.GetTypeInfo();
-                return typeInfo.IsClass && !typeInfo.IsAbstract;
-            }).ToList();
-
-            foreach(var type in types)
-            {
-                if (_wherePredicates.Count != 0 && !_wherePredicates.Any(filter => filter(type)))
-                {
-                    continue;
-                }
-                if (_exceptPredicates.Count != 0 && _exceptPredicates.Any(filter => filter(type)))
-                {
-                    continue;
-                }
-
-                var serviceTypes = type.GetInterfaces();
-
-                var serviceType = serviceTypes.First();
-                var serviceDescriptor = new ServiceDescriptor(serviceType, type, ServiceLifetime);
-                serviceCollection.Add(serviceDescriptor);
-
-                var otherServicesType = serviceTypes.Skip(1).ToList();
-                foreach (var otherService in otherServicesType)
-                {
-                    var otherServiceDescriptor = new ServiceDescriptor(otherService, serviceProviders => serviceProviders.GetService(serviceType), ServiceLifetime);
-                    serviceCollection.Add(otherServiceDescriptor);
-                }
+            _register.Register(serviceCollection);
 
 
+            //var types = Types.Where(x =>
+            //{
+            //    var typeInfo = x.GetTypeInfo();
+            //    return typeInfo.IsClass && !typeInfo.IsAbstract;
+            //}).ToList();
+
+            //foreach(var type in types)
+            //{
+            //    if (_wherePredicates.Count != 0 && !_wherePredicates.Any(filter => filter(type)))
+            //    {
+            //        continue;
+            //    }
+            //    if (_exceptPredicates.Count != 0 && _exceptPredicates.Any(filter => filter(type)))
+            //    {
+            //        continue;
+            //    }
+
+            //    var serviceTypes = type.GetInterfaces();
+
+            //    var serviceType = serviceTypes.First();
+            //    var serviceDescriptor = new ServiceDescriptor(serviceType, type, ServiceLifetime);
+            //    serviceCollection.Add(serviceDescriptor);
+
+            //    var otherServicesType = serviceTypes.Skip(1).ToList();
+            //    foreach (var otherService in otherServicesType)
+            //    {
+            //        var otherServiceDescriptor = new ServiceDescriptor(otherService, serviceProviders => serviceProviders.GetService(serviceType), ServiceLifetime);
+            //        serviceCollection.Add(otherServiceDescriptor);
+            //    }
 
 
-            }
+
+
+            //}
         }
 
         #endregion

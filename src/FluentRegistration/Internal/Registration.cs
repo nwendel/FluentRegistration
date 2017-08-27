@@ -39,7 +39,7 @@ namespace FluentRegistration.Internal
         /// </summary>
         /// <typeparam name="TService"></typeparam>
         /// <returns></returns>
-        public IImplementationSelector<TService> For<TService>()
+        public IComponentImplementationSelector<TService> For<TService>()
         {
             var registration = new ComponentRegistration<TService>();
             _register = registration;

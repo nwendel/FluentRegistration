@@ -13,11 +13,10 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
+using System;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
-using FluentRegistration;
 using FluentRegistration.Tests.TestClasses;
-using System;
 
 namespace FluentRegistration.Tests
 {

@@ -50,6 +50,10 @@ namespace FluentRegistration.Tests
                 .FromAssemblyContaining<SyntaxTests>()
                 .WithService.AllInterfaces()
                 .Lifetime.Transient());
+
+            tested.Register(r => r
+                .FromAssemblyContaining<SyntaxTests>()
+                .WithService.AllInterfaces());
         }
 
     }

@@ -37,7 +37,7 @@ namespace FluentRegistration.Tests
             var tested = new ServiceCollection();
 
             Assert.Throws<ArgumentNullException>("registrationAction",
-                () => tested.Register((Action<IRegistration>)null));
+                () => tested.Register((Func<IRegistration, ICompleteRegistration>)null));
         }
 
         /// <summary>

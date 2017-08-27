@@ -56,7 +56,7 @@ namespace FluentRegistration
         /// </summary>
         /// <param name="self"></param>
         /// <param name="registrations"></param>
-        public static void Register(this IServiceCollection self, Action<IRegistration> registrationAction)
+        public static void Register(this IServiceCollection self, Func<IRegistration, ICompleteRegistration> registrationAction)
         {
             if (self == null)
             {

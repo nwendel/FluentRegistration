@@ -38,7 +38,7 @@ namespace FluentRegistration.Internal
         /// </summary>
         /// <typeparam name="TService"></typeparam>
         /// <returns></returns>
-        public IImplementationSelector<TService> For<TService>()
+        public IComponentImplementationSelector<TService> For<TService>()
         {
             var register = new ComponentRegistration<TService>();
             _register = register;
@@ -67,7 +67,7 @@ namespace FluentRegistration.Internal
     /// 
     /// </summary>
     public class ComponentRegistration<TService> : 
-        IImplementationSelector<TService>,
+        IComponentImplementationSelector<TService>,
         IRegister
     {
 
