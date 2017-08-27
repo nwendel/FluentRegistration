@@ -4,7 +4,7 @@
     /// <summary>
     /// 
     /// </summary>
-    public interface IWithService : IWithServiceInitial, ILifetime
+    public interface IWithService : IServiceSelector, ILifetime
     {
     }
 
