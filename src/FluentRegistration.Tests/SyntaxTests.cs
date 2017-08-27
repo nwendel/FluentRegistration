@@ -54,6 +54,11 @@ namespace FluentRegistration.Tests
             tested.Register(r => r
                 .FromAssemblyContaining<SyntaxTests>()
                 .WithService.AllInterfaces());
+            tested.Register(r => r
+                .FromAssemblyContaining<SyntaxTests>()
+                .WithService
+                    //.DefaultInterface()
+                    .Interface<object>());
         }
 
     }

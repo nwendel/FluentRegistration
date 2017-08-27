@@ -32,6 +32,26 @@ namespace FluentRegistration.Internal
 
         #endregion
 
+        #region Default Interface
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        IWithService DefaultInterface();
+
+        #endregion
+
+        #region Interface
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        IWithService Interface<TService>();
+
+        #endregion
+
     }
 
 }

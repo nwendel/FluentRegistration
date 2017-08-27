@@ -14,7 +14,10 @@
 // limitations under the License.
 #endregion
 using System;
+using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
+using System.Linq;
 
 namespace FluentRegistration.Internal
 {
@@ -30,6 +33,7 @@ namespace FluentRegistration.Internal
         #region Fields
 
         private readonly AbstractTypeSelector _typeSelector;
+        private Func<Type, IEnumerable<Type>> _serviceTypeSelector;
 
         #endregion
 
@@ -46,10 +50,56 @@ namespace FluentRegistration.Internal
 
         #endregion
 
+        #region All Interfaces
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IWithService AllInterfaces()
         {
-            throw new NotImplementedException();
+            _serviceTypeSelector = type => type.GetInterfaces();
+            return null;
         }
+
+        #endregion
+        
+        #region Default Interface
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public IWithService DefaultInterface()
+        {
+            _serviceTypeSelector = type => type.GetInterfaces();
+            return null;
+        }
+
+        #endregion
+
+        #region Interface
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public IWithService Interface<TService>()
+        {
+            _serviceTypeSelector = type => type.GetInterfaces();
+            return null;
+        }
+
+        #endregion
+
+        #region Lifetime
+
+        /// <summary>
+        /// 
+        /// </summary>
+        //public ILifetimeSelector Lifetime => _lifetimeSelector;
+
+        #endregion
 
         #region Register
 
@@ -61,9 +111,21 @@ namespace FluentRegistration.Internal
         {
             var filteredTypes = _typeSelector.FilteredTypes;
 
+            foreach(var type in filteredTypes)
+            {
+                var serviceTypes = _serviceTypeSelector(type);
 
+                var serviceType = serviceTypes.First();
+                var serviceDescriptor = new ServiceDescriptor(serviceType, type, ServiceLifetime.Singleton);
+                serviceCollection.Add(serviceDescriptor);
 
-            throw new NotImplementedException();
+                var otherServicesType = serviceTypes.Skip(1).ToList();
+                foreach (var otherService in otherServicesType)
+                {
+                    var otherServiceDescriptor = new ServiceDescriptor(otherService, serviceProviders => serviceProviders.GetService(serviceType), ServiceLifetime.Singleton);
+                    serviceCollection.Add(otherServiceDescriptor);
+                }
+            }
         }
 
         #endregion
