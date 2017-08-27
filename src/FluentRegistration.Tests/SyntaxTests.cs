@@ -35,20 +35,20 @@ namespace FluentRegistration.Tests
                 .FromAssemblyContaining<SyntaxTests>()
                 .Where(c => c.InSameNamespaceAs<SyntaxTests>())
                 .Except(c => c.InSameNamespaceAs<SyntaxTests>())
-                .WithService.AllInterfaces()
+                .WithServices.AllInterfaces()
                 .Lifetime.Transient());
 
             tested.Register(r => r
                 .FromAssemblyContaining<SyntaxTests>()
-                .WithService.AllInterfaces()
+                .WithServices.AllInterfaces()
                 .Lifetime.Transient());
 
             tested.Register(r => r
                 .FromAssemblyContaining<SyntaxTests>()
-                .WithService.AllInterfaces());
+                .WithServices.AllInterfaces());
             tested.Register(r => r
                 .FromAssemblyContaining<SyntaxTests>()
-                .WithService
+                .WithServices
                     .DefaultInterface()
                     .Interface<object>()
                 .Lifetime.Singleton());

@@ -28,9 +28,6 @@ namespace FluentRegistration.Internal
     public abstract class AbstractTypeSelector :
         ITypeSelector,
         IWithServiceInitial,
-        //IServiceSelector,
-        //ILifetime,
-        //IServiceLifetimeAware,
         IRegister
     {
 
@@ -126,7 +123,7 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        public IServiceSelector WithService
+        public IServiceSelector WithServices
         {
             get
             {
@@ -135,37 +132,6 @@ namespace FluentRegistration.Internal
                 return serviceTypeSelector;
             }
         }
-
-        #endregion
-
-        #region All Interfaces
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        //public IWithService AllInterfaces()
-        //{
-        //    return this;
-        //}
-
-        #endregion
-
-        #region Lifetime
-
-        /// <summary>
-        /// 
-        /// </summary>
-        //public ILifetimeSelector Lifetime => _lifetimeSelector;
-
-        #endregion
-
-        #region Service Lifetime
-
-        /// <summary>
-        /// 
-        /// </summary>
-        //public ServiceLifetime ServiceLifetime { get; set; }
 
         #endregion
 

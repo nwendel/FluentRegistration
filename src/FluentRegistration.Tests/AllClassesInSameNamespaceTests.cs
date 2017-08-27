@@ -37,7 +37,7 @@ namespace FluentRegistration.Tests
             tested.Register(r => r
                 .FromAssemblyContaining<AllClassesInSameNamespaceTests>()
                 .Where(c => c.InSameNamespaceAs<ServiceInAnotherNamespace>())
-                .WithService.AllInterfaces());
+                .WithServices.AllInterfaces());
 
             Assert.Equal(1, tested.Count);
             Assert.All(tested, service =>

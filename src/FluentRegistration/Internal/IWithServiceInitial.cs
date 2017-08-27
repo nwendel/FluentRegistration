@@ -19,15 +19,15 @@ namespace FluentRegistration.Internal
     /// <summary>
     /// 
     /// </summary>
-    public interface IWithServiceInitial
+    public interface IWithServiceInitial : IFluentInterface
     {
 
-        #region With Service
+        #region With Services
 
         /// <summary>
         /// 
         /// </summary>
-        IServiceSelector WithService { get; }
+        IServiceSelector WithServices { get; }
 
         #endregion
 
