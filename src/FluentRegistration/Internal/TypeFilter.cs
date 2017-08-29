@@ -14,6 +14,7 @@
 // limitations under the License.
 #endregion
 using System;
+using System.Reflection;
 
 namespace FluentRegistration.Internal
 {
@@ -31,22 +32,27 @@ namespace FluentRegistration.Internal
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public bool AssignableTo<T>()
+        public Predicate<Type> AssignableTo<T>()
         {
-            throw new NotImplementedException();
+            return type => typeof(T).IsAssignableFrom(type);
         }
 
         #endregion
 
-        #region In Same Namespace As
+        #region Is In Namespace
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="namespace"></param>
         /// <returns></returns>
-        public Predicate<Type> InNamespace(string @namespace)
+        public Predicate<Type> IsInNamespace(string @namespace)
         {
+            if(string.IsNullOrWhiteSpace(@namespace))
+            {
+                throw new ArgumentNullException(nameof(@namespace));
+            }
+
             return type => type.Namespace == @namespace;
         }
 
@@ -61,7 +67,7 @@ namespace FluentRegistration.Internal
         /// <returns></returns>
         public Predicate<Type> InSameNamespaceAs(Type type)
         {
-            return InNamespace(type.Namespace);
+            return IsInNamespace(type.Namespace);
         }
         /// <summary>
         /// 

@@ -13,35 +13,38 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-namespace FluentRegistration.Internal
+using Microsoft.Extensions.DependencyInjection;
+using Xunit;
+using FluentRegistration.Tests.TestClasses;
+
+namespace FluentRegistration.Tests
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public interface IRegistration
+    public class ImplementedByTests
     {
 
-        #region From Assembly Containing
-
         /// <summary>
         /// 
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        ITypeSelector FromAssemblyContaining<T>();
+        [Fact]
+        public void Asdf()
+        {
+            var tested = new ServiceCollection();
 
-        #endregion
+            tested.Register(r => r
+                .ImplementedBy<SimpleService>()
+                .WithServices.AllInterfaces());
 
-        #region Implemented By
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        IWithServiceInitial ImplementedBy<T>();
-
-        #endregion
+            Assert.Equal(1, tested.Count);
+            Assert.All(tested, service =>
+            {
+                Assert.Equal(typeof(ISimpleService), service.ServiceType);
+                Assert.Equal(typeof(SimpleService), service.ImplementationType);
+            });
+        }
 
     }
 

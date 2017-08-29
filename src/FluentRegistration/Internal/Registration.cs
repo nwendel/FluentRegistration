@@ -65,6 +65,22 @@ namespace FluentRegistration.Internal
 
         #endregion
 
+        #region Implemented By
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public IWithServiceInitial ImplementedBy<T>()
+        {
+            // TODO: IsAssignableTo is not entierly correct
+            return FromAssemblyContaining<T>()
+                .Where(c => c.AssignableTo<T>());
+        }
+
+        #endregion
+
         #region Register
 
         /// <summary>

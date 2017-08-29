@@ -31,7 +31,7 @@ namespace FluentRegistration.Internal
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        bool AssignableTo<T>();
+        Predicate<Type> AssignableTo<T>();
 
         #endregion
 
@@ -42,7 +42,7 @@ namespace FluentRegistration.Internal
         /// </summary>
         /// <param name="namespace"></param>
         /// <returns></returns>
-        Predicate<Type> InNamespace(string @namespace);
+        Predicate<Type> IsInNamespace(string @namespace);
 
         /// <summary>
         /// 
