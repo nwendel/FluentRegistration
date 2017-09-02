@@ -30,7 +30,7 @@ namespace FluentRegistration.Tests
         /// 
         /// </summary>
         [Fact]
-        public void Asdf()
+        public void CanRegister()
         {
             var tested = new ServiceCollection();
 
