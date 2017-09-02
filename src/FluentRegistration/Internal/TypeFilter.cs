@@ -25,6 +25,25 @@ namespace FluentRegistration.Internal
     public class TypeFilter : ITypeFilter
     {
 
+        #region Fields
+
+        private readonly Type _type;
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        public TypeFilter(Type type)
+        {
+            _type = type;
+        }
+
+        #endregion
+
         #region Assignable To
 
         /// <summary>
@@ -32,9 +51,9 @@ namespace FluentRegistration.Internal
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public Predicate<Type> AssignableTo<T>()
+        public bool AssignableTo<T>()
         {
-            return type => typeof(T).IsAssignableFrom(type);
+            return typeof(T).IsAssignableFrom(_type);
         }
 
         #endregion
@@ -46,37 +65,49 @@ namespace FluentRegistration.Internal
         /// </summary>
         /// <param name="namespace"></param>
         /// <returns></returns>
-        public Predicate<Type> IsInNamespace(string @namespace)
+        public bool InNamespace(string @namespace)
         {
             if(string.IsNullOrWhiteSpace(@namespace))
             {
                 throw new ArgumentNullException(nameof(@namespace));
             }
 
-            return type => type.Namespace == @namespace;
+            return _type.Namespace == @namespace;
         }
 
         #endregion
 
-        #region Is In Same Namespace As
+        #region In Same Namespace As
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public Predicate<Type> InSameNamespaceAs(Type type)
+        public bool InSameNamespaceAs(Type type)
         {
-            return IsInNamespace(type.Namespace);
+            return InNamespace(type.Namespace);
         }
         /// <summary>
         /// 
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public Predicate<Type> InSameNamespaceAs<T>()
+        public bool InSameNamespaceAs<T>()
         {
             return InSameNamespaceAs(typeof(T));
+        }
+
+        #endregion
+
+        #region Implementation Type
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Type ImplementationType
+        {
+            get { return _type; }
         }
 
         #endregion

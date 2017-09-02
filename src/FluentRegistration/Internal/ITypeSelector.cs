@@ -31,7 +31,7 @@ namespace FluentRegistration.Internal
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        ITypeSelector Where(Func<ITypeFilter, Predicate<Type>> predicate);
+        ITypeSelector Where(Func<ITypeFilter, bool> predicate);
 
         #endregion
 
@@ -42,7 +42,7 @@ namespace FluentRegistration.Internal
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        ITypeSelector Except(Func<ITypeFilter, Predicate<Type>> predicate);
+        ITypeSelector Except(Func<ITypeFilter, bool> predicate);
 
         #endregion
 

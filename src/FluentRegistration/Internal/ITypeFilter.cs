@@ -31,7 +31,18 @@ namespace FluentRegistration.Internal
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        Predicate<Type> AssignableTo<T>();
+        bool AssignableTo<T>();
+
+        #endregion
+
+        #region In Namespace
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="namespace"></param>
+        /// <returns></returns>
+        bool InNamespace(string @namespace);
 
         #endregion
 
@@ -40,23 +51,25 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="namespace"></param>
-        /// <returns></returns>
-        Predicate<Type> IsInNamespace(string @namespace);
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        Predicate<Type> InSameNamespaceAs(Type type);
+        bool InSameNamespaceAs(Type type);
 
         /// <summary>
         /// 
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        Predicate<Type> InSameNamespaceAs<T>();
+        bool InSameNamespaceAs<T>();
+
+        #endregion
+
+        #region Implementation Type
+
+        /// <summary>
+        /// 
+        /// </summary>
+        Type ImplementationType { get; }
 
         #endregion
 

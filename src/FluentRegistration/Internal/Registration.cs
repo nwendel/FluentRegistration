@@ -13,9 +13,8 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-using System;
-using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace FluentRegistration.Internal
 {
@@ -48,7 +47,7 @@ namespace FluentRegistration.Internal
 
         #endregion
 
-        #region From AssemblyContaining
+        #region From Assembly Containing
 
         /// <summary>
         /// 
@@ -74,9 +73,8 @@ namespace FluentRegistration.Internal
         /// <returns></returns>
         public IWithServiceInitial ImplementedBy<T>()
         {
-            // TODO: IsAssignableTo is not entierly correct
             return FromAssemblyContaining<T>()
-                .Where(c => c.AssignableTo<T>());
+                .Where(c => c.ImplementationType == typeof(T));
         }
 
         #endregion

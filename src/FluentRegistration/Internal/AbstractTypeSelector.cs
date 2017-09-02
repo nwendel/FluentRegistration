@@ -34,9 +34,8 @@ namespace FluentRegistration.Internal
         #region Fields
 
         private IRegister _register;
-        private List<Predicate<Type>> _wherePredicates = new List<Predicate<Type>>();
-        private List<Predicate<Type>> _exceptPredicates = new List<Predicate<Type>>();
-        //private readonly ILifetimeSelector _lifetimeSelector;
+        private List<Func<ITypeFilter, bool>> _wherePredicates = new List<Func<ITypeFilter, bool>>();
+        private List<Func<ITypeFilter, bool>> _exceptPredicates = new List<Func<ITypeFilter, bool>>();
 
         #endregion
 
@@ -69,11 +68,9 @@ namespace FluentRegistration.Internal
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        public ITypeSelector Where(Func<ITypeFilter, Predicate<Type>> predicate)
+        public ITypeSelector Where(Func<ITypeFilter, bool> predicate)
         {
-            var typeFilter = new TypeFilter();
-            var wherePredicate = predicate.Invoke(typeFilter);
-            _wherePredicates.Add(wherePredicate);
+            _wherePredicates.Add(predicate);
             return this;
         }
 
@@ -86,11 +83,9 @@ namespace FluentRegistration.Internal
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        public ITypeSelector Except(Func<ITypeFilter, Predicate<Type>> predicate)
+        public ITypeSelector Except(Func<ITypeFilter, bool> predicate)
         {
-            var typeFilter = new TypeFilter();
-            var exceptPredicate = predicate.Invoke(typeFilter);
-            _exceptPredicates.Add(exceptPredicate);
+            _exceptPredicates.Add(predicate);
             return this;
         }
 
@@ -111,8 +106,8 @@ namespace FluentRegistration.Internal
                         var typeInfo = type.GetTypeInfo();
                         return typeInfo.IsClass && !typeInfo.IsAbstract;
                     })
-                    .Where(type => _wherePredicates.Count == 0 || _wherePredicates.Any(filter => filter(type)))
-                    .Where(type => _wherePredicates.Count == 0 || !_exceptPredicates.Any(filter => filter(type)));
+                    .Where(type => _wherePredicates.Count == 0 || _wherePredicates.Any(filter => filter(new TypeFilter(type))))
+                    .Where(type => _exceptPredicates.Count == 0 || !_exceptPredicates.Any(filter => filter(new TypeFilter(type))));
             }
         }
 
@@ -144,42 +139,6 @@ namespace FluentRegistration.Internal
         public void Register(IServiceCollection serviceCollection)
         {
             _register.Register(serviceCollection);
-
-
-            //var types = Types.Where(x =>
-            //{
-            //    var typeInfo = x.GetTypeInfo();
-            //    return typeInfo.IsClass && !typeInfo.IsAbstract;
-            //}).ToList();
-
-            //foreach(var type in types)
-            //{
-            //    if (_wherePredicates.Count != 0 && !_wherePredicates.Any(filter => filter(type)))
-            //    {
-            //        continue;
-            //    }
-            //    if (_exceptPredicates.Count != 0 && _exceptPredicates.Any(filter => filter(type)))
-            //    {
-            //        continue;
-            //    }
-
-            //    var serviceTypes = type.GetInterfaces();
-
-            //    var serviceType = serviceTypes.First();
-            //    var serviceDescriptor = new ServiceDescriptor(serviceType, type, ServiceLifetime);
-            //    serviceCollection.Add(serviceDescriptor);
-
-            //    var otherServicesType = serviceTypes.Skip(1).ToList();
-            //    foreach (var otherService in otherServicesType)
-            //    {
-            //        var otherServiceDescriptor = new ServiceDescriptor(otherService, serviceProviders => serviceProviders.GetService(serviceType), ServiceLifetime);
-            //        serviceCollection.Add(otherServiceDescriptor);
-            //    }
-
-
-
-
-            //}
         }
 
         #endregion
