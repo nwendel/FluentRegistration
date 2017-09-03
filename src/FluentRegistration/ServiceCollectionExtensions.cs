@@ -30,6 +30,8 @@ namespace FluentRegistration
 
         #region Register
 
+        // TODO: These needs to be merged into one...
+
         /// <summary>
         /// 
         /// </summary>

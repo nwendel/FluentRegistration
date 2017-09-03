@@ -113,7 +113,7 @@ namespace FluentRegistration.Internal
 
         #endregion
 
-        #region With Service
+        #region With Services
 
         /// <summary>
         /// 

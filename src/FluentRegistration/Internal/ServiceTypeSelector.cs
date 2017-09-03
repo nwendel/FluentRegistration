@@ -94,6 +94,20 @@ namespace FluentRegistration.Internal
 
         #endregion
 
+        #region Self
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public IWithService Self()
+        {
+            _serviceTypeSelector = type => new[] { type };
+            return this;
+        }
+
+        #endregion
+
         #region Lifetime
 
         /// <summary>

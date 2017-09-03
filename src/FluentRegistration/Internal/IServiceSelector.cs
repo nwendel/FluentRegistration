@@ -52,6 +52,16 @@ namespace FluentRegistration.Internal
 
         #endregion
 
+        #region Self
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        IWithService Self();
+
+        #endregion
+
     }
 
 }
