@@ -30,29 +30,6 @@ namespace FluentRegistration
 
         #region Register
 
-        // TODO: These needs to be merged into one...
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="self"></param>
-        /// <param name="registrations"></param>
-        public static void Register(this IServiceCollection self, Func<IComponentRegistration, ICompleteRegistration> registrationAction)
-        {
-            if (self == null)
-            {
-                throw new ArgumentNullException(nameof(self));
-            }
-            if (registrationAction == null)
-            {
-                throw new ArgumentNullException(nameof(registrationAction));
-            }
-
-            var registration = new ComponentRegistration();
-            registrationAction(registration);
-            registration.Register(self);
-        }
-
         /// <summary>
         /// 
         /// </summary>

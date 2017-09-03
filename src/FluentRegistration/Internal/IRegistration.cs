@@ -22,6 +22,17 @@ namespace FluentRegistration.Internal
     public interface IRegistration
     {
 
+        #region For
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TService"></typeparam>
+        /// <returns></returns>
+        IComponentImplementationSelector<TService> For<TService>();
+
+        #endregion
+
         #region From Assembly Containing
 
         /// <summary>

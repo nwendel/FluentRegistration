@@ -22,50 +22,6 @@ namespace FluentRegistration.Internal
     /// <summary>
     /// 
     /// </summary>
-    public class ComponentRegistration : IComponentRegistration, IRegister
-    {
-
-        #region Fields
-
-        private IRegister _register;
-
-        #endregion
-
-        #region For
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="TService"></typeparam>
-        /// <returns></returns>
-        public IComponentImplementationSelector<TService> For<TService>()
-        {
-            var register = new ComponentRegistration<TService>();
-            _register = register;
-            return register;
-        }
-
-        #endregion
-
-        #region Register
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="serviceCollection"></param>
-        public void Register(IServiceCollection serviceCollection)
-        {
-            _register.Register(serviceCollection);
-        }
-
-        #endregion
-
-    }
-
-
-    /// <summary>
-    /// 
-    /// </summary>
     public class ComponentRegistration<TService> : 
         IComponentImplementationSelector<TService>,
         IRegister

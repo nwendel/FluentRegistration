@@ -22,7 +22,7 @@ namespace FluentRegistration.Internal
     /// <summary>
     /// 
     /// </summary>
-    public class Registration : IRegistration, IComponentRegistration
+    public class Registration : IRegistration
     {
 
         #region Fields
