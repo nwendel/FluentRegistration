@@ -13,9 +13,9 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-using FluentRegistration.Tests.TestClasses;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
+using FluentRegistration.Tests.TestClasses;
 
 namespace FluentRegistration.Tests
 {
@@ -43,6 +43,48 @@ namespace FluentRegistration.Tests
             Assert.All(tested, service =>
             {
                 Assert.Equal(typeof(SimpleService), service.ServiceType);
+                Assert.Equal(typeof(SimpleService), service.ImplementationType);
+            });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void CanRegisterWithDefaultInterface()
+        {
+            var tested = new ServiceCollection();
+
+            tested.Register(r => r
+                .FromAssemblyContaining<SimpleService>()
+                .Where(c => c.ImplementationType == typeof(SimpleService))
+                .WithServices.DefaultInterface());
+
+            Assert.Equal(1, tested.Count);
+            Assert.All(tested, service =>
+            {
+                Assert.Equal(typeof(ISimpleService), service.ServiceType);
+                Assert.Equal(typeof(SimpleService), service.ImplementationType);
+            });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void CanRegisterWithSpecificInterface()
+        {
+            var tested = new ServiceCollection();
+
+            tested.Register(r => r
+                .FromAssemblyContaining<SimpleService>()
+                .Where(c => c.ImplementationType == typeof(SimpleService))
+                    .WithServices.Interface<ISimpleService>());
+
+            Assert.Equal(1, tested.Count);
+            Assert.All(tested, service =>
+            {
+                Assert.Equal(typeof(ISimpleService), service.ServiceType);
                 Assert.Equal(typeof(SimpleService), service.ImplementationType);
             });
         }

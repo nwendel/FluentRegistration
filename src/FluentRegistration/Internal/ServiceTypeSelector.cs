@@ -74,7 +74,23 @@ namespace FluentRegistration.Internal
         /// <returns></returns>
         public IWithService DefaultInterface()
         {
-            _serviceTypeSelector = type => type.GetInterfaces();
+            _serviceTypeSelector = type =>
+            {
+                var typeInfo = type.GetTypeInfo();
+                var interfaces = typeInfo.GetInterfaces();
+                var defaultInterfaces = interfaces.Where(i =>
+                {
+                    var name = i.Name;
+                    if (name.Length > 1 && name[0] == 'I' && char.IsUpper(name[1]))
+                    {
+                        name = name.Substring(1);
+                    }
+
+                    return type.Name.Contains(name);
+                });
+                return defaultInterfaces;
+            };
+            
             return this;
         }
 
