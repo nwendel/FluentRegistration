@@ -105,6 +105,25 @@ namespace FluentRegistration.Tests
             });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public void CanRegisterSingletonLifetimeMultipleServices()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.Register(r => r
+                .FromAssemblyContaining<SimpleService>()
+                .Where(c => c.ImplementationType == typeof(SimpleService))
+                .WithServices
+                    .Self()
+                    .DefaultInterface());
+            var tested = serviceCollection.BuildServiceProvider();
+
+            var serviceOne = tested.GetRequiredService<ISimpleService>();
+            var serviceTwo = tested.GetRequiredService<SimpleService>();
+            Assert.Same(serviceOne, serviceTwo);
+        }
+
     }
 
 }
