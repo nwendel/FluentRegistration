@@ -34,7 +34,7 @@ namespace FluentRegistration.Internal
         #region Fields
 
         private readonly AbstractTypeSelector _typeSelector;
-        private Func<Type, IEnumerable<Type>> _serviceTypeSelector;
+        private readonly List<Func<Type, IEnumerable<Type>>> _serviceTypeSelector = new List<Func<Type, IEnumerable<Type>>>();
         private readonly LifetimeSelector _lifetimeSelector = new LifetimeSelector();
 
         #endregion
@@ -60,7 +60,7 @@ namespace FluentRegistration.Internal
         /// <returns></returns>
         public IWithService AllInterfaces()
         {
-            _serviceTypeSelector = type => type.GetInterfaces();
+            _serviceTypeSelector.Add(type => type.GetInterfaces());
             return this;
         }
 
@@ -74,7 +74,7 @@ namespace FluentRegistration.Internal
         /// <returns></returns>
         public IWithService DefaultInterface()
         {
-            _serviceTypeSelector = type =>
+            _serviceTypeSelector.Add(type =>
             {
                 var typeInfo = type.GetTypeInfo();
                 var interfaces = typeInfo.GetInterfaces();
@@ -89,7 +89,7 @@ namespace FluentRegistration.Internal
                     return type.Name.Contains(name);
                 });
                 return defaultInterfaces;
-            };
+            });
             
             return this;
         }
@@ -104,7 +104,7 @@ namespace FluentRegistration.Internal
         /// <returns></returns>
         public IWithService Interface<TService>()
         {
-            _serviceTypeSelector = type => type.GetInterfaces();
+            _serviceTypeSelector.Add(type => type.GetInterfaces());
             return this;
         }
 
@@ -118,7 +118,7 @@ namespace FluentRegistration.Internal
         /// <returns></returns>
         public IWithService Self()
         {
-            _serviceTypeSelector = type => new[] { type };
+            _serviceTypeSelector.Add(type => new[] { type });
             return this;
         }
 
@@ -145,7 +145,7 @@ namespace FluentRegistration.Internal
 
             foreach(var type in filteredTypes)
             {
-                var serviceTypes = _serviceTypeSelector(type);
+                var serviceTypes = _serviceTypeSelector.SelectMany(selector => selector(type));
 
                 var serviceType = serviceTypes.First();
                 var serviceDescriptor = new ServiceDescriptor(serviceType, type, _lifetimeSelector.Lifetime);

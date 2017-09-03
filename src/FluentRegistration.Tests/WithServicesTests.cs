@@ -89,6 +89,26 @@ namespace FluentRegistration.Tests
             });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void CanRegisterWithServicesDefaultInterfaceSelf()
+        {
+            var tested = new ServiceCollection();
+
+            tested.Register(r => r
+                .FromAssemblyContaining<SimpleService>()
+                .Where(c => c.ImplementationType == typeof(SimpleService))
+                .WithServices
+                    .Self()
+                    .DefaultInterface());
+
+            Assert.Equal(2, tested.Count);
+            Assert.Contains(tested, x => x.ServiceType == typeof(ISimpleService));
+            Assert.Contains(tested, x => x.ServiceType == typeof(SimpleService));
+        }
+
     }
 
 }
