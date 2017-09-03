@@ -56,7 +56,7 @@ namespace FluentRegistration.Tests
             tested.Register(r => r
                 .ImplementedBy<SimpleService>()
                 .WithServices.AllInterfaces()
-                .Lifetime.Singleton());
+                .Lifetime.Singleton);
 
             Assert.Equal(1, tested.Count);
             Assert.All(tested, service =>
@@ -76,7 +76,7 @@ namespace FluentRegistration.Tests
             tested.Register(r => r
                 .ImplementedBy<SimpleService>()
                 .WithServices.AllInterfaces()
-                .Lifetime.Scoped());
+                .Lifetime.Scoped);
 
             Assert.Equal(1, tested.Count);
             Assert.All(tested, service =>
@@ -96,7 +96,7 @@ namespace FluentRegistration.Tests
             tested.Register(r => r
                 .ImplementedBy<SimpleService>()
                 .WithServices.AllInterfaces()
-                .Lifetime.Transient());
+                .Lifetime.Transient);
 
             Assert.Equal(1, tested.Count);
             Assert.All(tested, service =>

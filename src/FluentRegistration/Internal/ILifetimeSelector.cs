@@ -22,20 +22,32 @@ namespace FluentRegistration.Internal
     public interface ILifetimeSelector
     {
 
-        /// <summary>
-        /// 
-        /// </summary>
-        ICompleteRegistration Singleton();
+        #region Singleton
 
         /// <summary>
         /// 
         /// </summary>
-        ICompleteRegistration Scoped();
+        ICompleteRegistration Singleton { get; }
+
+        #endregion
+
+        #region Scoped
 
         /// <summary>
         /// 
         /// </summary>
-        ICompleteRegistration Transient();
+        ICompleteRegistration Scoped { get; }
+
+        #endregion
+
+        #region Transient
+
+        /// <summary>
+        /// 
+        /// </summary>
+        ICompleteRegistration Transient { get; }
+
+        #endregion
 
     }
 

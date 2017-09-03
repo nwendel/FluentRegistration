@@ -36,12 +36,12 @@ namespace FluentRegistration.Tests
                 .Where(c => c.InSameNamespaceAs<SyntaxTests>())
                 .Except(c => c.InSameNamespaceAs<SyntaxTests>())
                 .WithServices.AllInterfaces()
-                .Lifetime.Transient());
+                .Lifetime.Transient);
 
             tested.Register(r => r
                 .FromAssemblyContaining<SyntaxTests>()
                 .WithServices.AllInterfaces()
-                .Lifetime.Transient());
+                .Lifetime.Transient);
 
             tested.Register(r => r
                 .FromAssemblyContaining<SyntaxTests>()
@@ -51,7 +51,7 @@ namespace FluentRegistration.Tests
                 .WithServices
                     .DefaultInterface()
                     .Interface<object>()
-                .Lifetime.Singleton());
+                .Lifetime.Singleton);
         }
 
     }

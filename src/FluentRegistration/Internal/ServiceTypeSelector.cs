@@ -15,9 +15,9 @@
 #endregion
 using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 using System.Linq;
+using System.Reflection;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace FluentRegistration.Internal
 {
@@ -28,7 +28,6 @@ namespace FluentRegistration.Internal
     public class ServiceTypeSelector :
         IServiceSelector,
         IWithService,
-        IServiceLifetimeAware,
         IRegister
     {
 
@@ -36,7 +35,7 @@ namespace FluentRegistration.Internal
 
         private readonly AbstractTypeSelector _typeSelector;
         private Func<Type, IEnumerable<Type>> _serviceTypeSelector;
-        private ILifetimeSelector _lifetimeSelector;
+        private readonly LifetimeSelector _lifetimeSelector = new LifetimeSelector();
 
         #endregion
 
@@ -49,7 +48,6 @@ namespace FluentRegistration.Internal
         public ServiceTypeSelector(AbstractTypeSelector typeSelector)
         {
             _typeSelector = typeSelector;
-            _lifetimeSelector = new LifetimeSelector(this);
         }
 
         #endregion
@@ -103,11 +101,6 @@ namespace FluentRegistration.Internal
         /// </summary>
         public ILifetimeSelector Lifetime => _lifetimeSelector;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public ServiceLifetime ServiceLifetime { get; set; }
-
         #endregion
 
         #region Register
@@ -125,13 +118,13 @@ namespace FluentRegistration.Internal
                 var serviceTypes = _serviceTypeSelector(type);
 
                 var serviceType = serviceTypes.First();
-                var serviceDescriptor = new ServiceDescriptor(serviceType, type, ServiceLifetime);
+                var serviceDescriptor = new ServiceDescriptor(serviceType, type, _lifetimeSelector.Lifetime);
                 serviceCollection.Add(serviceDescriptor);
 
                 var otherServicesType = serviceTypes.Skip(1).ToList();
                 foreach (var otherService in otherServicesType)
                 {
-                    var otherServiceDescriptor = new ServiceDescriptor(otherService, serviceProviders => serviceProviders.GetService(serviceType), ServiceLifetime);
+                    var otherServiceDescriptor = new ServiceDescriptor(otherService, serviceProviders => serviceProviders.GetService(serviceType), _lifetimeSelector.Lifetime);
                     serviceCollection.Add(otherServiceDescriptor);
                 }
             }

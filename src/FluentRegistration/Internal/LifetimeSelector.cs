@@ -24,22 +24,12 @@ namespace FluentRegistration.Internal
     public class LifetimeSelector : ILifetimeSelector, ICompleteRegistration
     {
 
-        #region Fields
-
-        private readonly IServiceLifetimeAware _serviceLifetimeAware;
-
-        #endregion
-
-        #region Constructor
+        #region Properties
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="serviceLifetimeAware"></param>
-        public LifetimeSelector(IServiceLifetimeAware serviceLifetimeAware)
-        {
-            _serviceLifetimeAware = serviceLifetimeAware;
-        }
+        public ServiceLifetime Lifetime { get; private set; } = ServiceLifetime.Singleton;
 
         #endregion
 
@@ -48,11 +38,13 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        public ICompleteRegistration Singleton()
+        public ICompleteRegistration Singleton
         {
-            _serviceLifetimeAware.ServiceLifetime = ServiceLifetime.Singleton;
-            return this;
-            //return new CompleteRegistration();
+            get
+            {
+                Lifetime = ServiceLifetime.Singleton;
+                return this;
+            }
         }
 
         #endregion
@@ -62,11 +54,13 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        public ICompleteRegistration Scoped()
+        public ICompleteRegistration Scoped
         {
-            _serviceLifetimeAware.ServiceLifetime = ServiceLifetime.Scoped;
-            return this;
-            //return new CompleteRegistration();
+            get
+            {
+                Lifetime = ServiceLifetime.Scoped;
+                return this;
+            }
         }
 
         #endregion
@@ -76,11 +70,13 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        public ICompleteRegistration Transient()
+        public ICompleteRegistration Transient
         {
-            _serviceLifetimeAware.ServiceLifetime = ServiceLifetime.Transient;
-            return this;
-            //return new CompleteRegistration();
+            get
+            {
+                Lifetime = ServiceLifetime.Transient;
+                return this;
+            }
         }
 
         #endregion
