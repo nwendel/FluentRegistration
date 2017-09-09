@@ -35,8 +35,8 @@ namespace FluentRegistration.Internal
         #region Fields
 
         private readonly Type[] _serviceTypes;
-        private Type _implementedByType => typeof(TImplementation);
-        private readonly LifetimeSelector _lifetimeSelector = new LifetimeSelector();
+        private readonly Type _implementedByType;
+        private readonly LifetimeSelector _lifetimeSelector;
 
         #endregion
 
@@ -46,9 +46,23 @@ namespace FluentRegistration.Internal
         /// 
         /// </summary>
         /// <param name="serviceTypes"></param>
-        public ComponentImplementedByRegistration(Type[] serviceTypes)
+        /// <param name="implementedByType"></param>
+        public ComponentImplementedByRegistration(Type[] serviceTypes, Type implementedByType)
+            : this(serviceTypes, implementedByType, new LifetimeSelector())
+        {
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="serviceTypes"></param>
+        /// <param name="implementedByType"></param>
+        /// <param name="lifetimeSelector"></param>
+        public ComponentImplementedByRegistration(Type[] serviceTypes, Type implementedByType, LifetimeSelector lifetimeSelector)
         {
             _serviceTypes = serviceTypes;
+            _implementedByType = implementedByType;
+            _lifetimeSelector = lifetimeSelector;
         }
 
         #endregion

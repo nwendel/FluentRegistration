@@ -145,18 +145,12 @@ namespace FluentRegistration.Internal
 
             foreach(var type in filteredTypes)
             {
-                var serviceTypes = _serviceTypeSelector.SelectMany(selector => selector(type));
+                var serviceTypes = _serviceTypeSelector
+                    .SelectMany(selector => selector(type))
+                    .ToArray();
 
-                var serviceType = serviceTypes.First();
-                var serviceDescriptor = new ServiceDescriptor(serviceType, type, _lifetimeSelector.Lifetime);
-                serviceCollection.Add(serviceDescriptor);
-
-                var otherServicesType = serviceTypes.Skip(1).ToList();
-                foreach (var otherService in otherServicesType)
-                {
-                    var otherServiceDescriptor = new ServiceDescriptor(otherService, serviceProviders => serviceProviders.GetService(serviceType), _lifetimeSelector.Lifetime);
-                    serviceCollection.Add(otherServiceDescriptor);
-                }
+                var componentRegistration = new ComponentImplementedByRegistration<object, object>(serviceTypes, type, _lifetimeSelector);
+                componentRegistration.Register(serviceCollection);
             }
         }
 
