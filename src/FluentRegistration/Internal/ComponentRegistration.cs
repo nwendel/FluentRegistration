@@ -57,7 +57,7 @@ namespace FluentRegistration.Internal
         public ILifetime ImplementedBy<TImplementation>()
             where TImplementation : TService
         {
-            var implementedByRegistration = new ComponentImplementedByRegistration<TService, TImplementation>(_serviceTypes, typeof(TImplementation));
+            var implementedByRegistration = new ComponentImplementedByRegistration<TService, TImplementation>(_serviceTypes);
             _register = implementedByRegistration;
             return implementedByRegistration;
         }

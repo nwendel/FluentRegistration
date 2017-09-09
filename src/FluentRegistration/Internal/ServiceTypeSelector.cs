@@ -26,7 +26,6 @@ namespace FluentRegistration.Internal
     /// 
     /// </summary>
     public class ServiceTypeSelector :
-        IServiceSelector,
         IWithService,
         IRegister
     {

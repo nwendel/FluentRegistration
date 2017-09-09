@@ -20,16 +20,9 @@ namespace FluentRegistration.Internal
 {
 
     /// <summary>
-    /// 
     /// </summary>
     public class TypeFilter : ITypeFilter
     {
-
-        #region Fields
-
-        private readonly Type _type;
-
-        #endregion
 
         #region Constructor
 
@@ -39,7 +32,7 @@ namespace FluentRegistration.Internal
         /// <param name="type"></param>
         public TypeFilter(Type type)
         {
-            _type = type;
+            ImplementationType = type;
         }
 
         #endregion
@@ -47,13 +40,12 @@ namespace FluentRegistration.Internal
         #region Assignable To
 
         /// <summary>
-        /// 
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         public bool AssignableTo<T>()
         {
-            return typeof(T).IsAssignableFrom(_type);
+            return typeof(T).IsAssignableFrom(ImplementationType);
         }
 
         #endregion
@@ -61,7 +53,6 @@ namespace FluentRegistration.Internal
         #region Is In Namespace
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="namespace"></param>
         /// <returns></returns>
@@ -72,7 +63,7 @@ namespace FluentRegistration.Internal
                 throw new ArgumentNullException(nameof(@namespace));
             }
 
-            return _type.Namespace == @namespace;
+            return ImplementationType.Namespace == @namespace;
         }
 
         #endregion
@@ -80,7 +71,6 @@ namespace FluentRegistration.Internal
         #region In Same Namespace As
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
@@ -88,8 +78,8 @@ namespace FluentRegistration.Internal
         {
             return InNamespace(type.Namespace);
         }
+
         /// <summary>
-        /// 
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
@@ -103,12 +93,8 @@ namespace FluentRegistration.Internal
         #region Implementation Type
 
         /// <summary>
-        /// 
         /// </summary>
-        public Type ImplementationType
-        {
-            get { return _type; }
-        }
+        public Type ImplementationType { get; }
 
         #endregion
 

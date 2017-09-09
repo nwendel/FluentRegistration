@@ -27,7 +27,6 @@ namespace FluentRegistration.Internal
     /// </summary>
     public class ComponentImplementedByRegistration<TService, TImplementation> :
         ILifetime,
-        ICompleteRegistration,
         IRegister
         where TImplementation : TService
     {
@@ -46,9 +45,8 @@ namespace FluentRegistration.Internal
         /// 
         /// </summary>
         /// <param name="serviceTypes"></param>
-        /// <param name="implementedByType"></param>
-        public ComponentImplementedByRegistration(Type[] serviceTypes, Type implementedByType)
-            : this(serviceTypes, implementedByType, new LifetimeSelector())
+        public ComponentImplementedByRegistration(Type[] serviceTypes)
+            : this(serviceTypes, typeof(TImplementation), new LifetimeSelector())
         {
         }
 

@@ -27,7 +27,6 @@ namespace FluentRegistration.Internal
     /// </summary>
     public abstract class AbstractTypeSelector :
         ITypeSelector,
-        IWithServiceInitial,
         IRegister
     {
 

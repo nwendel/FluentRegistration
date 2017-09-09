@@ -41,7 +41,7 @@ namespace FluentRegistration.Options
         /// <summary>
         /// 
         /// </summary>
-        public static FluentRegistrationOptions Default = new FluentRegistrationOptions
+        public static readonly FluentRegistrationOptions Default = new FluentRegistrationOptions
         {
             MultipleRegistrationsBehavior = MultipleRegistrationsBehavior.Ignore,
             RegistrationsWithoutServicesBehavior = RegistrationsWithoutServicesBehavior.Ignore

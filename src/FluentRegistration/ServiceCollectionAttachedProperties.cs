@@ -31,7 +31,7 @@ namespace FluentRegistration
         /// <summary>
         /// 
         /// </summary>
-        public static AttachedProperty<IServiceCollection, FluentRegistrationOptions> Options = new AttachedProperty<IServiceCollection, FluentRegistrationOptions>(nameof(Options));
+        public static readonly AttachedProperty<IServiceCollection, FluentRegistrationOptions> Options = new AttachedProperty<IServiceCollection, FluentRegistrationOptions>(nameof(Options));
 
         #endregion
 

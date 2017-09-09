@@ -119,32 +119,6 @@ namespace FluentRegistration.Tests.Options
                     .For<ISimpleService>()
                     .ImplementedBy<SimpleService>()));
         }
-        
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        //[Fact]
-        //public void CanRegisterSameTwice()
-        //{
-        //    var tested = new ServiceCollection();
-
-        //    tested.Register(AllClasses
-        //            .FromAssemblyContaining<AllClassesBasedOnTests>()
-        //            .BasedOn<ISimpleService>()
-        //            .WithService.AllInterfaces());
-        //    tested.Register(AllClasses
-        //            .FromAssemblyContaining<AllClassesBasedOnTests>()
-        //            .BasedOn<ISimpleService>()
-        //            .WithService.AllInterfaces());
-
-        //    Assert.Equal(1, tested.Count);
-        //    Assert.All(tested, service =>
-        //    {
-        //        Assert.Equal(ServiceLifetime.Singleton, service.Lifetime);
-        //        Assert.Equal(typeof(ISimpleService), service.ServiceType);
-        //        Assert.Equal(typeof(SimpleService), service.ImplementationType);
-        //    });
-        //}
 
     }
 
