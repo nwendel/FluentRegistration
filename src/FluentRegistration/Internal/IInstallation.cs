@@ -21,6 +21,17 @@ namespace FluentRegistration.Internal
     /// </summary>
     public interface IInstallation
     {
+
+        #region From Assembly Containing
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        void FromAssemblyContaining<T>();
+
+        #endregion
+
     }
 
 }

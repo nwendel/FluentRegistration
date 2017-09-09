@@ -83,8 +83,9 @@ namespace FluentRegistration
                 throw new ArgumentNullException(nameof(installationAction));
             }
 
-            var installation = new Installation(self);
+            var installation = new Installation();
             installationAction(installation);
+            installation.Install(self);
         }
 
         #endregion

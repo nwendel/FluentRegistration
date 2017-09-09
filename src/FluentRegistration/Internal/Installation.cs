@@ -24,13 +24,25 @@ namespace FluentRegistration.Internal
     public class Installation : IInstallation
     {
 
-        #region Constructor
+        #region From Assembly Containing
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        public void FromAssemblyContaining<T>()
+        {
+        }
+
+        #endregion
+
+        #region Install
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="serviceCollection"></param>
-        public Installation(IServiceCollection serviceCollection)
+        public void Install(IServiceCollection serviceCollection)
         {
         }
 
