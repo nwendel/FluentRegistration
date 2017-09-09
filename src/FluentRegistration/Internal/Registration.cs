@@ -53,6 +53,11 @@ namespace FluentRegistration.Internal
         /// <returns></returns>
         public IComponentImplementationSelector<object> For(Type type)
         {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
             var registration = new ComponentRegistration<object>(new[] { type });
             _register = registration;
             return registration;
@@ -65,6 +70,11 @@ namespace FluentRegistration.Internal
         /// <returns></returns>
         public IComponentImplementationSelector<object> For(params Type[] types)
         {
+            if (types == null)
+            {
+                throw new ArgumentNullException(nameof(types));
+            }
+
             var registration = new ComponentRegistration<object>(types);
             _register = registration;
             return registration;
