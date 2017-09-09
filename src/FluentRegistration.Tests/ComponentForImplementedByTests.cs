@@ -113,6 +113,26 @@ namespace FluentRegistration.Tests
             });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void CanRegisterForNonGeneric()
+        {
+            var tested = new ServiceCollection();
+
+            tested.Register(c => c
+                    .For(typeof(ISimpleService))
+                    .ImplementedBy<SimpleService>());
+
+            Assert.Equal(1, tested.Count);
+            Assert.All(tested, service =>
+            {
+                Assert.Equal(ServiceLifetime.Singleton, service.Lifetime);
+                Assert.Equal(typeof(ISimpleService), service.ServiceType);
+                Assert.Equal(typeof(SimpleService), service.ImplementationType);
+            });
+        }
 
     }
 
