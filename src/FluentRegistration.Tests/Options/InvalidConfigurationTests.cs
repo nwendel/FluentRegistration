@@ -35,7 +35,7 @@ namespace FluentRegistration.Tests.Options
             ServiceCollection tested = null;
 
             Assert.Throws<ArgumentNullException>("self",
-                () => tested.ConfigureFluentRegistration(o => { }));
+                () => tested.Configure(o => { }));
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace FluentRegistration.Tests.Options
             var tested = new ServiceCollection();
 
             Assert.Throws<ArgumentNullException>("optionsAction",
-                () => tested.ConfigureFluentRegistration(null));
+                () => tested.Configure(null));
         }
 
     }

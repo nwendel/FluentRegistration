@@ -98,7 +98,7 @@ namespace FluentRegistration
         /// </summary>
         /// <param name="self"></param>
         /// <param name="optionsAction"></param>
-        public static void ConfigureFluentRegistration(this IServiceCollection self, Action<FluentRegistrationOptions> optionsAction)
+        public static void Configure(this IServiceCollection self, Action<FluentRegistrationOptions> optionsAction)
         {
             if (self == null)
             {
