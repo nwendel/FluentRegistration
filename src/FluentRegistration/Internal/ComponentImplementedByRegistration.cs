@@ -14,7 +14,10 @@
 // limitations under the License.
 #endregion
 using System;
+using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
+using AttachedProperties;
+using FluentRegistration.Options;
 
 namespace FluentRegistration.Internal
 {
@@ -54,6 +57,21 @@ namespace FluentRegistration.Internal
         /// <param name="serviceCollection"></param>
         public void Register(IServiceCollection serviceCollection)
         {
+            if (serviceCollection.Any(x => x.ImplementationType == _implementedByType))
+            {
+                // Already registered
+                var options = serviceCollection.GetAttachedValue(ServiceCollectionAttachedProperties.Options) ?? FluentRegistrationOptions.Default;
+                switch (options.MultipleRegistrationsBehavior)
+                {
+                    case MultipleRegistrationsBehavior.Ignore:
+                        return;
+                    case MultipleRegistrationsBehavior.Register:
+                        break;
+                    case MultipleRegistrationsBehavior.ThrowException:
+                        throw new RegistrationException(string.Format("Implementation of type {0} already registrered", _implementedByType.FullName));
+                }
+            }
+
             var serviceDescriptor = new ServiceDescriptor(_serviceType, _implementedByType, _lifetimeSelector.Lifetime);
             serviceCollection.Add(serviceDescriptor);
         }
