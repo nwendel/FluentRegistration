@@ -30,6 +30,7 @@ namespace FluentRegistration.Internal
         #region Fields
 
         private IRegister _register;
+        private readonly Type[] _serviceTypes;
 
         #endregion
 
@@ -38,8 +39,10 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        public ComponentRegistration()
+        /// <param name="serviceTypes"></param>
+        public ComponentRegistration(Type[] serviceTypes)
         {
+            _serviceTypes = serviceTypes;
         }
 
         #endregion
@@ -54,7 +57,7 @@ namespace FluentRegistration.Internal
         public ILifetime ImplementedBy<TImplementation>()
             where TImplementation : TService
         {
-            var implementedByRegistration = new ComponentImplementedByRegistration<TService, TImplementation>();
+            var implementedByRegistration = new ComponentImplementedByRegistration<TService, TImplementation>(_serviceTypes);
             _register = implementedByRegistration;
             return implementedByRegistration;
         }
@@ -74,7 +77,7 @@ namespace FluentRegistration.Internal
                 throw new ArgumentNullException(nameof(instance));
             }
 
-            var instanceRegistration = new ComponentInstanceRegistration<TService>(instance);
+            var instanceRegistration = new ComponentInstanceRegistration<TService>(_serviceTypes, instance);
             _register = instanceRegistration;
             return instanceRegistration;
         }

@@ -34,9 +34,22 @@ namespace FluentRegistration.Internal
 
         #region Fields
 
-        private Type _serviceType => typeof(TService);
+        private readonly Type[] _serviceTypes;
         private Type _implementedByType => typeof(TImplementation);
         private readonly LifetimeSelector _lifetimeSelector = new LifetimeSelector();
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="serviceTypes"></param>
+        public ComponentImplementedByRegistration(Type[] serviceTypes)
+        {
+            _serviceTypes = serviceTypes;
+        }
 
         #endregion
 
@@ -72,8 +85,16 @@ namespace FluentRegistration.Internal
                 }
             }
 
-            var serviceDescriptor = new ServiceDescriptor(_serviceType, _implementedByType, _lifetimeSelector.Lifetime);
+            var serviceType = _serviceTypes.First();
+            var serviceDescriptor = new ServiceDescriptor(serviceType, _implementedByType, _lifetimeSelector.Lifetime);
             serviceCollection.Add(serviceDescriptor);
+
+            var otherServicesType = _serviceTypes.Skip(1).ToList();
+            foreach (var otherService in otherServicesType)
+            {
+                var otherServiceDescriptor = new ServiceDescriptor(otherService, serviceProviders => serviceProviders.GetService(serviceType), _lifetimeSelector.Lifetime);
+                serviceCollection.Add(otherServiceDescriptor);
+            }
         }
 
         #endregion

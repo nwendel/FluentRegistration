@@ -13,6 +13,8 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
+using System;
+
 namespace FluentRegistration.Internal
 {
 
@@ -30,6 +32,20 @@ namespace FluentRegistration.Internal
         /// <typeparam name="TService"></typeparam>
         /// <returns></returns>
         IComponentImplementationSelector<TService> For<TService>();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        IComponentImplementationSelector<object> For(Type type);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        IComponentImplementationSelector<object> For(params Type[] type);
 
         #endregion
 

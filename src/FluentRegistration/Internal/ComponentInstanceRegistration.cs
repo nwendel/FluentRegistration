@@ -29,7 +29,7 @@ namespace FluentRegistration.Internal
 
         #region Fields
 
-        private Type _serviceType => typeof(TService);
+        private readonly Type[] _serviceTypes;
         private readonly TService _instance;
 
         #endregion
@@ -39,9 +39,11 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="serviceTypes"></param>
         /// <param name="instance"></param>
-        public ComponentInstanceRegistration(TService instance)
+        public ComponentInstanceRegistration(Type[] serviceTypes, TService instance)
         {
+            _serviceTypes = serviceTypes;
             _instance = instance;
         }
 
@@ -55,8 +57,11 @@ namespace FluentRegistration.Internal
         /// <param name="serviceCollection"></param>
         public void Register(IServiceCollection serviceCollection)
         {
-            var serviceDescriptor = new ServiceDescriptor(_serviceType, _instance);
-            serviceCollection.Add(serviceDescriptor);
+            foreach (var serviceType in _serviceTypes)
+            {
+                var serviceDescriptor = new ServiceDescriptor(serviceType, _instance);
+                serviceCollection.Add(serviceDescriptor);
+            }
         }
 
         #endregion

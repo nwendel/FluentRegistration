@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
+using System;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -40,7 +41,31 @@ namespace FluentRegistration.Internal
         /// <returns></returns>
         public IComponentImplementationSelector<TService> For<TService>()
         {
-            var registration = new ComponentRegistration<TService>();
+            var registration = new ComponentRegistration<TService>(new[] { typeof(TService) });
+            _register = registration;
+            return registration;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public IComponentImplementationSelector<object> For(Type type)
+        {
+            var registration = new ComponentRegistration<object>(new[] { type });
+            _register = registration;
+            return registration;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="types"></param>
+        /// <returns></returns>
+        public IComponentImplementationSelector<object> For(params Type[] types)
+        {
+            var registration = new ComponentRegistration<object>(types);
             _register = registration;
             return registration;
         }
