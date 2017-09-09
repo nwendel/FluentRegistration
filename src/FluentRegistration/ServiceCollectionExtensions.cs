@@ -85,8 +85,6 @@ namespace FluentRegistration
 
             var installation = new Installation(self);
             installationAction(installation);
-
-
         }
 
         #endregion

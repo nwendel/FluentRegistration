@@ -26,29 +26,29 @@ namespace FluentRegistration.Tests
     public class InvalidInstallTests
     {
 
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        //[Fact]
-        //public void ThrowsOnNullServiceCollection()
-        //{
-        //    ServiceCollection tested = null;
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void ThrowsOnNullServiceCollection()
+        {
+            ServiceCollection tested = null;
 
-        //    Assert.Throws<ArgumentNullException>("self",
-        //        () => tested.Install(new IServiceInstaller[0]));
-        //}
+            Assert.Throws<ArgumentNullException>("self",
+                () => tested.Install(null));
+        }
 
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        //[Fact]
-        //public void ThrowsOnNullInstallers()
-        //{
-        //    var tested = new ServiceCollection();
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void ThrowsOnNullInstallers()
+        {
+            var tested = new ServiceCollection();
 
-        //    Assert.Throws<ArgumentNullException>("installers",
-        //        () => tested.Install(null));
-        //}
+            Assert.Throws<ArgumentNullException>("installationAction",
+                () => tested.Install(null));
+        }
 
         ///// <summary>
         ///// 
