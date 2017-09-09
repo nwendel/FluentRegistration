@@ -13,6 +13,9 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
+using System;
+using System.Linq;
+using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FluentRegistration.Internal
@@ -24,6 +27,12 @@ namespace FluentRegistration.Internal
     public class Installation : IInstallation
     {
 
+        #region Fields
+
+        private IServiceInstaller[] _installers;
+
+        #endregion
+
         #region From Assembly Containing
 
         /// <summary>
@@ -32,6 +41,14 @@ namespace FluentRegistration.Internal
         /// <typeparam name="T"></typeparam>
         public void FromAssemblyContaining<T>()
         {
+            var assembly = typeof(T).GetTypeInfo().Assembly;
+            var allTypes = assembly.GetTypes();
+            var installers = allTypes
+                .Where(x => typeof(IServiceInstaller).GetTypeInfo().IsAssignableFrom(x))
+                .Select(x => Activator.CreateInstance(x))
+                .Cast<IServiceInstaller>()
+                .ToArray();
+            _installers = installers;
         }
 
         #endregion
@@ -44,6 +61,10 @@ namespace FluentRegistration.Internal
         /// <param name="serviceCollection"></param>
         public void Install(IServiceCollection serviceCollection)
         {
+            foreach(var installer in _installers)
+            {
+                installer.Install(serviceCollection);
+            }
         }
 
         #endregion
