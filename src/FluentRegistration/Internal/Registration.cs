@@ -14,6 +14,7 @@
 // limitations under the License.
 #endregion
 using System;
+using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -68,7 +69,7 @@ namespace FluentRegistration.Internal
         /// <returns></returns>
         public IComponentImplementationSelector<object> For(params Type[] types)
         {
-            if (types == null)
+            if (!types.Any())
             {
                 throw new ArgumentNullException(nameof(types));
             }

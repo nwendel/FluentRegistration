@@ -61,12 +61,26 @@ namespace FluentRegistration.Tests
         {
             var tested = new ServiceCollection();
 
-            Assert.Throws<ArgumentNullException>(() => 
+            Assert.Throws<ArgumentNullException>("type", () => 
                 tested.Register(c => c
                     .For((Type)null)
                     .ImplementedBy<SimpleService>()));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void ThrowsOnNoTypes()
+        {
+            var tested = new ServiceCollection();
+
+            Assert.Throws<ArgumentNullException>(() =>
+                tested.Register(c => c
+                    .For()
+                    .ImplementedBy<SimpleService>()));
+        }
+        
     }
 
 }
