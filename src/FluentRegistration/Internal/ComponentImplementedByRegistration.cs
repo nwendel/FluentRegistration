@@ -97,6 +97,19 @@ namespace FluentRegistration.Internal
                 }
             }
 
+            if (!_serviceTypes.Any())
+            {
+                // No interfaces found
+                var options = serviceCollection.GetAttachedValue(ServiceCollectionAttachedProperties.Options) ?? FluentRegistrationOptions.Default;
+                switch (options.RegistrationsWithoutServicesBehavior)
+                {
+                    case RegistrationsWithoutServicesBehavior.Ignore:
+                        return;
+                    case RegistrationsWithoutServicesBehavior.ThrowException:
+                        throw new RegistrationException(string.Format("No services found for implementation of type {0}", _implementedByType.FullName));
+                }
+            }
+
             var serviceType = _serviceTypes.First();
             var serviceDescriptor = new ServiceDescriptor(serviceType, _implementedByType, _lifetimeSelector.Lifetime);
             serviceCollection.Add(serviceDescriptor);
