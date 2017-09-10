@@ -36,7 +36,7 @@ namespace FluentRegistration.Tests.Internal
         {
             var tested = new TypeFilter(typeof(SimpleService));
 
-            Assert.Throws<ArgumentNullException>(() => tested.InNamespace(null));
+            Assert.Throws<ArgumentNullException>("namespace", () => tested.InNamespace(null));
         }
 
         /// <summary>

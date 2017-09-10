@@ -50,17 +50,6 @@ namespace FluentRegistration.Tests
                 () => tested.Install(null));
         }
 
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        //[Fact]
-        //public void ThrowsOnAllInstallersFromAssemblyNullAssembly()
-        //{
-        //    var tested = new ServiceCollection();
-
-        //    Assert.Throws<ArgumentNullException>(() => tested.Install(AllInstallers.FromAssembly(null)));
-        //}
-
     }
 
 }

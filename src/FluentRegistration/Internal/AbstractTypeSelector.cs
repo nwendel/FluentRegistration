@@ -33,20 +33,8 @@ namespace FluentRegistration.Internal
         #region Fields
 
         private IRegister _register;
-        private List<Func<ITypeFilter, bool>> _wherePredicates = new List<Func<ITypeFilter, bool>>();
-        private List<Func<ITypeFilter, bool>> _exceptPredicates = new List<Func<ITypeFilter, bool>>();
-
-        #endregion
-
-        #region Constructor
-
-        /// <summary>
-        /// 
-        /// </summary>
-        protected AbstractTypeSelector()
-        {
-            //_lifetimeSelector = new LifetimeSelector(this);
-        }
+        private readonly List<Func<ITypeFilter, bool>> _wherePredicates = new List<Func<ITypeFilter, bool>>();
+        private readonly List<Func<ITypeFilter, bool>> _exceptPredicates = new List<Func<ITypeFilter, bool>>();
 
         #endregion
 
