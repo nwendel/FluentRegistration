@@ -109,6 +109,7 @@ namespace FluentRegistration.Tests
         /// <summary>
         /// 
         /// </summary>
+        [Fact]
         public void CanRegisterSingletonLifetimeMultipleServices()
         {
             var serviceCollection = new ServiceCollection();

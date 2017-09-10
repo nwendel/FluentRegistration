@@ -117,7 +117,7 @@ namespace FluentRegistration.Internal
             var otherServicesType = _serviceTypes.Skip(1).ToList();
             foreach (var otherService in otherServicesType)
             {
-                var otherServiceDescriptor = new ServiceDescriptor(otherService, serviceProviders => serviceProviders.GetService(serviceType), _lifetimeSelector.Lifetime);
+                var otherServiceDescriptor = new ServiceDescriptor(otherService, serviceProvider => serviceProvider.GetService(serviceType), _lifetimeSelector.Lifetime);
                 serviceCollection.Add(otherServiceDescriptor);
             }
         }
