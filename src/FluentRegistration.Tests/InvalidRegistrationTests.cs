@@ -17,7 +17,7 @@ using System;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using FluentRegistration.Internal;
-using FluentRegistration.Tests.TestClasses;
+using FluentRegistration.Tests.Classes;
 
 namespace FluentRegistration.Tests
 {
