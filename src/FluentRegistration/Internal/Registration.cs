@@ -58,9 +58,7 @@ namespace FluentRegistration.Internal
                 throw new ArgumentNullException(nameof(type));
             }
 
-            var registration = new ComponentRegistration<object>(new[] { type });
-            _register = registration;
-            return registration;
+            return For(new[] {type});
         }
 
         /// <summary>

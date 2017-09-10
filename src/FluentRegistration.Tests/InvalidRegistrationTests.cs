@@ -35,8 +35,8 @@ namespace FluentRegistration.Tests
         {
             var tested = new ServiceCollection();
 
-            Assert.Throws<ArgumentNullException>("registrationAction",
-                () => tested.Register(null));
+            Assert.Throws<ArgumentNullException>("registrationAction", () => 
+                tested.Register(null));
         }
 
         /// <summary>
@@ -47,9 +47,23 @@ namespace FluentRegistration.Tests
         {
             ServiceCollection tested = null;
 
-            Assert.Throws<ArgumentNullException>("self",
-                () => tested.Register(r => r
+            Assert.Throws<ArgumentNullException>("self", () => 
+                tested.Register(r => r
                     .For<ISimpleService>()
+                    .ImplementedBy<SimpleService>()));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void ThrowsOnNullType()
+        {
+            var tested = new ServiceCollection();
+
+            Assert.Throws<ArgumentNullException>(() => 
+                tested.Register(c => c
+                    .For((Type)null)
                     .ImplementedBy<SimpleService>()));
         }
 

@@ -57,6 +57,11 @@ namespace FluentRegistration.Internal
         /// <returns></returns>
         public ITypeSelector Where(Func<ITypeFilter, bool> predicate)
         {
+            if (predicate == null)
+            {
+                throw new ArgumentNullException(nameof(predicate));
+            }
+
             _wherePredicates.Add(predicate);
             return this;
         }
@@ -72,6 +77,11 @@ namespace FluentRegistration.Internal
         /// <returns></returns>
         public ITypeSelector Except(Func<ITypeFilter, bool> predicate)
         {
+            if (predicate == null)
+            {
+                throw new ArgumentNullException(nameof(predicate));
+            }
+
             _exceptPredicates.Add(predicate);
             return this;
         }
