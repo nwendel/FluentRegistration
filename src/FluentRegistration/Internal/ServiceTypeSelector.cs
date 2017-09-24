@@ -59,7 +59,7 @@ namespace FluentRegistration.Internal
         /// <returns></returns>
         public IWithService AllInterfaces()
         {
-            _serviceTypeSelector.Add(type => type.GetInterfaces());
+            _serviceTypeSelector.Add(type => type.GetTypeInfo().GetInterfaces());
             return this;
         }
 
@@ -103,7 +103,7 @@ namespace FluentRegistration.Internal
         /// <returns></returns>
         public IWithService Interface<TService>()
         {
-            _serviceTypeSelector.Add(type => type.GetInterfaces());
+            _serviceTypeSelector.Add(type => type.GetTypeInfo().GetInterfaces());
             return this;
         }
 

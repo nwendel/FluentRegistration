@@ -45,7 +45,7 @@ namespace FluentRegistration.Internal
         /// <returns></returns>
         public bool AssignableTo<T>()
         {
-            return typeof(T).IsAssignableFrom(ImplementationType);
+            return typeof(T).GetTypeInfo().IsAssignableFrom(ImplementationType);
         }
 
         #endregion
