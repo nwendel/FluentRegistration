@@ -14,6 +14,7 @@
 // limitations under the License.
 #endregion
 using System;
+using System.Reflection;
 
 namespace FluentRegistration.Internal
 {
@@ -43,9 +44,20 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="type"></param>
+        /// <param name="types"></param>
         /// <returns></returns>
-        IComponentImplementationSelector<object> For(params Type[] type);
+        IComponentImplementationSelector<object> For(params Type[] types);
+
+        #endregion
+
+        #region From Assembly
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assembly"></param>
+        /// <returns></returns>
+        ITypeSelector FromAssembly(Assembly assembly);
 
         #endregion
 
@@ -56,6 +68,16 @@ namespace FluentRegistration.Internal
         /// </summary>
         /// <typeparam name="T"></typeparam>
         ITypeSelector FromAssemblyContaining<T>();
+
+        #endregion
+
+        #region From This Assembly
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        ITypeSelector FromThisAssembly();
 
         #endregion
 

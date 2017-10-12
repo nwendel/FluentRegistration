@@ -80,7 +80,21 @@ namespace FluentRegistration.Tests
                     .For()
                     .ImplementedBy<SimpleService>()));
         }
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void ThrowsOnNoAssembly()
+        {
+            var tested = new ServiceCollection();
+
+            Assert.Throws<ArgumentNullException>("assembly", () =>
+                tested.Register(r => r
+                    .FromAssembly(null)
+                    .WithServices.AllInterfaces()));
+        }
+
     }
 
 }

@@ -16,6 +16,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FluentRegistration.Internal
@@ -81,6 +82,27 @@ namespace FluentRegistration.Internal
 
         #endregion
 
+        #region From Assembly
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assembly"></param>
+        /// <returns></returns>
+        public ITypeSelector FromAssembly(Assembly assembly)
+        {
+            if(assembly == null)
+            {
+                throw new ArgumentNullException(nameof(assembly));
+            }
+
+            var registration = new AssemblyTypeSelector(assembly);
+            _register = registration;
+            return registration;
+        }
+
+        #endregion
+
         #region From Assembly Containing
 
         /// <summary>
@@ -91,9 +113,21 @@ namespace FluentRegistration.Internal
         public ITypeSelector FromAssemblyContaining<T>()
         {
             var assembly = typeof(T).GetTypeInfo().Assembly;
-            var registration = new AssemblyTypeSelector(assembly);
-            _register = registration;
-            return registration;
+            return FromAssembly(assembly);
+        }
+
+        #endregion
+
+        #region From This Assembly
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public ITypeSelector FromThisAssembly()
+        {
+            return FromAssembly(Assembly.GetCallingAssembly());
         }
 
         #endregion
