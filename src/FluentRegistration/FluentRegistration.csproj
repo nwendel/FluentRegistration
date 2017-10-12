@@ -9,7 +9,7 @@
     <PackageId>FluentRegistration</PackageId>
     <Title>FluentRegistration</Title>
     <Description>FluentRegistration</Description>
-    <Version>2.1.0</Version>
+    <Version>2.2.0</Version>
     <Copyright>Niklas Wendel 2016-2017</Copyright>
     <Authors>Niklas Wendel</Authors>
     <PackageTags>Dependency;Injection;Fluent;Registration;DI;Assembly;Scanning;Conventions</PackageTags>
