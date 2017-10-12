@@ -42,6 +42,11 @@ namespace FluentRegistration.Internal
         /// <param name="assembly"></param>
         public void FromAssembly(Assembly assembly)
         {
+            if(assembly == null)
+            {
+                throw new ArgumentNullException(nameof(assembly));
+            }
+
             var allTypes = assembly.GetTypes();
             var installers = allTypes
                 .Where(x => typeof(IServiceInstaller).GetTypeInfo().IsAssignableFrom(x))

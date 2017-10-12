@@ -16,6 +16,7 @@
 
 using FluentRegistration.Tests.Classes;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using Xunit;
 
 namespace FluentRegistration.Tests
@@ -50,7 +51,7 @@ namespace FluentRegistration.Tests
         /// 
         /// </summary>
         [Fact]
-        public void CanInstallFromAssembly()
+        public void CanInstallFromAssemblyContaining()
         {
             var tested = new ServiceCollection();
 
@@ -64,7 +65,38 @@ namespace FluentRegistration.Tests
                 Assert.Equal(typeof(SimpleService), service.ImplementationType);
             });
         }
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void CanInstallFromThisAssembly()
+        {
+            var tested = new ServiceCollection();
+
+            tested.Install(i => i.FromThisAssembly());
+
+            Assert.Equal(1, tested.Count);
+            Assert.All(tested, service =>
+            {
+                Assert.Equal(ServiceLifetime.Singleton, service.Lifetime);
+                Assert.Equal(typeof(ISimpleService), service.ServiceType);
+                Assert.Equal(typeof(SimpleService), service.ImplementationType);
+            });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void ThrowsOnInstallFromAssemblyNullAssembly()
+        {
+            var tested = new ServiceCollection();
+
+            Assert.Throws<ArgumentNullException>("assembly", () =>
+                tested.Install(i => i.FromAssembly(null)));
+        }
+
     }
 
 }

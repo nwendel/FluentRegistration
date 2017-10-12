@@ -60,7 +60,7 @@ namespace FluentRegistration.Internal
         {
             get
             {
-                _serviceTypeSelector = new ServiceTypeSelector(null);
+                _serviceTypeSelector = new ServiceTypeSelector();
                 return _serviceTypeSelector;
             }
         }

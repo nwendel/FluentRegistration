@@ -26,28 +26,13 @@ namespace FluentRegistration.Internal
     /// 
     /// </summary>
     public class ServiceTypeSelector :
-        IWithService,
-        IRegister
+        IWithService
     {
 
         #region Fields
 
-        private readonly IRegister _register;
         private readonly List<Func<Type, IEnumerable<Type>>> _serviceTypeSelectors = new List<Func<Type, IEnumerable<Type>>>();
         private readonly LifetimeSelector _lifetimeSelector = new LifetimeSelector();
-
-        #endregion
-
-        #region Constructor
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="register"></param>
-        public ServiceTypeSelector(IRegister register)
-        {
-            _register = register;
-        }
 
         #endregion
 
@@ -153,19 +138,6 @@ namespace FluentRegistration.Internal
         /// </summary>
         /// <returns></returns>
         public LifetimeSelector GetLifetimeSelector() => _lifetimeSelector;
-
-        #endregion
-
-        #region Register
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="serviceCollection"></param>
-        public void Register(IServiceCollection serviceCollection)
-        {
-            _register.Register(serviceCollection);
-        }
 
         #endregion
 
