@@ -13,6 +13,8 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
+using System.Reflection;
+
 namespace FluentRegistration.Internal
 {
 
@@ -22,6 +24,16 @@ namespace FluentRegistration.Internal
     public interface IInstallation
     {
 
+        #region From Assembly
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assembly"></param>
+        void FromAssembly(Assembly assembly);
+
+        #endregion
+
         #region From Assembly Containing
 
         /// <summary>
@@ -29,6 +41,15 @@ namespace FluentRegistration.Internal
         /// </summary>
         /// <typeparam name="T"></typeparam>
         void FromAssemblyContaining<T>();
+
+        #endregion
+
+        #region From This Assembly
+
+        /// <summary>
+        /// 
+        /// </summary>
+        void FromThisAssembly();
 
         #endregion
 

@@ -16,6 +16,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FluentRegistration.Internal
@@ -33,6 +34,25 @@ namespace FluentRegistration.Internal
 
         #endregion
 
+        #region From Assembly
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="assembly"></param>
+        public void FromAssembly(Assembly assembly)
+        {
+            var allTypes = assembly.GetTypes();
+            var installers = allTypes
+                .Where(x => typeof(IServiceInstaller).GetTypeInfo().IsAssignableFrom(x))
+                .Select(x => Activator.CreateInstance(x))
+                .Cast<IServiceInstaller>()
+                .ToArray();
+            _installers = installers;
+        }
+
+        #endregion
+
         #region From Assembly Containing
 
         /// <summary>
@@ -42,13 +62,20 @@ namespace FluentRegistration.Internal
         public void FromAssemblyContaining<T>()
         {
             var assembly = typeof(T).GetTypeInfo().Assembly;
-            var allTypes = assembly.GetTypes();
-            var installers = allTypes
-                .Where(x => typeof(IServiceInstaller).GetTypeInfo().IsAssignableFrom(x))
-                .Select(x => Activator.CreateInstance(x))
-                .Cast<IServiceInstaller>()
-                .ToArray();
-            _installers = installers;
+            FromAssembly(assembly);
+        }
+
+        #endregion
+
+        #region From This Assembly
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public void FromThisAssembly()
+        {
+            FromAssembly(Assembly.GetCallingAssembly());
         }
 
         #endregion
