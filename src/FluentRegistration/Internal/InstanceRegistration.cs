@@ -14,6 +14,7 @@
 // limitations under the License.
 #endregion
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace FluentRegistration.Internal
 {
@@ -40,6 +41,11 @@ namespace FluentRegistration.Internal
         /// </summary>
         public InstanceRegistration(T instance)
         {
+            if(instance == null)
+            {
+                throw new ArgumentNullException(nameof(instance));
+            }
+
             _instance = instance;
         }
 

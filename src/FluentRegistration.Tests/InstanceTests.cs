@@ -16,6 +16,7 @@
 
 using FluentRegistration.Tests.Classes;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using Xunit;
 
 namespace FluentRegistration.Tests
@@ -30,6 +31,21 @@ namespace FluentRegistration.Tests
         /// <summary>
         /// 
         /// </summary>
+        [Fact]
+        public void ThrowsOnRegisterNullInstance()
+        {
+            var tested = new ServiceCollection();
+
+            Assert.Throws<ArgumentNullException>("instance", () =>
+                tested.Register(r => r
+                    .Instance<SimpleService>(null)
+                    .WithServices.AllInterfaces()));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
         public void CanRegister()
         {
             var tested = new ServiceCollection();
