@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) Niklas Wendel 2016
+// Copyright (c) Niklas Wendel 2016-2017
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); 
 // you may not use this file except in compliance with the License. 
@@ -13,9 +13,10 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
+
+using FluentRegistration.Tests.Classes;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
-using FluentRegistration.Tests.TestClasses;
 
 namespace FluentRegistration.Tests
 {
@@ -34,7 +35,7 @@ namespace FluentRegistration.Tests
         {
             var tested = new ServiceCollection();
 
-            tested.Install<SimpleInstaller>();
+            tested.Install<SimpleServiceInstaller>();
 
             Assert.Equal(1, tested.Count);
             Assert.All(tested, service =>
@@ -45,6 +46,25 @@ namespace FluentRegistration.Tests
             });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void CanInstallFromAssembly()
+        {
+            var tested = new ServiceCollection();
+
+            tested.Install(i => i.FromAssemblyContaining<SimpleServiceInstaller>());
+
+            Assert.Equal(1, tested.Count);
+            Assert.All(tested, service =>
+            {
+                Assert.Equal(ServiceLifetime.Singleton, service.Lifetime);
+                Assert.Equal(typeof(ISimpleService), service.ServiceType);
+                Assert.Equal(typeof(SimpleService), service.ImplementationType);
+            });
+        }
+        
     }
 
 }

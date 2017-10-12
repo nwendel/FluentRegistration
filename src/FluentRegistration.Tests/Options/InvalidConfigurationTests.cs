@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) Niklas Wendel 2016
+// Copyright (c) Niklas Wendel 2016-2017
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); 
 // you may not use this file except in compliance with the License. 
@@ -35,7 +35,7 @@ namespace FluentRegistration.Tests.Options
             ServiceCollection tested = null;
 
             Assert.Throws<ArgumentNullException>("self",
-                () => tested.ConfigureFluentRegistration(o => { }));
+                () => tested.Configure(o => { }));
         }
 
         /// <summary>
@@ -44,10 +44,10 @@ namespace FluentRegistration.Tests.Options
         [Fact]
         public void ThrowsOnNullOptionsAction()
         {
-            ServiceCollection tested = new ServiceCollection();
+            var tested = new ServiceCollection();
 
             Assert.Throws<ArgumentNullException>("optionsAction",
-                () => tested.ConfigureFluentRegistration(null));
+                () => tested.Configure(null));
         }
 
     }

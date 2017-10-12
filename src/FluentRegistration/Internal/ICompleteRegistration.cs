@@ -13,29 +13,14 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-using System;
-
-namespace FluentRegistration
+namespace FluentRegistration.Internal
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public class RegistrationException : Exception
+    public interface ICompleteRegistration
     {
-
-        #region Constructor
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="message"></param>
-        public RegistrationException(string message) : base(message)
-        {
-        }
-
-        #endregion
-
     }
 
 }

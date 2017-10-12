@@ -13,42 +13,54 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-using System;
-using Microsoft.Extensions.DependencyInjection;
-using Xunit;
-
-namespace FluentRegistration.Tests
+namespace FluentRegistration.Internal
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public class InvalidInstallTests
+    public interface IServiceSelector
     {
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [Fact]
-        public void ThrowsOnNullServiceCollection()
-        {
-            ServiceCollection tested = null;
-
-            Assert.Throws<ArgumentNullException>("self",
-                () => tested.Install(null));
-        }
+        #region All Interfaces
 
         /// <summary>
         /// 
         /// </summary>
-        [Fact]
-        public void ThrowsOnNullInstallers()
-        {
-            var tested = new ServiceCollection();
+        /// <returns></returns>
+        IWithService AllInterfaces();
 
-            Assert.Throws<ArgumentNullException>("installationAction",
-                () => tested.Install(null));
-        }
+        #endregion
+
+        #region Default Interface
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        IWithService DefaultInterface();
+
+        #endregion
+
+        #region Interface
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        IWithService Interface<TService>();
+
+        #endregion
+
+        #region Self
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        IWithService Self();
+
+        #endregion
 
     }
 

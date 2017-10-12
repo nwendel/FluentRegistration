@@ -22,15 +22,15 @@ namespace FluentRegistration.Internal
     /// <summary>
     /// 
     /// </summary>
-    public class ComponentRegistration<TService> : 
-        IComponentImplementationSelector<TService>,
+    public class ComponentInstanceRegistration<TService> :
+        ICompleteRegistration,
         IRegister
     {
 
         #region Fields
 
-        private IRegister _register;
         private readonly Type[] _serviceTypes;
+        private readonly TService _instance;
 
         #endregion
 
@@ -40,46 +40,11 @@ namespace FluentRegistration.Internal
         /// 
         /// </summary>
         /// <param name="serviceTypes"></param>
-        public ComponentRegistration(Type[] serviceTypes)
+        /// <param name="instance"></param>
+        public ComponentInstanceRegistration(Type[] serviceTypes, TService instance)
         {
             _serviceTypes = serviceTypes;
-        }
-
-        #endregion
-
-        #region Implemented By
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="TImplementation"></typeparam>
-        /// <returns></returns>
-        public ILifetime ImplementedBy<TImplementation>()
-            where TImplementation : TService
-        {
-            var implementedByRegistration = new ComponentImplementedByRegistration<TService, TImplementation>(_serviceTypes);
-            _register = implementedByRegistration;
-            return implementedByRegistration;
-        }
-
-        #endregion
-
-        #region Instance
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="instance"></param>
-        public ICompleteRegistration Instance(TService instance)
-        {
-            if(instance == null)
-            {
-                throw new ArgumentNullException(nameof(instance));
-            }
-
-            var instanceRegistration = new ComponentInstanceRegistration<TService>(_serviceTypes, instance);
-            _register = instanceRegistration;
-            return instanceRegistration;
+            _instance = instance;
         }
 
         #endregion
@@ -92,7 +57,11 @@ namespace FluentRegistration.Internal
         /// <param name="serviceCollection"></param>
         public void Register(IServiceCollection serviceCollection)
         {
-            _register.Register(serviceCollection);
+            foreach (var serviceType in _serviceTypes)
+            {
+                var serviceDescriptor = new ServiceDescriptor(serviceType, _instance);
+                serviceCollection.Add(serviceDescriptor);
+            }
         }
 
         #endregion

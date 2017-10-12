@@ -13,9 +13,9 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
+
 using System;
-using FluentRegistration.Tests.Classes;
-using Microsoft.Extensions.DependencyInjection;
+using FluentRegistration.Internal;
 using Xunit;
 
 namespace FluentRegistration.Tests
@@ -24,45 +24,31 @@ namespace FluentRegistration.Tests
     /// <summary>
     /// 
     /// </summary>
-    public class ComponentForInstanceTests
+    public class TypeSelectorTests
     {
 
         /// <summary>
         /// 
         /// </summary>
         [Fact]
-        public void CanRegister()
+        public void ThrowsOnNullWhere()
         {
-            var tested = new ServiceCollection();
+            var tested = new AssemblyTypeSelector(null);
 
-            var simpleService = new SimpleService();
-
-            tested.Register(r => r
-                .For<ISimpleService>()
-                .Instance(simpleService));
-
-            Assert.Equal(1, tested.Count);
-            Assert.All(tested, service =>
-            {
-                Assert.Equal(typeof(ISimpleService), service.ServiceType);
-                Assert.Same(simpleService, service.ImplementationInstance);
-            });
+            Assert.Throws<ArgumentNullException>("predicate", () => tested.Where(null));
         }
 
         /// <summary>
         /// 
         /// </summary>
         [Fact]
-        public void ThrowsOnRegisterNullInstance()
+        public void ThrowsOnNullExcept()
         {
-            var tested = new ServiceCollection();
+            var tested = new AssemblyTypeSelector(null);
 
-            Assert.Throws<ArgumentNullException>("instance", () =>
-                tested.Register(r => r
-                    .For<ISimpleService>()
-                    .Instance(null)));
+            Assert.Throws<ArgumentNullException>("predicate", () => tested.Except(null));
         }
-
+        
     }
 
 }

@@ -13,39 +13,63 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-namespace FluentRegistration.Options
+using System;
+
+namespace FluentRegistration.Internal
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public class FluentRegistrationOptions
+    public interface ITypeFilter : IFluentInterface
     {
 
-        #region Properties
+        #region Assignable To
 
         /// <summary>
         /// 
         /// </summary>
-        public MultipleRegistrationsBehavior MultipleRegistrationsBehavior { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public RegistrationsWithoutServicesBehavior RegistrationsWithoutServicesBehavior { get; set; }
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        bool AssignableTo<T>();
 
         #endregion
 
-        #region Default
+        #region In Namespace
 
         /// <summary>
         /// 
         /// </summary>
-        public static readonly FluentRegistrationOptions Default = new FluentRegistrationOptions
-        {
-            MultipleRegistrationsBehavior = MultipleRegistrationsBehavior.Ignore,
-            RegistrationsWithoutServicesBehavior = RegistrationsWithoutServicesBehavior.Ignore
-        };
+        /// <param name="namespace"></param>
+        /// <returns></returns>
+        bool InNamespace(string @namespace);
+
+        #endregion
+
+        #region In Same Namespace As
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        bool InSameNamespaceAs(Type type);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        bool InSameNamespaceAs<T>();
+
+        #endregion
+
+        #region Implementation Type
+
+        /// <summary>
+        /// 
+        /// </summary>
+        Type ImplementationType { get; }
 
         #endregion
 

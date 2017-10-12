@@ -13,10 +13,7 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-using System;
-using FluentRegistration.Tests.Classes;
 using Microsoft.Extensions.DependencyInjection;
-using Xunit;
 
 namespace FluentRegistration.Tests
 {
@@ -24,43 +21,37 @@ namespace FluentRegistration.Tests
     /// <summary>
     /// 
     /// </summary>
-    public class ComponentForInstanceTests
+    public class SyntaxTests
     {
 
         /// <summary>
         /// 
         /// </summary>
-        [Fact]
-        public void CanRegister()
+        public void Asdf()
         {
             var tested = new ServiceCollection();
-
-            var simpleService = new SimpleService();
 
             tested.Register(r => r
-                .For<ISimpleService>()
-                .Instance(simpleService));
+                .FromAssemblyContaining<SyntaxTests>()
+                .Where(c => c.InSameNamespaceAs<SyntaxTests>())
+                .Except(c => c.InSameNamespaceAs<SyntaxTests>())
+                .WithServices.AllInterfaces()
+                .Lifetime.Transient);
 
-            Assert.Equal(1, tested.Count);
-            Assert.All(tested, service =>
-            {
-                Assert.Equal(typeof(ISimpleService), service.ServiceType);
-                Assert.Same(simpleService, service.ImplementationInstance);
-            });
-        }
+            tested.Register(r => r
+                .FromAssemblyContaining<SyntaxTests>()
+                .WithServices.AllInterfaces()
+                .Lifetime.Transient);
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [Fact]
-        public void ThrowsOnRegisterNullInstance()
-        {
-            var tested = new ServiceCollection();
-
-            Assert.Throws<ArgumentNullException>("instance", () =>
-                tested.Register(r => r
-                    .For<ISimpleService>()
-                    .Instance(null)));
+            tested.Register(r => r
+                .FromAssemblyContaining<SyntaxTests>()
+                .WithServices.AllInterfaces());
+            tested.Register(r => r
+                .FromAssemblyContaining<SyntaxTests>()
+                .WithServices
+                    .DefaultInterface()
+                    .Interface<object>()
+                .Lifetime.Singleton);
         }
 
     }

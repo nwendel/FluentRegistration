@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) Niklas Wendel 2016
+// Copyright (c) Niklas Wendel 2016-2017
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); 
 // you may not use this file except in compliance with the License. 
@@ -31,7 +31,7 @@ namespace FluentRegistration
         /// <summary>
         /// 
         /// </summary>
-        public static AttachedProperty<IServiceCollection, FluentRegistrationOptions> Options = new AttachedProperty<IServiceCollection, FluentRegistrationOptions>(nameof(Options));
+        public static readonly AttachedProperty<IServiceCollection, FluentRegistrationOptions> Options = new AttachedProperty<IServiceCollection, FluentRegistrationOptions>(nameof(Options));
 
         #endregion
 

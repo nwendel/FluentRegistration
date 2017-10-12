@@ -20,75 +20,81 @@ namespace FluentRegistration.Internal
 {
 
     /// <summary>
-    /// 
     /// </summary>
-    public interface IRegistration
+    public class TypeFilter : ITypeFilter
     {
 
-        #region For
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="TService"></typeparam>
-        /// <returns></returns>
-        IComponentImplementationSelector<TService> For<TService>();
+        #region Constructor
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="type"></param>
-        /// <returns></returns>
-        IComponentImplementationSelector<object> For(Type type);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="types"></param>
-        /// <returns></returns>
-        IComponentImplementationSelector<object> For(params Type[] types);
+        public TypeFilter(Type type)
+        {
+            ImplementationType = type;
+        }
 
         #endregion
 
-        #region From Assembly
+        #region Assignable To
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="assembly"></param>
-        /// <returns></returns>
-        ITypeSelector FromAssembly(Assembly assembly);
-
-        #endregion
-
-        #region From Assembly Containing
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        ITypeSelector FromAssemblyContaining<T>();
-
-        #endregion
-
-        #region From This Assembly
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        ITypeSelector FromThisAssembly();
-
-        #endregion
-
-        #region Implemented By
-
-        /// <summary>
-        /// 
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        IWithServiceInitial ImplementedBy<T>();
+        public bool AssignableTo<T>()
+        {
+            return typeof(T).GetTypeInfo().IsAssignableFrom(ImplementationType);
+        }
+
+        #endregion
+
+        #region Is In Namespace
+
+        /// <summary>
+        /// </summary>
+        /// <param name="namespace"></param>
+        /// <returns></returns>
+        public bool InNamespace(string @namespace)
+        {
+            if(string.IsNullOrWhiteSpace(@namespace))
+            {
+                throw new ArgumentNullException(nameof(@namespace));
+            }
+
+            return ImplementationType.Namespace == @namespace;
+        }
+
+        #endregion
+
+        #region In Same Namespace As
+
+        /// <summary>
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public bool InSameNamespaceAs(Type type)
+        {
+            return InNamespace(type.Namespace);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public bool InSameNamespaceAs<T>()
+        {
+            return InSameNamespaceAs(typeof(T));
+        }
+
+        #endregion
+
+        #region Implementation Type
+
+        /// <summary>
+        /// </summary>
+        public Type ImplementationType { get; }
 
         #endregion
 

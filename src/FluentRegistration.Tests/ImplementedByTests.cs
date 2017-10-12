@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-using System;
+
 using FluentRegistration.Tests.Classes;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
@@ -24,7 +24,7 @@ namespace FluentRegistration.Tests
     /// <summary>
     /// 
     /// </summary>
-    public class ComponentForInstanceTests
+    public class ImplementedByTests
     {
 
         /// <summary>
@@ -35,32 +35,16 @@ namespace FluentRegistration.Tests
         {
             var tested = new ServiceCollection();
 
-            var simpleService = new SimpleService();
-
             tested.Register(r => r
-                .For<ISimpleService>()
-                .Instance(simpleService));
+                .ImplementedBy<SimpleService>()
+                .WithServices.AllInterfaces());
 
             Assert.Equal(1, tested.Count);
             Assert.All(tested, service =>
             {
                 Assert.Equal(typeof(ISimpleService), service.ServiceType);
-                Assert.Same(simpleService, service.ImplementationInstance);
+                Assert.Equal(typeof(SimpleService), service.ImplementationType);
             });
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Fact]
-        public void ThrowsOnRegisterNullInstance()
-        {
-            var tested = new ServiceCollection();
-
-            Assert.Throws<ArgumentNullException>("instance", () =>
-                tested.Register(r => r
-                    .For<ISimpleService>()
-                    .Instance(null)));
         }
 
     }

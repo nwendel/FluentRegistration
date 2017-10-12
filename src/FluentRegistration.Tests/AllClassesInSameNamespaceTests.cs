@@ -15,8 +15,7 @@
 #endregion
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
-using FluentRegistration;
-using FluentRegistration.Tests.TestClasses.AnotherNamespace;
+using FluentRegistration.Tests.Classes.AnotherNamespace;
 
 namespace FluentRegistration.Tests
 {
@@ -31,14 +30,14 @@ namespace FluentRegistration.Tests
         /// 
         /// </summary>
         [Fact]
-        public void CanRegister()
+        public void CanRegisterWhere()
         {
             var tested = new ServiceCollection();
 
-            tested.Register(AllClasses
-                    .FromAssemblyContaining<AllClassesInSameNamespaceTests>()
-                    .Where(Component.IsInSameNamespaceAs<ServiceInAnotherNamespace>())
-                    .WithService.AllInterfaces());
+            tested.Register(r => r
+                .FromAssemblyContaining<AllClassesInSameNamespaceTests>()
+                .Where(c => c.InSameNamespaceAs<ServiceInAnotherNamespace>())
+                .WithServices.AllInterfaces());
 
             Assert.Equal(1, tested.Count);
             Assert.All(tested, service =>
@@ -48,6 +47,23 @@ namespace FluentRegistration.Tests
             });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void CanRegisterExcept()
+        {
+            var tested = new ServiceCollection();
+
+            tested.Register(r => r
+                .FromAssemblyContaining<AllClassesInSameNamespaceTests>()
+                .Where(c => c.InSameNamespaceAs<ServiceInAnotherNamespace>())
+                .Except(c => c.ImplementationType == typeof(ServiceInAnotherNamespace))
+                .WithServices.AllInterfaces());
+
+            Assert.Equal(0, tested.Count);
+        }
+        
     }
 
 }

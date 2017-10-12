@@ -14,41 +14,37 @@
 // limitations under the License.
 #endregion
 using System;
-using Microsoft.Extensions.DependencyInjection;
-using Xunit;
 
-namespace FluentRegistration.Tests
+namespace FluentRegistration.Internal
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public class InvalidInstallTests
+    public interface ITypeSelector : IWithServiceInitial
     {
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [Fact]
-        public void ThrowsOnNullServiceCollection()
-        {
-            ServiceCollection tested = null;
-
-            Assert.Throws<ArgumentNullException>("self",
-                () => tested.Install(null));
-        }
+        #region Where
 
         /// <summary>
         /// 
         /// </summary>
-        [Fact]
-        public void ThrowsOnNullInstallers()
-        {
-            var tested = new ServiceCollection();
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        ITypeSelector Where(Func<ITypeFilter, bool> predicate);
 
-            Assert.Throws<ArgumentNullException>("installationAction",
-                () => tested.Install(null));
-        }
+        #endregion
+
+        #region Except
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        ITypeSelector Except(Func<ITypeFilter, bool> predicate);
+
+        #endregion
 
     }
 

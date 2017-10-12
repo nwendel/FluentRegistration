@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) Niklas Wendel 2016-2017
+// Copyright (c) Niklas Wendel 2016
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); 
 // you may not use this file except in compliance with the License. 
@@ -13,28 +13,19 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-using System;
-
-namespace FluentRegistration
+namespace FluentRegistration.Tests.Classes.AnotherNamespace
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public class RegistrationException : Exception
+    public interface IServiceInAnotherNamespace
     {
-
-        #region Constructor
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="message"></param>
-        public RegistrationException(string message) : base(message)
-        {
-        }
-
-        #endregion
+        void Operation();
 
     }
 

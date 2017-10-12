@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) Niklas Wendel 2016-2017
+// Copyright (c) Niklas Wendel 2016
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); 
 // you may not use this file except in compliance with the License. 
@@ -13,10 +13,9 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-using System;
-using FluentRegistration.Tests.Classes;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
+using FluentRegistration.Tests.Classes.AnotherNamespace;
 
 namespace FluentRegistration.Tests
 {
@@ -24,7 +23,7 @@ namespace FluentRegistration.Tests
     /// <summary>
     /// 
     /// </summary>
-    public class ComponentForInstanceTests
+    public class FromAssemblyTests
     {
 
         /// <summary>
@@ -35,34 +34,21 @@ namespace FluentRegistration.Tests
         {
             var tested = new ServiceCollection();
 
-            var simpleService = new SimpleService();
-
             tested.Register(r => r
-                .For<ISimpleService>()
-                .Instance(simpleService));
+                .FromThisAssembly()
+                .Where(c => c.InSameNamespaceAs<ServiceInAnotherNamespace>())
+                .WithServices.AllInterfaces());
 
             Assert.Equal(1, tested.Count);
             Assert.All(tested, service =>
             {
-                Assert.Equal(typeof(ISimpleService), service.ServiceType);
-                Assert.Same(simpleService, service.ImplementationInstance);
+                Assert.Equal(typeof(IServiceInAnotherNamespace), service.ServiceType);
+                Assert.Equal(typeof(ServiceInAnotherNamespace), service.ImplementationType);
             });
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Fact]
-        public void ThrowsOnRegisterNullInstance()
-        {
-            var tested = new ServiceCollection();
-
-            Assert.Throws<ArgumentNullException>("instance", () =>
-                tested.Register(r => r
-                    .For<ISimpleService>()
-                    .Instance(null)));
         }
 
     }
 
 }
+
+

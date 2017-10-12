@@ -14,41 +14,45 @@
 // limitations under the License.
 #endregion
 using System;
-using Microsoft.Extensions.DependencyInjection;
-using Xunit;
+using System.Collections.Generic;
+using System.Reflection;
 
-namespace FluentRegistration.Tests
+namespace FluentRegistration.Internal
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public class InvalidInstallTests
+    public class AssemblyTypeSelector : AbstractTypeSelector
     {
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [Fact]
-        public void ThrowsOnNullServiceCollection()
-        {
-            ServiceCollection tested = null;
+        #region Fields
 
-            Assert.Throws<ArgumentNullException>("self",
-                () => tested.Install(null));
-        }
+        private readonly Assembly _assembly;
+
+        #endregion
+
+        #region Constructor
 
         /// <summary>
         /// 
         /// </summary>
-        [Fact]
-        public void ThrowsOnNullInstallers()
+        public AssemblyTypeSelector(Assembly assembly)
         {
-            var tested = new ServiceCollection();
-
-            Assert.Throws<ArgumentNullException>("installationAction",
-                () => tested.Install(null));
+            _assembly = assembly;
         }
+
+        #endregion
+
+        #region Types
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// 
+        protected override IEnumerable<Type> Types => _assembly.GetTypes();
+
+        #endregion
 
     }
 

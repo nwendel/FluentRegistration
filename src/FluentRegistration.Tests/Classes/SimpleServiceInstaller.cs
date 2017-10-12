@@ -13,41 +13,26 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-using System;
 using Microsoft.Extensions.DependencyInjection;
-using Xunit;
 
-namespace FluentRegistration.Tests
+namespace FluentRegistration.Tests.Classes
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public class InvalidInstallTests
+    public class SimpleServiceInstaller : IServiceInstaller
     {
 
         /// <summary>
         /// 
         /// </summary>
-        [Fact]
-        public void ThrowsOnNullServiceCollection()
+        /// <param name="serviceCollection"></param>
+        public void Install(IServiceCollection serviceCollection)
         {
-            ServiceCollection tested = null;
-
-            Assert.Throws<ArgumentNullException>("self",
-                () => tested.Install(null));
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Fact]
-        public void ThrowsOnNullInstallers()
-        {
-            var tested = new ServiceCollection();
-
-            Assert.Throws<ArgumentNullException>("installationAction",
-                () => tested.Install(null));
+            serviceCollection.Register(c => c
+                .For<ISimpleService>()
+                .ImplementedBy<SimpleService>());
         }
 
     }

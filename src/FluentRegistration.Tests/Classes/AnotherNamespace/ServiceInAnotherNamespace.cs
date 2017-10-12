@@ -1,5 +1,5 @@
 ﻿#region License
-// Copyright (c) Niklas Wendel 2016-2017
+// Copyright (c) Niklas Wendel 2016
 // 
 // Licensed under the Apache License, Version 2.0 (the "License"); 
 // you may not use this file except in compliance with the License. 
@@ -13,41 +13,20 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-using System;
-using Microsoft.Extensions.DependencyInjection;
-using Xunit;
-
-namespace FluentRegistration.Tests
+namespace FluentRegistration.Tests.Classes.AnotherNamespace
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public class InvalidInstallTests
+    public class ServiceInAnotherNamespace : IServiceInAnotherNamespace
     {
 
         /// <summary>
         /// 
         /// </summary>
-        [Fact]
-        public void ThrowsOnNullServiceCollection()
+        public void Operation()
         {
-            ServiceCollection tested = null;
-
-            Assert.Throws<ArgumentNullException>("self",
-                () => tested.Install(null));
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [Fact]
-        public void ThrowsOnNullInstallers()
-        {
-            var tested = new ServiceCollection();
-
-            Assert.Throws<ArgumentNullException>("installationAction",
-                () => tested.Install(null));
         }
 
     }

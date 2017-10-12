@@ -13,8 +13,7 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-using System;
-using System.ComponentModel;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace FluentRegistration.Internal
 {
@@ -22,52 +21,63 @@ namespace FluentRegistration.Internal
     /// <summary>
     /// 
     /// </summary>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public interface IFluentInterface
+    public class LifetimeSelector : ILifetimeSelector, ICompleteRegistration
     {
 
-        #region Get Type
+        #region Properties
 
         /// <summary>
         /// 
         /// </summary>
-        /// <returns></returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        Type GetType();
+        public ServiceLifetime Lifetime { get; private set; } = ServiceLifetime.Singleton;
 
         #endregion
 
-        #region Get Hash Code
+        #region Singleton
 
         /// <summary>
         /// 
         /// </summary>
-        /// <returns></returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        int GetHashCode();
+        public ICompleteRegistration Singleton
+        {
+            get
+            {
+                Lifetime = ServiceLifetime.Singleton;
+                return this;
+            }
+        }
 
         #endregion
 
-        #region To String
+        #region Scoped
 
         /// <summary>
         /// 
         /// </summary>
-        /// <returns></returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        string ToString();
+        public ICompleteRegistration Scoped
+        {
+            get
+            {
+                Lifetime = ServiceLifetime.Scoped;
+                return this;
+            }
+        }
 
         #endregion
 
-        #region Equals
+        #region Transient
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        bool Equals(object obj);
+        public ICompleteRegistration Transient
+        {
+            get
+            {
+                Lifetime = ServiceLifetime.Transient;
+                return this;
+            }
+        }
 
         #endregion
 
