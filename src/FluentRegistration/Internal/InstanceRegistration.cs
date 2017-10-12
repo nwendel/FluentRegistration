@@ -13,8 +13,6 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-using System;
-using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FluentRegistration.Internal
@@ -23,15 +21,15 @@ namespace FluentRegistration.Internal
     /// <summary>
     /// 
     /// </summary>
-    public class ComponentInstanceRegistration<TService> :
-        ICompleteRegistration,
+    public class InstanceRegistration<T> :
+        IWithServiceInitial, 
         IRegister
     {
 
         #region Fields
 
-        private readonly IEnumerable<Type> _serviceTypes;
-        private readonly TService _instance;
+        private readonly T _instance;
+        private ServiceTypeSelector _serviceTypeSelector;
 
         #endregion
 
@@ -40,12 +38,25 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="serviceTypes"></param>
-        /// <param name="instance"></param>
-        public ComponentInstanceRegistration(IEnumerable<Type> serviceTypes, TService instance)
+        public InstanceRegistration(T instance)
         {
-            _serviceTypes = serviceTypes;
             _instance = instance;
+        }
+
+        #endregion
+
+        #region With Service
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public IServiceSelector WithServices
+        {
+            get
+            {
+                _serviceTypeSelector = new ServiceTypeSelector(null);
+                return _serviceTypeSelector;
+            }
         }
 
         #endregion
@@ -58,11 +69,11 @@ namespace FluentRegistration.Internal
         /// <param name="serviceCollection"></param>
         public void Register(IServiceCollection serviceCollection)
         {
-            foreach (var serviceType in _serviceTypes)
-            {
-                var serviceDescriptor = new ServiceDescriptor(serviceType, _instance);
-                serviceCollection.Add(serviceDescriptor);
-            }
+            var serviceTypes = _serviceTypeSelector.GetServicesFor(typeof(T));
+            var serviceLifetimeSelector = _serviceTypeSelector.GetLifetimeSelector();
+
+            var componentRegistration = new ComponentInstanceRegistration<T>(serviceTypes, _instance);
+            componentRegistration.Register(serviceCollection);
         }
 
         #endregion

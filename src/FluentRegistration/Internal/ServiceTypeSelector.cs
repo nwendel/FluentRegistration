@@ -32,8 +32,8 @@ namespace FluentRegistration.Internal
 
         #region Fields
 
-        private readonly AbstractTypeSelector _typeSelector;
-        private readonly List<Func<Type, IEnumerable<Type>>> _serviceTypeSelector = new List<Func<Type, IEnumerable<Type>>>();
+        private readonly IRegister _register;
+        private readonly List<Func<Type, IEnumerable<Type>>> _serviceTypeSelectors = new List<Func<Type, IEnumerable<Type>>>();
         private readonly LifetimeSelector _lifetimeSelector = new LifetimeSelector();
 
         #endregion
@@ -43,10 +43,10 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="typeSelector"></param>
-        public ServiceTypeSelector(AbstractTypeSelector typeSelector)
+        /// <param name="register"></param>
+        public ServiceTypeSelector(IRegister register)
         {
-            _typeSelector = typeSelector;
+            _register = register;
         }
 
         #endregion
@@ -59,7 +59,7 @@ namespace FluentRegistration.Internal
         /// <returns></returns>
         public IWithService AllInterfaces()
         {
-            _serviceTypeSelector.Add(type => type.GetTypeInfo().GetInterfaces());
+            _serviceTypeSelectors.Add(type => type.GetTypeInfo().GetInterfaces());
             return this;
         }
 
@@ -73,7 +73,7 @@ namespace FluentRegistration.Internal
         /// <returns></returns>
         public IWithService DefaultInterface()
         {
-            _serviceTypeSelector.Add(type =>
+            _serviceTypeSelectors.Add(type =>
             {
                 var typeInfo = type.GetTypeInfo();
                 var interfaces = typeInfo.GetInterfaces();
@@ -103,7 +103,7 @@ namespace FluentRegistration.Internal
         /// <returns></returns>
         public IWithService Interface<TService>()
         {
-            _serviceTypeSelector.Add(type => type.GetTypeInfo().GetInterfaces());
+            _serviceTypeSelectors.Add(type => type.GetTypeInfo().GetInterfaces());
             return this;
         }
 
@@ -117,8 +117,22 @@ namespace FluentRegistration.Internal
         /// <returns></returns>
         public IWithService Self()
         {
-            _serviceTypeSelector.Add(type => new[] { type });
+            _serviceTypeSelectors.Add(type => new[] { type });
             return this;
+        }
+
+        #endregion
+
+        #region Get Services For
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public IEnumerable<Type> GetServicesFor(Type type)
+        {
+            return _serviceTypeSelectors.SelectMany(selector => selector(type));
         }
 
         #endregion
@@ -132,6 +146,16 @@ namespace FluentRegistration.Internal
 
         #endregion
 
+        #region Get Lifetime Selector
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public LifetimeSelector GetLifetimeSelector() => _lifetimeSelector;
+
+        #endregion
+
         #region Register
 
         /// <summary>
@@ -140,17 +164,7 @@ namespace FluentRegistration.Internal
         /// <param name="serviceCollection"></param>
         public void Register(IServiceCollection serviceCollection)
         {
-            var filteredTypes = _typeSelector.FilteredTypes;
-
-            foreach(var type in filteredTypes)
-            {
-                var serviceTypes = _serviceTypeSelector
-                    .SelectMany(selector => selector(type))
-                    .ToArray();
-
-                var componentRegistration = new ComponentImplementedByRegistration<object, object>(serviceTypes, type, _lifetimeSelector);
-                componentRegistration.Register(serviceCollection);
-            }
+            _register.Register(serviceCollection);
         }
 
         #endregion

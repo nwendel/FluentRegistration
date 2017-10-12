@@ -18,6 +18,7 @@ using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using AttachedProperties;
 using FluentRegistration.Options;
+using System.Collections.Generic;
 
 namespace FluentRegistration.Internal
 {
@@ -33,7 +34,7 @@ namespace FluentRegistration.Internal
 
         #region Fields
 
-        private readonly Type[] _serviceTypes;
+        private readonly IEnumerable<Type> _serviceTypes;
         private readonly Type _implementedByType;
         private readonly LifetimeSelector _lifetimeSelector;
 
@@ -45,7 +46,7 @@ namespace FluentRegistration.Internal
         /// 
         /// </summary>
         /// <param name="serviceTypes"></param>
-        public ComponentImplementedByRegistration(Type[] serviceTypes)
+        public ComponentImplementedByRegistration(IEnumerable<Type> serviceTypes)
             : this(serviceTypes, typeof(TImplementation), new LifetimeSelector())
         {
         }
@@ -56,7 +57,7 @@ namespace FluentRegistration.Internal
         /// <param name="serviceTypes"></param>
         /// <param name="implementedByType"></param>
         /// <param name="lifetimeSelector"></param>
-        public ComponentImplementedByRegistration(Type[] serviceTypes, Type implementedByType, LifetimeSelector lifetimeSelector)
+        public ComponentImplementedByRegistration(IEnumerable<Type> serviceTypes, Type implementedByType, LifetimeSelector lifetimeSelector)
         {
             _serviceTypes = serviceTypes;
             _implementedByType = implementedByType;

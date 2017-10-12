@@ -32,9 +32,9 @@ namespace FluentRegistration.Internal
 
         #region Fields
 
-        private IRegister _register;
         private readonly List<Func<ITypeFilter, bool>> _wherePredicates = new List<Func<ITypeFilter, bool>>();
         private readonly List<Func<ITypeFilter, bool>> _exceptPredicates = new List<Func<ITypeFilter, bool>>();
+        private ServiceTypeSelector _serviceTypeSelector;
 
         #endregion
 
@@ -119,9 +119,8 @@ namespace FluentRegistration.Internal
         {
             get
             {
-                var serviceTypeSelector = new ServiceTypeSelector(this);
-                _register = serviceTypeSelector;
-                return serviceTypeSelector;
+                _serviceTypeSelector = new ServiceTypeSelector(this);
+                return _serviceTypeSelector;
             }
         }
 
@@ -135,7 +134,16 @@ namespace FluentRegistration.Internal
         /// <param name="serviceCollection"></param>
         public void Register(IServiceCollection serviceCollection)
         {
-            _register.Register(serviceCollection);
+            var filteredTypes = FilteredTypes;
+
+            foreach (var type in filteredTypes)
+            {
+                var serviceTypes = _serviceTypeSelector.GetServicesFor(type);
+                var serviceLifetimeSelector = _serviceTypeSelector.GetLifetimeSelector();
+
+                var componentRegistration = new ComponentImplementedByRegistration<object, object>(serviceTypes, type, serviceLifetimeSelector);
+                componentRegistration.Register(serviceCollection);
+            }
         }
 
         #endregion

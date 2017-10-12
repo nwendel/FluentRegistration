@@ -147,6 +147,23 @@ namespace FluentRegistration.Internal
 
         #endregion
 
+        #region Instance
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="instance"></param>
+        /// <returns></returns>
+        public IWithServiceInitial Instance<T>(T instance)
+        {
+            var registration = new InstanceRegistration<T>(instance);
+            _register = registration;
+            return registration;
+        }
+
+        #endregion
+
         #region Register
 
         /// <summary>
