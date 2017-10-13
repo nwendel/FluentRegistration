@@ -13,10 +13,9 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-
-using FluentRegistration.Tests.Classes;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
+using FluentRegistration.Tests.Classes;
 
 namespace FluentRegistration.Tests
 {
@@ -39,7 +38,7 @@ namespace FluentRegistration.Tests
                 .For<ISimpleService>()
                 .ImplementedBy<SimpleService>());
 
-            Assert.Equal(1, tested.Count);
+            Assert.Single(tested);
             Assert.All(tested, service =>
             {
                 Assert.Equal(ServiceLifetime.Singleton, service.Lifetime);
@@ -61,7 +60,7 @@ namespace FluentRegistration.Tests
                 .ImplementedBy<SimpleService>()
                 .Lifetime.Singleton);
 
-            Assert.Equal(1, tested.Count);
+            Assert.Single(tested);
             Assert.All(tested, service =>
             {
                 Assert.Equal(ServiceLifetime.Singleton, service.Lifetime);
@@ -83,7 +82,7 @@ namespace FluentRegistration.Tests
                 .ImplementedBy<SimpleService>()
                 .Lifetime.Scoped);
 
-            Assert.Equal(1, tested.Count);
+            Assert.Single(tested);
             Assert.All(tested, service =>
             {
                 Assert.Equal(ServiceLifetime.Scoped, service.Lifetime);
@@ -105,7 +104,7 @@ namespace FluentRegistration.Tests
                 .ImplementedBy<SimpleService>()
                 .Lifetime.Transient);
 
-            Assert.Equal(1, tested.Count);
+            Assert.Single(tested);
             Assert.All(tested, service =>
             {
                 Assert.Equal(ServiceLifetime.Transient, service.Lifetime);
@@ -126,7 +125,7 @@ namespace FluentRegistration.Tests
                     .For(typeof(ISimpleService))
                     .ImplementedBy<SimpleService>());
 
-            Assert.Equal(1, tested.Count);
+            Assert.Single(tested);
             Assert.All(tested, service =>
             {
                 Assert.Equal(ServiceLifetime.Singleton, service.Lifetime);

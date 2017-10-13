@@ -13,11 +13,10 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-
-using FluentRegistration.Tests.Classes;
-using Microsoft.Extensions.DependencyInjection;
 using System;
+using Microsoft.Extensions.DependencyInjection;
 using Xunit;
+using FluentRegistration.Tests.Classes;
 
 namespace FluentRegistration.Tests
 {
@@ -38,7 +37,7 @@ namespace FluentRegistration.Tests
 
             tested.Install<SimpleServiceInstaller>();
 
-            Assert.Equal(1, tested.Count);
+            Assert.Single(tested);
             Assert.All(tested, service =>
             {
                 Assert.Equal(ServiceLifetime.Singleton, service.Lifetime);
@@ -57,7 +56,7 @@ namespace FluentRegistration.Tests
 
             tested.Install(i => i.FromAssemblyContaining<SimpleServiceInstaller>());
 
-            Assert.Equal(1, tested.Count);
+            Assert.Single(tested);
             Assert.All(tested, service =>
             {
                 Assert.Equal(ServiceLifetime.Singleton, service.Lifetime);
@@ -76,7 +75,7 @@ namespace FluentRegistration.Tests
 
             tested.Install(i => i.FromThisAssembly());
 
-            Assert.Equal(1, tested.Count);
+            Assert.Single(tested);
             Assert.All(tested, service =>
             {
                 Assert.Equal(ServiceLifetime.Singleton, service.Lifetime);

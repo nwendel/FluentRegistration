@@ -39,7 +39,7 @@ namespace FluentRegistration.Tests
                 .Where(c => c.InSameNamespaceAs<ServiceInAnotherNamespace>())
                 .WithServices.AllInterfaces());
 
-            Assert.Equal(1, tested.Count);
+            Assert.Single(tested);
             Assert.All(tested, service =>
             {
                 Assert.Equal(typeof(IServiceInAnotherNamespace), service.ServiceType);
@@ -61,7 +61,7 @@ namespace FluentRegistration.Tests
                 .Except(c => c.ImplementationType == typeof(ServiceInAnotherNamespace))
                 .WithServices.AllInterfaces());
 
-            Assert.Equal(0, tested.Count);
+            Assert.Empty(tested);
         }
         
     }

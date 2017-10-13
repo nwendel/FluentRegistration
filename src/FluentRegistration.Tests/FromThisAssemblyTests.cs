@@ -39,7 +39,7 @@ namespace FluentRegistration.Tests
                 .Where(c => c.InSameNamespaceAs<ServiceInAnotherNamespace>())
                 .WithServices.AllInterfaces());
 
-            Assert.Equal(1, tested.Count);
+            Assert.Single(tested);
             Assert.All(tested, service =>
             {
                 Assert.Equal(typeof(IServiceInAnotherNamespace), service.ServiceType);

@@ -13,10 +13,9 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-
-using FluentRegistration.Tests.Classes;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
+using FluentRegistration.Tests.Classes;
 
 namespace FluentRegistration.Tests
 {
@@ -39,7 +38,7 @@ namespace FluentRegistration.Tests
                 .ImplementedBy<SimpleService>()
                 .WithServices.AllInterfaces());
 
-            Assert.Equal(1, tested.Count);
+            Assert.Single(tested);
             Assert.All(tested, service =>
             {
                 Assert.Equal(typeof(ISimpleService), service.ServiceType);

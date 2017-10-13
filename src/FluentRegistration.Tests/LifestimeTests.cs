@@ -13,10 +13,9 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-
-using FluentRegistration.Tests.Classes;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
+using FluentRegistration.Tests.Classes;
 
 namespace FluentRegistration.Tests
 {
@@ -39,7 +38,7 @@ namespace FluentRegistration.Tests
                 .ImplementedBy<SimpleService>()
                 .WithServices.AllInterfaces());
 
-            Assert.Equal(1, tested.Count);
+            Assert.Single(tested);
             Assert.All(tested, service =>
             {
                 Assert.Equal(ServiceLifetime.Singleton, service.Lifetime);
@@ -59,7 +58,7 @@ namespace FluentRegistration.Tests
                 .WithServices.AllInterfaces()
                 .Lifetime.Singleton);
 
-            Assert.Equal(1, tested.Count);
+            Assert.Single(tested);
             Assert.All(tested, service =>
             {
                 Assert.Equal(ServiceLifetime.Singleton, service.Lifetime);
@@ -79,7 +78,7 @@ namespace FluentRegistration.Tests
                 .WithServices.AllInterfaces()
                 .Lifetime.Scoped);
 
-            Assert.Equal(1, tested.Count);
+            Assert.Single(tested);
             Assert.All(tested, service =>
             {
                 Assert.Equal(ServiceLifetime.Scoped, service.Lifetime);
@@ -99,7 +98,7 @@ namespace FluentRegistration.Tests
                 .WithServices.AllInterfaces()
                 .Lifetime.Transient);
 
-            Assert.Equal(1, tested.Count);
+            Assert.Single(tested);
             Assert.All(tested, service =>
             {
                 Assert.Equal(ServiceLifetime.Transient, service.Lifetime);
