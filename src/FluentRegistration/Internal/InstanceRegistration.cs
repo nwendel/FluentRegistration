@@ -13,8 +13,8 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-using Microsoft.Extensions.DependencyInjection;
 using System;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace FluentRegistration.Internal
 {
@@ -75,7 +75,7 @@ namespace FluentRegistration.Internal
         /// <param name="serviceCollection"></param>
         public void Register(IServiceCollection serviceCollection)
         {
-            var serviceTypes = _serviceTypeSelector.GetServicesFor(typeof(T));
+            var serviceTypes = _serviceTypeSelector.GetServicesFor(_instance.GetType());
             var serviceLifetimeSelector = _serviceTypeSelector.GetLifetimeSelector();
 
             var componentRegistration = new ComponentInstanceRegistration<T>(serviceTypes, _instance);

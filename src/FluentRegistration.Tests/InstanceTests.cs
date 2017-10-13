@@ -63,6 +63,27 @@ namespace FluentRegistration.Tests
             });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void CanRegisterDeclared()
+        {
+            var tested = new ServiceCollection();
+            var instance = new SimpleService();
+
+            tested.Register(r => r
+                .Instance<object>(instance)
+                .WithServices.AllInterfaces());
+
+            Assert.Single(tested);
+            Assert.All(tested, service =>
+            {
+                Assert.Equal(typeof(ISimpleService), service.ServiceType);
+                Assert.Same(instance, service.ImplementationInstance);
+            });
+        }
+
     }
 
 }
