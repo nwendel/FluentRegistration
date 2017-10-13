@@ -42,7 +42,7 @@ namespace FluentRegistration.Tests.Options
                 .For<ISimpleService>()
                 .ImplementedBy<SimpleService>());
 
-            Assert.Equal(1, tested.Count);
+            Assert.Single(tested);
             Assert.All(tested, service =>
             {
                 Assert.Equal(ServiceLifetime.Singleton, service.Lifetime);
@@ -67,7 +67,7 @@ namespace FluentRegistration.Tests.Options
                 .For<ISimpleService>()
                 .ImplementedBy<SimpleService>());
 
-            Assert.Equal(1, tested.Count);
+            Assert.Single(tested);
             Assert.All(tested, service =>
             {
                 Assert.Equal(ServiceLifetime.Singleton, service.Lifetime);

@@ -13,11 +13,10 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-
-using FluentRegistration.Options;
-using FluentRegistration.Tests.Classes;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
+using FluentRegistration.Options;
+using FluentRegistration.Tests.Classes;
 
 namespace FluentRegistration.Tests.Options
 {
@@ -41,7 +40,7 @@ namespace FluentRegistration.Tests.Options
                 .Where(c => c.ImplementationType == typeof(NoInterfaceService))
                 .WithServices.DefaultInterface());
 
-            Assert.Equal(0, tested.Count);
+            Assert.Empty(tested);
         }
 
         /// <summary>
@@ -58,7 +57,7 @@ namespace FluentRegistration.Tests.Options
                 .Where(c => c.ImplementationType == typeof(NoInterfaceService))
                 .WithServices.DefaultInterface());
 
-            Assert.Equal(0, tested.Count);
+            Assert.Empty(tested);
         }
 
         /// <summary>
