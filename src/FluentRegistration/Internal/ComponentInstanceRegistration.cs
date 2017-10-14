@@ -24,7 +24,7 @@ namespace FluentRegistration.Internal
     /// 
     /// </summary>
     public class ComponentInstanceRegistration<TService> :
-        ICompleteRegistration,
+        IValidRegistration,
         IRegister
     {
 

@@ -19,7 +19,7 @@ namespace FluentRegistration.Internal
     /// <summary>
     /// 
     /// </summary>
-    public interface ICompleteRegistration
+    public interface IValidRegistration
     {
     }
 

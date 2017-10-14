@@ -19,7 +19,8 @@ namespace FluentRegistration.Internal
     /// <summary>
     /// 
     /// </summary>
-    public interface IComponentImplementationSelector<TService> : IFluentInterface
+    public interface IComponentImplementationSelector<TService> : 
+        IFluentInterface
     {
 
         #region Implemented By
@@ -39,7 +40,7 @@ namespace FluentRegistration.Internal
         /// 
         /// </summary>
         /// <param name="instance"></param>
-        ICompleteRegistration Instance(TService instance);
+        IValidRegistration Instance(TService instance);
 
         #endregion
 

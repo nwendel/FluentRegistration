@@ -70,7 +70,7 @@ namespace FluentRegistration.Internal
         /// 
         /// </summary>
         /// <param name="instance"></param>
-        public ICompleteRegistration Instance(TService instance)
+        public IValidRegistration Instance(TService instance)
         {
             if(instance == null)
             {

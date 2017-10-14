@@ -27,7 +27,7 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        ICompleteRegistration Singleton { get; }
+        IValidRegistration Singleton { get; }
 
         #endregion
 
@@ -36,7 +36,7 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        ICompleteRegistration Scoped { get; }
+        IValidRegistration Scoped { get; }
 
         #endregion
 
@@ -45,7 +45,7 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        ICompleteRegistration Transient { get; }
+        IValidRegistration Transient { get; }
 
         #endregion
 

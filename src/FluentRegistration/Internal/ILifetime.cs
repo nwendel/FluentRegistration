@@ -20,7 +20,7 @@ namespace FluentRegistration.Internal
     /// 
     /// </summary>
     public interface ILifetime : 
-        ICompleteRegistration,
+        IValidRegistration,
         IFluentInterface
     {
 

@@ -21,7 +21,7 @@ namespace FluentRegistration.Internal
     /// <summary>
     /// 
     /// </summary>
-    public class LifetimeSelector : ILifetimeSelector, ICompleteRegistration
+    public class LifetimeSelector : ILifetimeSelector, IValidRegistration
     {
 
         #region Properties
@@ -38,7 +38,7 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        public ICompleteRegistration Singleton
+        public IValidRegistration Singleton
         {
             get
             {
@@ -54,7 +54,7 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        public ICompleteRegistration Scoped
+        public IValidRegistration Scoped
         {
             get
             {
@@ -70,7 +70,7 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        public ICompleteRegistration Transient
+        public IValidRegistration Transient
         {
             get
             {
