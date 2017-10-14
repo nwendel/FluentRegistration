@@ -19,7 +19,8 @@ namespace FluentRegistration.Internal
     /// <summary>
     /// 
     /// </summary>
-    public interface IWithServiceInitial : IFluentInterface
+    public interface IWithServiceInitial : 
+        IFluentInterface
     {
 
         #region With Services

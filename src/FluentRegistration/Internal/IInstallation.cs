@@ -21,7 +21,8 @@ namespace FluentRegistration.Internal
     /// <summary>
     /// 
     /// </summary>
-    public interface IInstallation
+    public interface IInstallation :
+        IFluentInterface
     {
 
         #region From Assembly

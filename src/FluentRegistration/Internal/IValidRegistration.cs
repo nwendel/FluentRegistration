@@ -19,7 +19,8 @@ namespace FluentRegistration.Internal
     /// <summary>
     /// 
     /// </summary>
-    public interface IValidRegistration
+    public interface IValidRegistration :
+        IFluentInterface
     {
     }
 

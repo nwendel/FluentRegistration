@@ -19,7 +19,8 @@ namespace FluentRegistration.Internal
     /// <summary>
     /// 
     /// </summary>
-    public interface IServiceSelector
+    public interface IServiceSelector :
+        IFluentInterface
     {
 
         #region All Interfaces

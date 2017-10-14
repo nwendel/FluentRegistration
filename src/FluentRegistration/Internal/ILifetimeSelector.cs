@@ -19,7 +19,8 @@ namespace FluentRegistration.Internal
     /// <summary>
     /// 
     /// </summary>
-    public interface ILifetimeSelector
+    public interface ILifetimeSelector :
+        IFluentInterface
     {
 
         #region Singleton

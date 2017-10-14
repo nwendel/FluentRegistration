@@ -21,7 +21,8 @@ namespace FluentRegistration.Internal
     /// <summary>
     /// 
     /// </summary>
-    public interface ITypeFilter : IFluentInterface
+    public interface ITypeFilter : 
+        IFluentInterface
     {
 
         #region Assignable To

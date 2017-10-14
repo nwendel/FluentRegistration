@@ -22,7 +22,8 @@ namespace FluentRegistration.Internal
     /// <summary>
     /// 
     /// </summary>
-    public interface IRegistration
+    public interface IRegistration :
+        IFluentInterface
     {
 
         #region For
