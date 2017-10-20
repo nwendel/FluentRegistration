@@ -13,6 +13,8 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
+using System;
+
 namespace FluentRegistration.Internal
 {
 
@@ -41,6 +43,44 @@ namespace FluentRegistration.Internal
         /// </summary>
         /// <param name="instance"></param>
         IValidRegistration Instance(TService instance);
+
+        #endregion
+
+        #region Using Factory
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        IValidRegistration UsingFactory();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TFactory"></typeparam>
+        /// <returns></returns>
+        IValidRegistration UsingFactory<TFactory>()
+            where TFactory : IServiceFactory<TService>;
+
+        #endregion
+
+        #region Using Factory Method
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TImplementation"></typeparam>
+        /// <param name="factoryMethod"></param>
+        /// <returns></returns>
+        IValidRegistration UsingFactoryMethod(Func<TService> factoryMethod);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TImplementation"></typeparam>
+        /// <param name="factoryMethod"></param>
+        /// <returns></returns>
+        IValidRegistration UsingFactoryMethod(Func<IServiceProvider, TService> factoryMethod);
 
         #endregion
 

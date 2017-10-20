@@ -77,9 +77,76 @@ namespace FluentRegistration.Internal
                 throw new ArgumentNullException(nameof(instance));
             }
 
-            var instanceRegistration = new ComponentInstanceRegistration<TService>(_serviceTypes, instance);
+            var instanceRegistration = new ComponentInstanceRegistration(_serviceTypes, instance);
             _register = instanceRegistration;
             return instanceRegistration;
+        }
+
+        #endregion
+
+        #region Using Factory
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public IValidRegistration UsingFactory()
+        {
+            return UsingFactory<IServiceFactory<TService>>();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TFactory"></typeparam>
+        /// <returns></returns>
+        public IValidRegistration UsingFactory<TFactory>()
+            where TFactory : IServiceFactory<TService>
+        {
+            return UsingFactoryMethod(serviceProvider =>
+            {
+                var serviceFactory = serviceProvider.GetRequiredService<TFactory>();
+                var instance = serviceFactory.Create();
+                return instance;
+            });
+        }
+
+        #endregion
+
+        #region Using Factory Method
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TImplementation"></typeparam>
+        /// <param name="factoryMethod"></param>
+        /// <returns></returns>
+        public IValidRegistration UsingFactoryMethod(Func<TService> factoryMethod)
+        {
+            if(factoryMethod == null)
+            {
+                throw new ArgumentNullException(nameof(factoryMethod));
+            }
+
+            return UsingFactoryMethod(serviceProvider => factoryMethod());
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TImplementation"></typeparam>
+        /// <param name="factoryMethod"></param>
+        /// <returns></returns>
+        public IValidRegistration UsingFactoryMethod(Func<IServiceProvider, TService> factoryMethod)
+        {
+            if (factoryMethod == null)
+            {
+                throw new ArgumentNullException(nameof(factoryMethod));
+            }
+
+            var factoryRegistration = new ComponentFactoryRegistration<TService>(factoryMethod);
+            _register = factoryRegistration;
+            return factoryRegistration;
         }
 
         #endregion

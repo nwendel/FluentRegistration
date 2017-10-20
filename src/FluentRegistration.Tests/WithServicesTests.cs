@@ -79,7 +79,7 @@ namespace FluentRegistration.Tests
             tested.Register(r => r
                 .FromAssemblyContaining<SimpleService>()
                 .Where(c => c.ImplementationType == typeof(SimpleService))
-                    .WithServices.Interface<ISimpleService>());
+                    .WithServices.Service<ISimpleService>());
 
             Assert.Single(tested);
             Assert.All(tested, service =>

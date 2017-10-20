@@ -80,13 +80,13 @@ namespace FluentRegistration.Internal
 
         #endregion
 
-        #region Interface
+        #region Service
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public IWithService Interface<TService>()
+        public IWithService Service<TService>()
         {
             _serviceTypeSelectors.Add(type => type.GetTypeInfo().GetInterfaces());
             return this;

@@ -22,15 +22,14 @@ namespace FluentRegistration.Internal
     /// <summary>
     /// 
     /// </summary>
-    public class InstanceRegistration<T> :
-        IWithServiceInitial, 
+    public class ComponentFactoryRegistration<TService> :
+        IValidRegistration,
         IRegister
     {
 
         #region Fields
 
-        private readonly T _instance;
-        private ServiceTypeSelector _serviceTypeSelector;
+        private readonly Func<IServiceProvider, TService> _factoryMethod;
 
         #endregion
 
@@ -39,30 +38,10 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        public InstanceRegistration(T instance)
+        /// <param name="factoryMethod"></param>
+        public ComponentFactoryRegistration(Func<IServiceProvider, TService> factoryMethod)
         {
-            if(instance == null)
-            {
-                throw new ArgumentNullException(nameof(instance));
-            }
-
-            _instance = instance;
-        }
-
-        #endregion
-
-        #region With Service
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public IServiceSelector WithServices
-        {
-            get
-            {
-                _serviceTypeSelector = new ServiceTypeSelector();
-                return _serviceTypeSelector;
-            }
+            _factoryMethod = factoryMethod;
         }
 
         #endregion
@@ -75,11 +54,8 @@ namespace FluentRegistration.Internal
         /// <param name="serviceCollection"></param>
         public void Register(IServiceCollection serviceCollection)
         {
-            var serviceTypes = _serviceTypeSelector.GetServicesFor(_instance.GetType());
-            var serviceLifetimeSelector = _serviceTypeSelector.GetLifetimeSelector();
-
-            var componentRegistration = new ComponentInstanceRegistration(serviceTypes, _instance);
-            componentRegistration.Register(serviceCollection);
+            var serviceDescriptor = new ServiceDescriptor(typeof(TService), serviceProvider => _factoryMethod(serviceProvider), ServiceLifetime.Transient);
+            serviceCollection.Add(serviceDescriptor);
         }
 
         #endregion

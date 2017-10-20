@@ -23,7 +23,7 @@ namespace FluentRegistration.Internal
     /// <summary>
     /// 
     /// </summary>
-    public class ComponentInstanceRegistration<TService> :
+    public class ComponentInstanceRegistration :
         IValidRegistration,
         IRegister
     {
@@ -31,7 +31,7 @@ namespace FluentRegistration.Internal
         #region Fields
 
         private readonly IEnumerable<Type> _serviceTypes;
-        private readonly TService _instance;
+        private readonly object _instance;
 
         #endregion
 
@@ -42,7 +42,7 @@ namespace FluentRegistration.Internal
         /// </summary>
         /// <param name="serviceTypes"></param>
         /// <param name="instance"></param>
-        public ComponentInstanceRegistration(IEnumerable<Type> serviceTypes, TService instance)
+        public ComponentInstanceRegistration(IEnumerable<Type> serviceTypes, object instance)
         {
             _serviceTypes = serviceTypes;
             _instance = instance;

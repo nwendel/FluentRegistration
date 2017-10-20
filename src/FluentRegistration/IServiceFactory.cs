@@ -13,53 +13,22 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-namespace FluentRegistration.Internal
+namespace FluentRegistration
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public interface IServiceSelector :
-        IFluentInterface
+    public interface IServiceFactory<T>
     {
 
-        #region All Interfaces
+        #region Create
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        IWithService AllInterfaces();
-
-        #endregion
-
-        #region Default Interface
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        IWithService DefaultInterface();
-
-        #endregion
-
-        #region Interface
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        IWithService Service<TService>();
-
-        #endregion
-
-        #region Self
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        IWithService Self();
+        T Create();
 
         #endregion
 

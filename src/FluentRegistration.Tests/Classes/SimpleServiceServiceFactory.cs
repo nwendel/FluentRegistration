@@ -13,55 +13,28 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-namespace FluentRegistration.Internal
+namespace FluentRegistration.Tests.Classes
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public interface IServiceSelector :
-        IFluentInterface
+    public class SimpleServiceServiceFactory : IServiceFactory<ISimpleService>
     {
 
-        #region All Interfaces
+        /// <summary>
+        /// 
+        /// </summary>
+        public static SimpleService SimpleService = new SimpleService();
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        IWithService AllInterfaces();
-
-        #endregion
-
-        #region Default Interface
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        IWithService DefaultInterface();
-
-        #endregion
-
-        #region Interface
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        IWithService Service<TService>();
-
-        #endregion
-
-        #region Self
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        IWithService Self();
-
-        #endregion
+        public ISimpleService Create()
+        {
+            return SimpleService;
+        }
 
     }
 
