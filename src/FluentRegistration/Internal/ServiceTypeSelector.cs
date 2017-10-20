@@ -17,7 +17,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace FluentRegistration.Internal
 {
@@ -88,7 +87,7 @@ namespace FluentRegistration.Internal
         /// <returns></returns>
         public IWithService Service<TService>()
         {
-            _serviceTypeSelectors.Add(type => type.GetTypeInfo().GetInterfaces());
+            _serviceTypeSelectors.Add(type => new[] { typeof(TService) });
             return this;
         }
 
