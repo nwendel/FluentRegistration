@@ -13,7 +13,6 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-
 using System;
 using Xunit;
 using FluentRegistration.Internal;
@@ -59,6 +58,50 @@ namespace FluentRegistration.Tests.Internal
             var tested = new TypeFilter(typeof(SimpleService));
 
             Assert.True(tested.AssignableTo<ISimpleService>());
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void CanAssignableToGenericClassTrue()
+        {
+            var tested = new TypeFilter(typeof(GenericServiceThree<>));
+
+            Assert.True(tested.AssignableTo(typeof(GenericServiceOne<>)));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void CanAssignableToGenericClassFalse()
+        {
+            var tested = new TypeFilter(typeof(object));
+
+            Assert.False(tested.AssignableTo(typeof(GenericServiceOne<>)));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void CanAssignableToGenericInterfaceTrue()
+        {
+            var tested = new TypeFilter(typeof(GenericServiceThree<>));
+
+            Assert.True(tested.AssignableTo(typeof(IGenericInterface<>)));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void CanAssignableToGenericInterfaceFalse()
+        {
+            var tested = new TypeFilter(typeof(object));
+
+            Assert.False(tested.AssignableTo(typeof(IGenericInterface<>)));
         }
 
     }
