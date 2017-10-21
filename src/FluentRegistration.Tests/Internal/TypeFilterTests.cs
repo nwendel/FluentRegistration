@@ -43,6 +43,17 @@ namespace FluentRegistration.Tests.Internal
         /// 
         /// </summary>
         [Fact]
+        public void ThrowsOnAssignableToNull()
+        {
+            var tested = new TypeFilter(typeof(SimpleService));
+
+            Assert.Throws<ArgumentNullException>("type", () => tested.AssignableTo(null));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
         public void CanAssignableTo()
         {
             var tested = new TypeFilter(typeof(SimpleService));
