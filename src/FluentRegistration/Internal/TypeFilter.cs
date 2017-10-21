@@ -48,6 +48,11 @@ namespace FluentRegistration.Internal
         /// <returns></returns>
         public bool AssignableTo(Type type)
         {
+            if(type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
             var typeInfo = type.GetTypeInfo();
             if(typeInfo.IsGenericTypeDefinition)
             {
