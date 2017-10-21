@@ -65,6 +65,16 @@ namespace FluentRegistration.Internal
 
         #endregion
 
+        #region In This Namespace
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        bool InThisNamespace();
+
+        #endregion
+
         #region Implementation Type
 
         /// <summary>

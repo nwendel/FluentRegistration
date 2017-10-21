@@ -14,7 +14,9 @@
 // limitations under the License.
 #endregion
 using System;
+using System.Diagnostics;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace FluentRegistration.Internal
 {
@@ -50,7 +52,7 @@ namespace FluentRegistration.Internal
 
         #endregion
 
-        #region Is In Namespace
+        #region In Namespace
 
         /// <summary>
         /// </summary>
@@ -86,6 +88,24 @@ namespace FluentRegistration.Internal
         public bool InSameNamespaceAs<T>()
         {
             return InSameNamespaceAs(typeof(T));
+        }
+
+        #endregion
+
+        #region In This Namespace
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public bool InThisNamespace()
+        {
+            var stackTrace = new StackTrace();
+            var stackFrame = stackTrace.GetFrame(1);
+            var @namespace = stackFrame.GetMethod().DeclaringType.Namespace;
+
+            return InNamespace(@namespace);
         }
 
         #endregion
