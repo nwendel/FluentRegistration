@@ -30,6 +30,13 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        bool AssignableTo(Type type);
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         bool AssignableTo<T>();

@@ -42,12 +42,71 @@ namespace FluentRegistration.Internal
         #region Assignable To
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public bool AssignableTo(Type type)
+        {
+            var typeInfo = type.GetTypeInfo();
+            if(typeInfo.IsGenericTypeDefinition)
+            {
+                if(typeInfo.IsInterface)
+                {
+                    return AssignableToGenericInterface(typeInfo);
+                }
+                return AssignableToGenericClass(typeInfo);
+
+            }
+            return type.GetTypeInfo().IsAssignableFrom(ImplementationType);
+        }
+
+        /// <summary>
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         public bool AssignableTo<T>()
         {
-            return typeof(T).GetTypeInfo().IsAssignableFrom(ImplementationType);
+            return AssignableTo(typeof(T));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        private bool AssignableToGenericInterface(Type type)
+        {
+            var interfaces = ImplementationType.GetInterfaces();
+            foreach (var @interface in interfaces)
+            {
+                var interfaceTypeInfo = @interface.GetTypeInfo();
+                if (interfaceTypeInfo.IsGenericType && @interface.GetGenericTypeDefinition() == type)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        private bool AssignableToGenericClass(Type type)
+        {
+            var candidateType = ImplementationType;
+            while (candidateType != null)
+            {
+                var canidateTypeInfo = candidateType.GetTypeInfo();
+                if (canidateTypeInfo.IsGenericType && canidateTypeInfo.GetGenericTypeDefinition() == type)
+                {
+                    return true;
+                }
+                candidateType = canidateTypeInfo.BaseType;
+            }
+            return false;
         }
 
         #endregion
