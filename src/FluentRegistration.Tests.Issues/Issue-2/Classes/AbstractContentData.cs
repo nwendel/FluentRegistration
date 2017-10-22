@@ -13,13 +13,13 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
-namespace FluentRegistration.Tests.Classes
+namespace FluentRegistration.Tests.Issues.Issue_2.Classes
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public interface IGenericInterface<T>
+    public class AbstractContentData : AbstractEntity
     {
     }
 
