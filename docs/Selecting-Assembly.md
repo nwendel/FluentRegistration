@@ -1,4 +1,0 @@
-Selecting Assembly
-==================
-
-Stuff here
