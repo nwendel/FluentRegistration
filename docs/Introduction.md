@@ -1,6 +1,6 @@
 # Introduction
 
-A fluent API for registering services with Microsoft.Extensions.DependencyInjection
+A fluent API for registering services with [Microsoft.Extensions.DependencyInjection](https://github.com/aspnet/DependencyInjection).
 
 ## What is FluentRegistration?
 
