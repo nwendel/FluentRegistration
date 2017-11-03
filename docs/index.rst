@@ -6,6 +6,7 @@ A fluent API for registering services with Microsoft.Extensions.DependencyInject
 .. toctree::
   :maxdepth: 2
   
+  Introduction
   Getting-Started
   
 .. toctree::
@@ -16,7 +17,4 @@ A fluent API for registering services with Microsoft.Extensions.DependencyInject
   Instance-Registration
   Service-Factory-Registration
   Convention-Registration
-    Selecting-Assembly
-    Type-Filtering
-    Selecting-Services
   Lifestyle
