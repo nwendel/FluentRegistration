@@ -1,4 +1,0 @@
-Type Filtering
-==============
-
-Stuff here
