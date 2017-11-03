@@ -5,13 +5,14 @@ A fluent API for registering services with Microsoft.Extensions.DependencyInject
 
 .. toctree::
   :maxdepth: 2
+  :caption: User Documentation
   
   Introduction
   Getting-Started
   
 .. toctree::
   :maxdepth: 2
-  :caption: Features
+  :caption: Feature Documentation
   
   Component-Registration
   Instance-Registration
