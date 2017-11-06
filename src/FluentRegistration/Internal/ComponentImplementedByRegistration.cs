@@ -94,7 +94,7 @@ namespace FluentRegistration.Internal
                     case MultipleRegistrationsBehavior.Register:
                         break;
                     case MultipleRegistrationsBehavior.ThrowException:
-                        throw new RegistrationException(string.Format("Implementation of type {0} already registrered", _implementedByType.FullName));
+                        throw new RegistrationException($"Implementation of type {_implementedByType.FullName} already registrered");
                 }
             }
 
@@ -107,7 +107,7 @@ namespace FluentRegistration.Internal
                     case RegistrationsWithoutServicesBehavior.Ignore:
                         return;
                     case RegistrationsWithoutServicesBehavior.ThrowException:
-                        throw new RegistrationException(string.Format("No services found for implementation of type {0}", _implementedByType.FullName));
+                        throw new RegistrationException($"No services found for implementation of type {_implementedByType.FullName}");
                 }
             }
 
