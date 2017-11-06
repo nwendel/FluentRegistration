@@ -111,15 +111,41 @@ namespace FluentRegistration.Internal
                 }
             }
 
-            var serviceType = _serviceTypes.First();
-            var serviceDescriptor = new ServiceDescriptor(serviceType, _implementedByType, _lifetimeSelector.Lifetime);
-            serviceCollection.Add(serviceDescriptor);
-
-            var otherServicesType = _serviceTypes.Skip(1).ToList();
-            foreach (var otherService in otherServicesType)
+            if(_serviceTypes.Count() == 1)
             {
-                var otherServiceDescriptor = new ServiceDescriptor(otherService, serviceProvider => serviceProvider.GetService(serviceType), _lifetimeSelector.Lifetime);
-                serviceCollection.Add(otherServiceDescriptor);
+                var serviceType = _serviceTypes.First();
+                var serviceDescriptor = new ServiceDescriptor(serviceType, _implementedByType, _lifetimeSelector.Lifetime);
+                serviceCollection.Add(serviceDescriptor);
+            }
+            else
+            {
+                // TODO: Workaround to solve problem with registering multiple implementation types under same shared interface
+                //       Since they should be resolved to same instance in case of singleton or scoped lifestyle
+
+                var selfServiceDescriptor = new ServiceDescriptor(_implementedByType, _implementedByType, _lifetimeSelector.Lifetime);
+                serviceCollection.Add(selfServiceDescriptor);
+
+                foreach (var serviceType in _serviceTypes)
+                {
+                    if (serviceType == _implementedByType)
+                    {
+                        continue;
+                    }
+
+                    var serviceDescriptor = new ServiceDescriptor(serviceType, serviceProvider => serviceProvider.GetService(_implementedByType), _lifetimeSelector.Lifetime);
+                    serviceCollection.Add(serviceDescriptor);
+                }
+
+                //var serviceType = _serviceTypes.First();
+                //var serviceDescriptor = new ServiceDescriptor(serviceType, _implementedByType, _lifetimeSelector.Lifetime);
+                //serviceCollection.Add(serviceDescriptor);
+
+                //var otherServicesType = _serviceTypes.Skip(1).ToList();
+                //foreach (var otherService in otherServicesType)
+                //{
+                //    var otherServiceDescriptor = new ServiceDescriptor(otherService, serviceProvider => serviceProvider.GetService(serviceType), _lifetimeSelector.Lifetime);
+                //    serviceCollection.Add(otherServiceDescriptor);
+                //}
             }
         }
 
