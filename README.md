@@ -15,7 +15,7 @@ public class Example
             .WithServices
                 .AllInterfaces()
                 .Self()
-            .Lifetime.Singleton);
+            .Lifetime.Singleton());
     }
 
 }
