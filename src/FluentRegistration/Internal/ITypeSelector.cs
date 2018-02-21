@@ -22,8 +22,7 @@ namespace FluentRegistration.Internal
     /// 
     /// </summary>
     public interface ITypeSelector : 
-        IWithServiceInitial,
-        IFluentInterface
+        IWithServiceInitial
     {
 
         #region Where

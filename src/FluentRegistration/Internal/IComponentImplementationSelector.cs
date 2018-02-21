@@ -69,7 +69,6 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        /// <typeparam name="TImplementation"></typeparam>
         /// <param name="factoryMethod"></param>
         /// <returns></returns>
         IValidRegistration UsingFactoryMethod(Func<TService> factoryMethod);
@@ -77,7 +76,6 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        /// <typeparam name="TImplementation"></typeparam>
         /// <param name="factoryMethod"></param>
         /// <returns></returns>
         IValidRegistration UsingFactoryMethod(Func<IServiceProvider, TService> factoryMethod);

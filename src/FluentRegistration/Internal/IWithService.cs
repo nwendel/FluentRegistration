@@ -21,8 +21,7 @@ namespace FluentRegistration.Internal
     /// </summary>
     public interface IWithService : 
         IServiceSelector, 
-        ILifetime,
-        IFluentInterface
+        ILifetime
     {
     }
 

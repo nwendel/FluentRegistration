@@ -21,7 +21,9 @@ namespace FluentRegistration.Internal
     /// <summary>
     /// 
     /// </summary>
-    public class LifetimeSelector : ILifetimeSelector, IValidRegistration
+    public class LifetimeSelector : 
+        ILifetimeSelector, 
+        IValidRegistration
     {
 
         #region Properties

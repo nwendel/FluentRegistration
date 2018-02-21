@@ -76,8 +76,6 @@ namespace FluentRegistration.Internal
         public void Register(IServiceCollection serviceCollection)
         {
             var serviceTypes = _serviceTypeSelector.GetServicesFor(_instance.GetType());
-            var serviceLifetimeSelector = _serviceTypeSelector.GetLifetimeSelector();
-
             var componentRegistration = new ComponentInstanceRegistration(serviceTypes, _instance);
             componentRegistration.Register(serviceCollection);
         }

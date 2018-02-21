@@ -20,8 +20,7 @@ namespace FluentRegistration.Internal
     /// 
     /// </summary>
     public interface ILifetime : 
-        IValidRegistration,
-        IFluentInterface
+        IValidRegistration
     {
 
         #region Lifetime
