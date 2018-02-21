@@ -12,9 +12,10 @@ public class Example
         services.Register(r => r
             .FromThisAssembly()
             .Where(c => c.InThisNamespace() && c.AssignableTo<IService>())
-            .WithServies
+            .WithServices
                 .AllInterfaces()
-                .Self());
+                .Self()
+            .Lifetime.Singleton);
     }
 
 }
