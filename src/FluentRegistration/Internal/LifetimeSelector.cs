@@ -40,13 +40,10 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        public IValidRegistration Singleton
+        public IValidRegistration Singleton()
         {
-            get
-            {
-                Lifetime = ServiceLifetime.Singleton;
-                return this;
-            }
+            Lifetime = ServiceLifetime.Singleton;
+            return this;
         }
 
         #endregion
@@ -56,13 +53,10 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        public IValidRegistration Scoped
+        public IValidRegistration Scoped()
         {
-            get
-            {
-                Lifetime = ServiceLifetime.Scoped;
-                return this;
-            }
+            Lifetime = ServiceLifetime.Scoped;
+            return this;
         }
 
         #endregion
@@ -72,13 +66,10 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        public IValidRegistration Transient
+        public IValidRegistration Transient()
         {
-            get
-            {
-                Lifetime = ServiceLifetime.Transient;
-                return this;
-            }
+            Lifetime = ServiceLifetime.Transient;
+            return this;
         }
 
         #endregion

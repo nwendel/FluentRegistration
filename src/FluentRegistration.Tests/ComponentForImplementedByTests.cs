@@ -58,7 +58,7 @@ namespace FluentRegistration.Tests
             tested.Register(r => r
                 .For<ISimpleService>()
                 .ImplementedBy<SimpleService>()
-                .Lifetime.Singleton);
+                .Lifetime.Singleton());
 
             Assert.Single(tested);
             Assert.All(tested, service =>
@@ -80,7 +80,7 @@ namespace FluentRegistration.Tests
             tested.Register(r => r
                 .For<ISimpleService>()
                 .ImplementedBy<SimpleService>()
-                .Lifetime.Scoped);
+                .Lifetime.Scoped());
 
             Assert.Single(tested);
             Assert.All(tested, service =>
@@ -102,7 +102,7 @@ namespace FluentRegistration.Tests
             tested.Register(r => r
                 .For<ISimpleService>()
                 .ImplementedBy<SimpleService>()
-                .Lifetime.Transient);
+                .Lifetime.Transient());
 
             Assert.Single(tested);
             Assert.All(tested, service =>
