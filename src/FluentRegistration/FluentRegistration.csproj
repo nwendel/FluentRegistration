@@ -10,7 +10,7 @@
     <Title>FluentRegistration</Title>
     <Description>FluentRegistration</Description>
     <Version>2.6.0</Version>
-    <Copyright>Niklas Wendel 2016-2017</Copyright>
+    <Copyright>Niklas Wendel 2016-2018</Copyright>
     <Authors>Niklas Wendel</Authors>
     <PackageTags>Dependency;Injection;Fluent;Registration;DI;Assembly;Scanning;Conventions</PackageTags>
     <PackageProjectUrl>https://github.com/nwendel/fluentregistration</PackageProjectUrl>
