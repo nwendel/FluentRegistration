@@ -9,12 +9,12 @@
     <PackageId>FluentRegistration</PackageId>
     <Title>FluentRegistration</Title>
     <Description>FluentRegistration</Description>
-    <Version>2.6.0</Version>
-    <Copyright>Niklas Wendel 2016-2018</Copyright>
+    <Version>2.7.0</Version>
+    <Copyright>Niklas Wendel 2016-2019</Copyright>
     <Authors>Niklas Wendel</Authors>
     <PackageTags>Dependency;Injection;Fluent;Registration;DI;Assembly;Scanning;Conventions</PackageTags>
     <PackageProjectUrl>https://github.com/nwendel/fluentregistration</PackageProjectUrl>
-    <PackageLicenseUrl>http://www.apache.org/licenses/LICENSE-2.0</PackageLicenseUrl>  
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
