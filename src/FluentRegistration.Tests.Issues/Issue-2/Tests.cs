@@ -37,7 +37,7 @@ namespace FluentRegistration.Tests.Issues.Issue_2
             var openContentAwareCommandType = typeof(IContentAwareCommand<,>);
             var openContentAwareCommandValidatorType = openValidatorType.MakeGenericType(openContentAwareCommandType);
 
-            // ISSUE: Cannot close type, IsGenericTypeDefintion returns false
+            // ISSUE: Cannot close type, IsGenericTypeDefinition returns false
             var closedType = openContentAwareCommandValidatorType.MakeGenericType(typeof(AbstractPageData), typeof(AbstractPageExtensionProperties));
         }
 
