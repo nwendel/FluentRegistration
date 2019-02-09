@@ -89,26 +89,20 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        /// <returns></returns>
-        public IValidRegistration UsingFactory()
-        {
-            return UsingFactory<IServiceFactory<TService>>();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <typeparam name="TFactory"></typeparam>
+        /// <param name="createAction"></param>
         /// <returns></returns>
-        public IValidRegistration UsingFactory<TFactory>()
-            where TFactory : IServiceFactory<TService>
+        public IValidRegistration UsingFactory<TFactory>(Func<TFactory, TService> createAction)
+            where TFactory : class
         {
-            return UsingFactoryMethod(serviceProvider =>
+            if (createAction == null)
             {
-                var serviceFactory = serviceProvider.GetRequiredService<TFactory>();
-                var instance = serviceFactory.Create();
-                return instance;
-            });
+                throw new ArgumentNullException(nameof(createAction));
+            }
+
+            var factoryRegistration = new ComponentFactoryRegistration<TFactory, TService>(createAction);
+            _register = factoryRegistration;
+            return factoryRegistration;
         }
 
         #endregion
@@ -142,9 +136,9 @@ namespace FluentRegistration.Internal
                 throw new ArgumentNullException(nameof(factoryMethod));
             }
 
-            var factoryRegistration = new ComponentFactoryRegistration<TService>(factoryMethod);
-            _register = factoryRegistration;
-            return factoryRegistration;
+            var factoryMethodRegistration = new ComponentFactoryMethodRegistration<TService>(factoryMethod);
+            _register = factoryMethodRegistration;
+            return factoryMethodRegistration;
         }
 
         #endregion

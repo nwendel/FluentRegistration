@@ -51,16 +51,11 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        /// <returns></returns>
-        IValidRegistration UsingFactory();
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <typeparam name="TFactory"></typeparam>
+        /// <param name="createAction"></param>
         /// <returns></returns>
-        IValidRegistration UsingFactory<TFactory>()
-            where TFactory : IServiceFactory<TService>;
+        IValidRegistration UsingFactory<TFactory>(Func<TFactory, TService> createAction)
+            where TFactory : class;
 
         #endregion
 

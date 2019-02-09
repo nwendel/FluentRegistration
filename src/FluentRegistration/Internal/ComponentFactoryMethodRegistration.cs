@@ -22,15 +22,14 @@ namespace FluentRegistration.Internal
     /// <summary>
     /// 
     /// </summary>
-    public class ComponentFactoryRegistration<TFactory, TService> :
+    public class ComponentFactoryMethodRegistration<TService> :
         IValidRegistration,
         IRegister
-        where TFactory : class
     {
 
         #region Fields
 
-        private readonly Func<TFactory, TService> _createAction;
+        private readonly Func<IServiceProvider, TService> _factoryMethod;
 
         #endregion
 
@@ -39,10 +38,10 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="createAction"></param>
-        public ComponentFactoryRegistration(Func<TFactory, TService> createAction)
+        /// <param name="factoryMethod"></param>
+        public ComponentFactoryMethodRegistration(Func<IServiceProvider, TService> factoryMethod)
         {
-            _createAction = createAction;
+            _factoryMethod = factoryMethod;
         }
 
         #endregion
@@ -55,13 +54,7 @@ namespace FluentRegistration.Internal
         /// <param name="serviceCollection"></param>
         public void Register(IServiceCollection serviceCollection)
         {
-            // TODO: Is this correct to add TFactory here as a singleton?
-            serviceCollection.AddSingleton<TFactory, TFactory>();
-            var serviceDescriptor = new ServiceDescriptor(typeof(TService), serviceProvider =>
-            {
-                var factory = serviceProvider.GetRequiredService<TFactory>();
-                return _createAction(factory);
-            }, ServiceLifetime.Transient);
+            var serviceDescriptor = new ServiceDescriptor(typeof(TService), serviceProvider => _factoryMethod(serviceProvider), ServiceLifetime.Transient);
             serviceCollection.Add(serviceDescriptor);
         }
 

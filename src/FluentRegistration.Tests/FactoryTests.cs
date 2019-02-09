@@ -36,11 +36,11 @@ namespace FluentRegistration.Tests
             var tested = new ServiceCollection();
 
             tested.Register(c => c
-                .For<IServiceFactory<ISimpleService>>()
+                .For<SimpleServiceServiceFactory>()
                 .ImplementedBy<SimpleServiceServiceFactory>());
             tested.Register(c => c
                     .For<ISimpleService>()
-                    .UsingFactory());
+                    .UsingFactory<SimpleServiceServiceFactory>(f => f.CreateSimpleService()));
             var serviceProvider = tested.BuildServiceProvider();
             var service = serviceProvider.GetService<ISimpleService>();
 
@@ -83,7 +83,7 @@ namespace FluentRegistration.Tests
         /// 
         /// </summary>
         [Fact]
-        public void ThrowsOnUsingFactoryMethod2()
+        public void ThrowsOnUsingFactoryMethodWithServiceProvider()
         {
             var tested = new ServiceCollection();
 

@@ -19,7 +19,7 @@ namespace FluentRegistration.Tests.Classes
     /// <summary>
     /// 
     /// </summary>
-    public class SimpleServiceServiceFactory : IServiceFactory<ISimpleService>
+    public class SimpleServiceServiceFactory
     {
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace FluentRegistration.Tests.Classes
         /// 
         /// </summary>
         /// <returns></returns>
-        public ISimpleService Create()
+        public ISimpleService CreateSimpleService()
         {
             return SimpleService;
         }
