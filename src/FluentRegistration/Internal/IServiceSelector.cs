@@ -29,7 +29,7 @@ namespace FluentRegistration.Internal
         /// 
         /// </summary>
         /// <returns></returns>
-        IWithService AllInterfaces();
+        IWithServices AllInterfaces();
 
         #endregion
 
@@ -39,7 +39,7 @@ namespace FluentRegistration.Internal
         /// 
         /// </summary>
         /// <returns></returns>
-        IWithService DefaultInterface();
+        IWithServices DefaultInterface();
 
         #endregion
 
@@ -49,7 +49,7 @@ namespace FluentRegistration.Internal
         /// 
         /// </summary>
         /// <returns></returns>
-        IWithService Service<TService>();
+        IWithServices Service<TService>();
 
         #endregion
 
@@ -59,7 +59,7 @@ namespace FluentRegistration.Internal
         /// 
         /// </summary>
         /// <returns></returns>
-        IWithService Self();
+        IWithServices Self();
 
         #endregion
 

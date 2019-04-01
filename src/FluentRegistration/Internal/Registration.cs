@@ -139,7 +139,7 @@ namespace FluentRegistration.Internal
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public IWithServiceInitial ImplementedBy<T>()
+        public IWithServicesInitial ImplementedBy<T>()
         {
             return FromAssemblyContaining<T>()
                 .Where(c => c.ImplementationType == typeof(T));
@@ -155,7 +155,7 @@ namespace FluentRegistration.Internal
         /// <typeparam name="T"></typeparam>
         /// <param name="instance"></param>
         /// <returns></returns>
-        public IWithServiceInitial Instance<T>(T instance)
+        public IWithServicesInitial Instance<T>(T instance)
         {
             var registration = new InstanceRegistration<T>(instance);
             _register = registration;

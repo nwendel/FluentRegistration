@@ -89,7 +89,7 @@ namespace FluentRegistration.Internal
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        IWithServiceInitial ImplementedBy<T>();
+        IWithServicesInitial ImplementedBy<T>();
 
         #endregion
 
@@ -101,7 +101,7 @@ namespace FluentRegistration.Internal
         /// <typeparam name="T"></typeparam>
         /// <param name="instance"></param>
         /// <returns></returns>
-        IWithServiceInitial Instance<T>(T instance);
+        IWithServicesInitial Instance<T>(T instance);
 
         #endregion
 

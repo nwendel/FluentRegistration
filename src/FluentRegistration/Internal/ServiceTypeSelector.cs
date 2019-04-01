@@ -25,7 +25,7 @@ namespace FluentRegistration.Internal
     /// 
     /// </summary>
     public class ServiceTypeSelector :
-        IWithService
+        IWithServices
     {
 
         #region Fields
@@ -41,7 +41,7 @@ namespace FluentRegistration.Internal
         /// 
         /// </summary>
         /// <returns></returns>
-        public IWithService AllInterfaces()
+        public IWithServices AllInterfaces()
         {
             _serviceTypeSelectors.Add(type => type.GetTypeInfo().GetInterfaces());
             return this;
@@ -55,7 +55,7 @@ namespace FluentRegistration.Internal
         /// 
         /// </summary>
         /// <returns></returns>
-        public IWithService DefaultInterface()
+        public IWithServices DefaultInterface()
         {
             _serviceTypeSelectors.Add(type =>
             {
@@ -85,7 +85,7 @@ namespace FluentRegistration.Internal
         /// 
         /// </summary>
         /// <returns></returns>
-        public IWithService Service<TService>()
+        public IWithServices Service<TService>()
         {
             _serviceTypeSelectors.Add(type => new[] { typeof(TService) });
             return this;
@@ -99,7 +99,7 @@ namespace FluentRegistration.Internal
         /// 
         /// </summary>
         /// <returns></returns>
-        public IWithService Self()
+        public IWithServices Self()
         {
             _serviceTypeSelectors.Add(type => new[] { type });
             return this;

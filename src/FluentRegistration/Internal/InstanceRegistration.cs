@@ -23,7 +23,7 @@ namespace FluentRegistration.Internal
     /// 
     /// </summary>
     public class InstanceRegistration<T> :
-        IWithServiceInitial, 
+        IWithServicesInitial, 
         IRegister
     {
 
