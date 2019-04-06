@@ -67,6 +67,12 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="type"></param>
+        ITypeSelector FromAssemblyContaining(Type type);
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <typeparam name="T"></typeparam>
         ITypeSelector FromAssemblyContaining<T>();
 

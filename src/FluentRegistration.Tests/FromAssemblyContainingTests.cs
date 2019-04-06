@@ -13,53 +13,43 @@
 // See the License for the specific language governing permissions and 
 // limitations under the License.
 #endregion
+using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Reflection;
+using Xunit;
 
-namespace FluentRegistration.Internal
+namespace FluentRegistration.Tests
 {
 
     /// <summary>
     /// 
     /// </summary>
-    public interface IInstallation :
-        IFluentInterface
+    public class FromAssemblyContainingTests
     {
 
-        #region From Assembly
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
+        public void ThrowsOnRegisterNullType()
+        {
+            var tested = new ServiceCollection();
+
+
+            Assert.Throws<ArgumentNullException>("type", () => tested.Register(r => r
+                .FromAssemblyContaining(null)
+                .WithServices.Self()));
+        }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="assembly"></param>
-        void FromAssembly(Assembly assembly);
+        [Fact]
+        public void ThrowsOnInstallNullType()
+        {
+            var tested = new ServiceCollection();
 
-        #endregion
-
-        #region From Assembly Containing
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="type"></param>
-        void FromAssemblyContaining(Type type);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        void FromAssemblyContaining<T>();
-
-        #endregion
-
-        #region From This Assembly
-
-        /// <summary>
-        /// 
-        /// </summary>
-        void FromThisAssembly();
-
-        #endregion
+            Assert.Throws<ArgumentNullException>("type", () => tested.Install(i => i.FromAssemblyContaining(null)));
+        }
 
     }
 

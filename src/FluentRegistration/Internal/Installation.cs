@@ -63,11 +63,25 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="type"></param>
+        public void FromAssemblyContaining(Type type)
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
+            var assembly = type.GetTypeInfo().Assembly;
+            FromAssembly(assembly);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <typeparam name="T"></typeparam>
         public void FromAssemblyContaining<T>()
         {
-            var assembly = typeof(T).GetTypeInfo().Assembly;
-            FromAssembly(assembly);
+            FromAssemblyContaining(typeof(T));
         }
 
         #endregion
