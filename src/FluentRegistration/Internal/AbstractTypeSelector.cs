@@ -131,8 +131,8 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="serviceCollection"></param>
-        public void Register(IServiceCollection serviceCollection)
+        /// <param name="services"></param>
+        public void Register(IServiceCollection services)
         {
             var filteredTypes = FilteredTypes;
 
@@ -142,7 +142,7 @@ namespace FluentRegistration.Internal
                 var serviceLifetimeSelector = _serviceTypeSelector.GetLifetimeSelector();
 
                 var componentRegistration = new ComponentImplementedByRegistration<object, object>(serviceTypes, type, serviceLifetimeSelector);
-                componentRegistration.Register(serviceCollection);
+                componentRegistration.Register(services);
             }
         }
 

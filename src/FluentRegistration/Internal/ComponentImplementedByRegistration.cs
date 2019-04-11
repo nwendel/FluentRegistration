@@ -80,13 +80,13 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="serviceCollection"></param>
-        public void Register(IServiceCollection serviceCollection)
+        /// <param name="services"></param>
+        public void Register(IServiceCollection services)
         {
-            if (serviceCollection.Any(x => x.ImplementationType == _implementedByType))
+            if (services.Any(x => x.ImplementationType == _implementedByType))
             {
                 // Already registered
-                var options = serviceCollection.GetAttachedValue(ServiceCollectionAttachedProperties.Options) ?? FluentRegistrationOptions.Default;
+                var options = services.GetAttachedValue(ServiceCollectionAttachedProperties.Options) ?? FluentRegistrationOptions.Default;
                 switch (options.MultipleRegistrationsBehavior)
                 {
                     case MultipleRegistrationsBehavior.Ignore:
@@ -101,7 +101,7 @@ namespace FluentRegistration.Internal
             if (!_serviceTypes.Any())
             {
                 // No interfaces found
-                var options = serviceCollection.GetAttachedValue(ServiceCollectionAttachedProperties.Options) ?? FluentRegistrationOptions.Default;
+                var options = services.GetAttachedValue(ServiceCollectionAttachedProperties.Options) ?? FluentRegistrationOptions.Default;
                 switch (options.RegistrationsWithoutServicesBehavior)
                 {
                     case RegistrationsWithoutServicesBehavior.Ignore:
@@ -115,7 +115,7 @@ namespace FluentRegistration.Internal
             {
                 var serviceType = _serviceTypes.First();
                 var serviceDescriptor = new ServiceDescriptor(serviceType, _implementedByType, _lifetimeSelector.Lifetime);
-                serviceCollection.Add(serviceDescriptor);
+                services.Add(serviceDescriptor);
             }
             else
             {
@@ -123,7 +123,7 @@ namespace FluentRegistration.Internal
                 //       Since they should be resolved to same instance in case of singleton or scoped lifestyle
 
                 var selfServiceDescriptor = new ServiceDescriptor(_implementedByType, _implementedByType, _lifetimeSelector.Lifetime);
-                serviceCollection.Add(selfServiceDescriptor);
+                services.Add(selfServiceDescriptor);
 
                 foreach (var serviceType in _serviceTypes)
                 {
@@ -133,18 +133,18 @@ namespace FluentRegistration.Internal
                     }
 
                     var serviceDescriptor = new ServiceDescriptor(serviceType, serviceProvider => serviceProvider.GetService(_implementedByType), _lifetimeSelector.Lifetime);
-                    serviceCollection.Add(serviceDescriptor);
+                    services.Add(serviceDescriptor);
                 }
 
                 //var serviceType = _serviceTypes.First();
                 //var serviceDescriptor = new ServiceDescriptor(serviceType, _implementedByType, _lifetimeSelector.Lifetime);
-                //serviceCollection.Add(serviceDescriptor);
+                //services.Add(serviceDescriptor);
 
                 //var otherServicesType = _serviceTypes.Skip(1).ToList();
                 //foreach (var otherService in otherServicesType)
                 //{
                 //    var otherServiceDescriptor = new ServiceDescriptor(otherService, serviceProvider => serviceProvider.GetService(serviceType), _lifetimeSelector.Lifetime);
-                //    serviceCollection.Add(otherServiceDescriptor);
+                //    services.Add(otherServiceDescriptor);
                 //}
             }
         }

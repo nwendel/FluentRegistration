@@ -72,12 +72,12 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="serviceCollection"></param>
-        public void Register(IServiceCollection serviceCollection)
+        /// <param name="services"></param>
+        public void Register(IServiceCollection services)
         {
             var serviceTypes = _serviceTypeSelector.GetServicesFor(_instance.GetType());
             var componentRegistration = new ComponentInstanceRegistration(serviceTypes, _instance);
-            componentRegistration.Register(serviceCollection);
+            componentRegistration.Register(services);
         }
 
         #endregion

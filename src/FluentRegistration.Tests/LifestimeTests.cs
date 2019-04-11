@@ -111,14 +111,14 @@ namespace FluentRegistration.Tests
         [Fact]
         public void CanRegisterSingletonLifetimeMultipleServices()
         {
-            var serviceCollection = new ServiceCollection();
-            serviceCollection.Register(r => r
+            var services = new ServiceCollection();
+            services.Register(r => r
                 .FromAssemblyContaining<SimpleService>()
                 .Where(c => c.ImplementationType == typeof(SimpleService))
                 .WithServices
                     .Self()
                     .DefaultInterface());
-            var tested = serviceCollection.BuildServiceProvider();
+            var tested = services.BuildServiceProvider();
 
             var serviceOne = tested.GetRequiredService<ISimpleService>();
             var serviceTwo = tested.GetRequiredService<SimpleService>();

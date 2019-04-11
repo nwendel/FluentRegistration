@@ -52,17 +52,17 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="serviceCollection"></param>
-        public void Register(IServiceCollection serviceCollection)
+        /// <param name="services"></param>
+        public void Register(IServiceCollection services)
         {
             // TODO: Is this correct to add TFactory here as a singleton?
-            serviceCollection.AddSingleton<TFactory, TFactory>();
+            services.AddSingleton<TFactory, TFactory>();
             var serviceDescriptor = new ServiceDescriptor(typeof(TService), serviceProvider =>
             {
                 var factory = serviceProvider.GetRequiredService<TFactory>();
                 return _createAction(factory);
             }, ServiceLifetime.Transient);
-            serviceCollection.Add(serviceDescriptor);
+            services.Add(serviceDescriptor);
         }
 
         #endregion

@@ -104,12 +104,12 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="serviceCollection"></param>
-        public void Install(IServiceCollection serviceCollection)
+        /// <param name="services"></param>
+        public void Install(IServiceCollection services)
         {
             foreach(var installer in _installers)
             {
-                installer.Install(serviceCollection);
+                installer.Install(services);
             }
         }
 

@@ -184,10 +184,10 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="serviceCollection"></param>
-        public void Register(IServiceCollection serviceCollection)
+        /// <param name="services"></param>
+        public void Register(IServiceCollection services)
         {
-            _register.Register(serviceCollection);
+            _register.Register(services);
         }
 
         #endregion

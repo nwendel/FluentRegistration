@@ -55,13 +55,13 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="serviceCollection"></param>
-        public void Register(IServiceCollection serviceCollection)
+        /// <param name="services"></param>
+        public void Register(IServiceCollection services)
         {
             foreach (var serviceType in _serviceTypes)
             {
                 var serviceDescriptor = new ServiceDescriptor(serviceType, _instance);
-                serviceCollection.Add(serviceDescriptor);
+                services.Add(serviceDescriptor);
             }
         }
 

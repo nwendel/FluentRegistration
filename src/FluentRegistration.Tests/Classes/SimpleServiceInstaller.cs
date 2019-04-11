@@ -27,10 +27,10 @@ namespace FluentRegistration.Tests.Classes
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="serviceCollection"></param>
-        public void Install(IServiceCollection serviceCollection)
+        /// <param name="services"></param>
+        public void Install(IServiceCollection services)
         {
-            serviceCollection.Register(c => c
+            services.Register(c => c
                 .For<ISimpleService>()
                 .ImplementedBy<SimpleService>());
         }

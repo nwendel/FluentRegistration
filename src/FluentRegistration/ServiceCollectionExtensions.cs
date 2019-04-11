@@ -90,7 +90,7 @@ namespace FluentRegistration
 
         #endregion
 
-        #region Configure Fluent Registration
+        #region Configure
 
         /// <summary>
         /// 

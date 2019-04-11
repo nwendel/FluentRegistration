@@ -51,11 +51,11 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="serviceCollection"></param>
-        public void Register(IServiceCollection serviceCollection)
+        /// <param name="services"></param>
+        public void Register(IServiceCollection services)
         {
             var serviceDescriptor = new ServiceDescriptor(typeof(TService), serviceProvider => _factoryMethod(serviceProvider), ServiceLifetime.Transient);
-            serviceCollection.Add(serviceDescriptor);
+            services.Add(serviceDescriptor);
         }
 
         #endregion

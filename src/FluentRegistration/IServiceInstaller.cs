@@ -29,8 +29,8 @@ namespace FluentRegistration
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="serviceCollection"></param>
-        void Install(IServiceCollection serviceCollection);
+        /// <param name="services"></param>
+        void Install(IServiceCollection services);
 
         #endregion
 
