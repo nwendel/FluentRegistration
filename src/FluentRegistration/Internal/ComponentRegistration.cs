@@ -92,15 +92,15 @@ namespace FluentRegistration.Internal
         /// <typeparam name="TFactory"></typeparam>
         /// <param name="createAction"></param>
         /// <returns></returns>
-        public IValidRegistration UsingFactory<TFactory>(Func<TFactory, TService> createAction)
+        public IValidRegistration UsingFactory<TFactory>(Func<TFactory, TService> factoryMethod)
             where TFactory : class
         {
-            if (createAction == null)
+            if (factoryMethod == null)
             {
-                throw new ArgumentNullException(nameof(createAction));
+                throw new ArgumentNullException(nameof(factoryMethod));
             }
 
-            var factoryRegistration = new ComponentFactoryRegistration<TFactory, TService>(createAction);
+            var factoryRegistration = new ComponentFactoryRegistration<TFactory, TService>(factoryMethod);
             _register = factoryRegistration;
             return factoryRegistration;
         }

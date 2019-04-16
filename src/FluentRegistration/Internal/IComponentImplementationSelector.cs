@@ -61,6 +61,8 @@ namespace FluentRegistration.Internal
 
         #region Using Factory Method
 
+        // TODO: Are these methods needed, or is UsingFactory enuf?
+
         /// <summary>
         /// 
         /// </summary>

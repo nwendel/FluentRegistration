@@ -31,6 +31,20 @@ namespace FluentRegistration.Tests
         /// 
         /// </summary>
         [Fact]
+        public void ThrowsOnRegisterUsingFactoryNullFactoryMethod()
+        {
+            var tested = new ServiceCollection();
+
+            Assert.Throws<ArgumentNullException>("factoryMethod", () => 
+                tested.Register(c => c
+                .For<ISimpleService>()
+                .UsingFactory<SimpleServiceServiceFactory>(null)));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Fact]
         public void CanRegisterUsingFactory()
         {
             var tested = new ServiceCollection();
@@ -39,8 +53,8 @@ namespace FluentRegistration.Tests
                 .For<SimpleServiceServiceFactory>()
                 .ImplementedBy<SimpleServiceServiceFactory>());
             tested.Register(c => c
-                    .For<ISimpleService>()
-                    .UsingFactory<SimpleServiceServiceFactory>(f => f.CreateSimpleService()));
+                .For<ISimpleService>()
+                .UsingFactory<SimpleServiceServiceFactory>(f => f.CreateSimpleService()));
             var serviceProvider = tested.BuildServiceProvider();
             var service = serviceProvider.GetService<ISimpleService>();
 
