@@ -120,7 +120,7 @@ namespace FluentRegistration.Internal
             else
             {
                 // TODO: Workaround to solve problem with registering multiple implementation types under same shared interface
-                //       Since they should be resolved to same instance in case of singleton or scoped lifestyle
+                // TODO: Since they should be resolved to same instance in case of singleton or scoped lifestyle
 
                 var selfServiceDescriptor = new ServiceDescriptor(_implementedByType, _implementedByType, _lifetimeSelector.Lifetime);
                 services.Add(selfServiceDescriptor);
@@ -129,23 +129,13 @@ namespace FluentRegistration.Internal
                 {
                     if (serviceType == _implementedByType)
                     {
+                        // Already registered with self above
                         continue;
                     }
 
                     var serviceDescriptor = new ServiceDescriptor(serviceType, serviceProvider => serviceProvider.GetService(_implementedByType), _lifetimeSelector.Lifetime);
                     services.Add(serviceDescriptor);
                 }
-
-                //var serviceType = _serviceTypes.First();
-                //var serviceDescriptor = new ServiceDescriptor(serviceType, _implementedByType, _lifetimeSelector.Lifetime);
-                //services.Add(serviceDescriptor);
-
-                //var otherServicesType = _serviceTypes.Skip(1).ToList();
-                //foreach (var otherService in otherServicesType)
-                //{
-                //    var otherServiceDescriptor = new ServiceDescriptor(otherService, serviceProvider => serviceProvider.GetService(serviceType), _lifetimeSelector.Lifetime);
-                //    services.Add(otherServiceDescriptor);
-                //}
             }
         }
 
