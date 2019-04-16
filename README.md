@@ -16,6 +16,30 @@ public class Example
                 .AllInterfaces()
                 .Self()
             .Lifetime.Singleton());
+            
+        services.Register(c => c
+            .For<IService>()
+            .ImplementedBy<Implementation>()
+            .Lifetime.Singleton());
+            
+        services.Register(r => r
+            .ImplementedBy<Implementation>()
+            .WithServices.AllInterfaces()
+            .Lifetime.Singleton());
+            
+        services.Install<ServiceInstaller>();
+        
+        services.Install(i => i.FromThisAssembly());
+    }
+
+}
+
+public class ServiceInstaller : IServiceInstaller
+{
+
+    public void Install(IServiceCollection services)
+    {
+        // Register services here
     }
 
 }
