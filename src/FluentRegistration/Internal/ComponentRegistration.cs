@@ -90,7 +90,7 @@ namespace FluentRegistration.Internal
         /// 
         /// </summary>
         /// <typeparam name="TFactory"></typeparam>
-        /// <param name="createAction"></param>
+        /// <param name="factoryMethod"></param>
         /// <returns></returns>
         public IValidRegistration UsingFactory<TFactory>(Func<TFactory, TService> factoryMethod)
             where TFactory : class

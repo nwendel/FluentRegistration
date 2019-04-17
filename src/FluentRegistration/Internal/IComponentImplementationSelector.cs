@@ -52,16 +52,14 @@ namespace FluentRegistration.Internal
         /// 
         /// </summary>
         /// <typeparam name="TFactory"></typeparam>
-        /// <param name="createAction"></param>
+        /// <param name="factoryMethod"></param>
         /// <returns></returns>
-        IValidRegistration UsingFactory<TFactory>(Func<TFactory, TService> createAction)
+        IValidRegistration UsingFactory<TFactory>(Func<TFactory, TService> factoryMethod)
             where TFactory : class;
 
         #endregion
 
         #region Using Factory Method
-
-        // TODO: Are these methods needed, or is UsingFactory enuf?
 
         /// <summary>
         /// 
