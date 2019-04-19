@@ -30,7 +30,7 @@ namespace FluentRegistration.Internal
 
         #region Fields
 
-        private readonly Func<TFactory, TService> _createAction;
+        private readonly Func<TFactory, TService> _factoryMethod;
 
         #endregion
 
@@ -39,10 +39,10 @@ namespace FluentRegistration.Internal
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="createAction"></param>
-        public ComponentFactoryRegistration(Func<TFactory, TService> createAction)
+        /// <param name="factoryMethod"></param>
+        public ComponentFactoryRegistration(Func<TFactory, TService> factoryMethod)
         {
-            _createAction = createAction;
+            _factoryMethod = factoryMethod;
         }
 
         #endregion
@@ -57,10 +57,11 @@ namespace FluentRegistration.Internal
         {
             // TODO: Is this correct to add TFactory here as a singleton?
             services.AddSingleton<TFactory, TFactory>();
+            // TODO: Should lifetime always be controlled by factory?
             var serviceDescriptor = new ServiceDescriptor(typeof(TService), serviceProvider =>
             {
                 var factory = serviceProvider.GetRequiredService<TFactory>();
-                return _createAction(factory);
+                return _factoryMethod(factory);
             }, ServiceLifetime.Transient);
             services.Add(serviceDescriptor);
         }
