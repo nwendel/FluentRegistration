@@ -167,7 +167,9 @@ namespace FluentRegistration.Internal
         {
             var stackTrace = new StackTrace();
             var stackFrame = stackTrace.GetFrame(1);
-            var @namespace = stackFrame.GetMethod().DeclaringType.Namespace;
+            var @namespace = stackFrame.GetMethod().DeclaringType?.Namespace;
+
+            // TODO: CHeck for null DeclaringType and provide better exception?
 
             return InNamespace(@namespace);
         }
