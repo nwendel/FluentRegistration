@@ -104,12 +104,12 @@ namespace FluentRegistration.Internal
             var candidateType = ImplementationType;
             while (candidateType != null)
             {
-                var canidateTypeInfo = candidateType.GetTypeInfo();
-                if (canidateTypeInfo.IsGenericType && canidateTypeInfo.GetGenericTypeDefinition() == type)
+                var candidateTypeInfo = candidateType.GetTypeInfo();
+                if (candidateTypeInfo.IsGenericType && candidateTypeInfo.GetGenericTypeDefinition() == type)
                 {
                     return true;
                 }
-                candidateType = canidateTypeInfo.BaseType;
+                candidateType = candidateTypeInfo.BaseType;
             }
             return false;
         }
@@ -124,12 +124,33 @@ namespace FluentRegistration.Internal
         /// <returns></returns>
         public bool InNamespace(string @namespace)
         {
-            if(string.IsNullOrWhiteSpace(@namespace))
+            return InNamespace(@namespace, false);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="namespace"></param>
+        /// <param name="includeSubNamespaces"></param>
+        /// <returns></returns>
+        public bool InNamespace(string @namespace, bool includeSubNamespaces)
+        {
+            if (string.IsNullOrWhiteSpace(@namespace))
             {
                 throw new ArgumentNullException(nameof(@namespace));
             }
 
-            return ImplementationType.Namespace == @namespace;
+            if (ImplementationType.Namespace == @namespace)
+            {
+                return true;
+            }
+            if (includeSubNamespaces)
+            {
+                return ImplementationType.Namespace != null &&
+                       ImplementationType.Namespace.StartsWith(@namespace + ".");
+            }
+
+            return false;
         }
 
         #endregion
@@ -142,7 +163,23 @@ namespace FluentRegistration.Internal
         /// <returns></returns>
         public bool InSameNamespaceAs(Type type)
         {
-            return InNamespace(type.Namespace);
+            return InSameNamespaceAs(type, false);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="includeSubNamespaces"></param>
+        /// <returns></returns>
+        public bool InSameNamespaceAs(Type type, bool includeSubNamespaces)
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException(nameof(type));
+            }
+
+            return InNamespace(type.Namespace, includeSubNamespaces);
         }
 
         /// <summary>
@@ -151,7 +188,18 @@ namespace FluentRegistration.Internal
         /// <returns></returns>
         public bool InSameNamespaceAs<T>()
         {
-            return InSameNamespaceAs(typeof(T));
+            return InSameNamespaceAs<T>(false);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="includeSubNamespaces"></param>
+        /// <returns></returns>
+        public bool InSameNamespaceAs<T>(bool includeSubNamespaces)
+        {
+            return InSameNamespaceAs(typeof(T), includeSubNamespaces);
         }
 
         #endregion
@@ -165,13 +213,36 @@ namespace FluentRegistration.Internal
         [MethodImpl(MethodImplOptions.NoInlining)]
         public bool InThisNamespace()
         {
+            return InThisNamespaceCore(false);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="includeSubNamespaces"></param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public bool InThisNamespace(bool includeSubNamespaces)
+        {
+
+            return InThisNamespaceCore(includeSubNamespaces);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="includeSubNamespaces"></param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public bool InThisNamespaceCore(bool includeSubNamespaces)
+        {
             var stackTrace = new StackTrace();
-            var stackFrame = stackTrace.GetFrame(1);
+            var stackFrame = stackTrace.GetFrame(2);
             var @namespace = stackFrame.GetMethod().DeclaringType?.Namespace;
 
             // TODO: CHeck for null DeclaringType and provide better exception?
 
-            return InNamespace(@namespace);
+            return InNamespace(@namespace, includeSubNamespaces);
         }
 
         #endregion
