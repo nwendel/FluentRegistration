@@ -56,11 +56,12 @@ namespace FluentRegistration.Internal
         public void Register(IServiceCollection services)
         {
             // TODO: Is this correct to add TFactory here as a singleton?
-            services.AddSingleton<TFactory, TFactory>();
             // TODO: Should lifetime always be controlled by factory?
+            services.AddSingleton<TFactory, TFactory>();
+
             var serviceDescriptor = new ServiceDescriptor(typeof(TService), serviceProvider =>
             {
-                var factory = serviceProvider.GetRequiredService<TFactory>();
+                var factory = serviceProvider.GetService<TFactory>();
                 return _factoryMethod(factory);
             }, ServiceLifetime.Transient);
             services.Add(serviceDescriptor);
