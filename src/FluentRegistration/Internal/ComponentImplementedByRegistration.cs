@@ -94,7 +94,7 @@ namespace FluentRegistration.Internal
                     case MultipleRegistrationsBehavior.Register:
                         break;
                     case MultipleRegistrationsBehavior.ThrowException:
-                        throw new RegistrationException($"Implementation of type {_implementedByType.FullName} already registrered");
+                        throw new RegistrationException($"Implementation of type {_implementedByType.FullName} already registered");
                 }
             }
 
