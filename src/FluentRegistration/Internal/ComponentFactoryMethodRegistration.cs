@@ -25,6 +25,7 @@ namespace FluentRegistration.Internal
     public class ComponentFactoryMethodRegistration<TService> :
         IValidRegistration,
         IRegister
+        where TService : notnull
     {
 
         #region Fields

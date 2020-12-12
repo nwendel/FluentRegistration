@@ -26,6 +26,7 @@ namespace FluentRegistration.Internal
         IValidRegistration,
         IRegister
         where TFactory : class
+        where TService : notnull
     {
 
         #region Fields
@@ -61,7 +62,7 @@ namespace FluentRegistration.Internal
 
             var serviceDescriptor = new ServiceDescriptor(typeof(TService), serviceProvider =>
             {
-                var factory = serviceProvider.GetService<TFactory>();
+                var factory = serviceProvider.GetRequiredService<TFactory>();
                 return _factoryMethod(factory);
             }, ServiceLifetime.Transient);
             services.Add(serviceDescriptor);

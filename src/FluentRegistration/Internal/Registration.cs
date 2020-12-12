@@ -30,7 +30,7 @@ namespace FluentRegistration.Internal
 
         #region Fields
 
-        private IRegister _register;
+        private IRegister? _register;
 
         #endregion
 
@@ -42,6 +42,7 @@ namespace FluentRegistration.Internal
         /// <typeparam name="TService"></typeparam>
         /// <returns></returns>
         public IComponentImplementationSelector<TService> For<TService>()
+            where TService : notnull
         {
             var registration = new ComponentRegistration<TService>(new[] { typeof(TService) });
             _register = registration;
@@ -171,6 +172,7 @@ namespace FluentRegistration.Internal
         /// <param name="instance"></param>
         /// <returns></returns>
         public IWithServicesInitial Instance<T>(T instance)
+            where T : notnull
         {
             var registration = new InstanceRegistration<T>(instance);
             _register = registration;
@@ -187,6 +189,11 @@ namespace FluentRegistration.Internal
         /// <param name="services"></param>
         public void Register(IServiceCollection services)
         {
+            if (_register == null)
+            {
+                throw new InvalidOperationException("Register called without defining what to register via the fluent Api.");
+            }
+
             _register.Register(services);
         }
 

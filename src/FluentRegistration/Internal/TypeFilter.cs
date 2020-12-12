@@ -238,11 +238,15 @@ namespace FluentRegistration.Internal
         {
             var stackTrace = new StackTrace();
             var stackFrame = stackTrace.GetFrame(2);
-            var @namespace = stackFrame.GetMethod().DeclaringType?.Namespace;
+            var method = stackFrame.GetMethod();
+            var declaringType = method.DeclaringType;
 
-            // TODO: CHeck for null DeclaringType and provide better exception?
+            if (declaringType == null)
+            {
+                throw new RegistrationException($"Unable to determine declaring type for method {method.Name}");
+            }
 
-            return InNamespace(@namespace, includeSubNamespaces);
+            return InNamespace(declaringType.Namespace, includeSubNamespaces);
         }
 
         #endregion

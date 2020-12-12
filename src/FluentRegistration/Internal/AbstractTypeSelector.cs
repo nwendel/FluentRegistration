@@ -34,7 +34,7 @@ namespace FluentRegistration.Internal
 
         private readonly List<Func<ITypeFilter, bool>> _wherePredicates = new List<Func<ITypeFilter, bool>>();
         private readonly List<Func<ITypeFilter, bool>> _exceptPredicates = new List<Func<ITypeFilter, bool>>();
-        private ServiceTypeSelector _serviceTypeSelector;
+        private ServiceTypeSelector _serviceTypeSelector = new ServiceTypeSelector();
 
         #endregion
 
@@ -119,7 +119,6 @@ namespace FluentRegistration.Internal
         {
             get
             {
-                _serviceTypeSelector = new ServiceTypeSelector();
                 return _serviceTypeSelector;
             }
         }

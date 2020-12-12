@@ -33,7 +33,8 @@ namespace FluentRegistration.Internal
         /// </summary>
         /// <typeparam name="TService"></typeparam>
         /// <returns></returns>
-        IComponentImplementationSelector<TService> For<TService>();
+        IComponentImplementationSelector<TService> For<TService>()
+            where TService : notnull;
 
         /// <summary>
         /// 
@@ -107,7 +108,8 @@ namespace FluentRegistration.Internal
         /// <typeparam name="T"></typeparam>
         /// <param name="instance"></param>
         /// <returns></returns>
-        IWithServicesInitial Instance<T>(T instance);
+        IWithServicesInitial Instance<T>(T instance)
+            where T : notnull;
 
         #endregion
 

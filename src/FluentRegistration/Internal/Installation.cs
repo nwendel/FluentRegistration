@@ -30,7 +30,7 @@ namespace FluentRegistration.Internal
 
         #region Fields
 
-        private IServiceInstaller[] _installers;
+        private IServiceInstaller[]? _installers;
 
         #endregion
 
@@ -107,7 +107,12 @@ namespace FluentRegistration.Internal
         /// <param name="services"></param>
         public void Install(IServiceCollection services)
         {
-            foreach(var installer in _installers)
+            if (_installers == null)
+            {
+                throw new InvalidOperationException("Install called without defining what to install via the fluent Api.");
+            }
+
+            foreach (var installer in _installers)
             {
                 installer.Install(services);
             }

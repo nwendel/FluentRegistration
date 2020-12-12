@@ -25,11 +25,12 @@ namespace FluentRegistration.Internal
     public class ComponentRegistration<TService> : 
         IComponentImplementationSelector<TService>,
         IRegister
+        where TService : notnull
     {
 
         #region Fields
 
-        private IRegister _register;
+        private IRegister? _register;
         private readonly Type[] _serviceTypes;
 
         #endregion
@@ -151,6 +152,11 @@ namespace FluentRegistration.Internal
         /// <param name="services"></param>
         public void Register(IServiceCollection services)
         {
+            if (_register == null)
+            {
+                throw new InvalidOperationException("Register called without defining what to register via the fluent Api.");
+            }
+
             _register.Register(services);
         }
 

@@ -25,12 +25,13 @@ namespace FluentRegistration.Internal
     public class InstanceRegistration<T> :
         IWithServicesInitial, 
         IRegister
+        where T : notnull
     {
 
         #region Fields
 
         private readonly T _instance;
-        private ServiceTypeSelector _serviceTypeSelector;
+        private ServiceTypeSelector _serviceTypeSelector = new ServiceTypeSelector();
 
         #endregion
 
@@ -60,7 +61,6 @@ namespace FluentRegistration.Internal
         {
             get
             {
-                _serviceTypeSelector = new ServiceTypeSelector();
                 return _serviceTypeSelector;
             }
         }
