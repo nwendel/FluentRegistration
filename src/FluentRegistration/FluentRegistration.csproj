@@ -21,7 +21,7 @@
 
   <PropertyGroup>
     <DocumentationFile>C:\dev\projects\FluentRegistration\src\FluentRegistration\FluentRegistration.xml</DocumentationFile>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
 
