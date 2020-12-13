@@ -1,37 +1,17 @@
-﻿#region License
-// Copyright (c) Niklas Wendel 2016-2019
-// 
-// Licensed under the Apache License, Version 2.0 (the "License"); 
-// you may not use this file except in compliance with the License. 
-// You may obtain a copy of the License at 
-// 
-// http://www.apache.org/licenses/LICENSE-2.0 
-// 
-// Unless required by applicable law or agreed to in writing, software 
-// distributed under the License is distributed on an "AS IS" BASIS, 
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-// See the License for the specific language governing permissions and 
-// limitations under the License.
-#endregion
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Extensions.DependencyInjection;
 using AttachedProperties;
 using FluentRegistration.Options;
-using System.Collections.Generic;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace FluentRegistration.Internal
 {
-
-    /// <summary>
-    /// 
-    /// </summary>
     public class ComponentImplementedByRegistration<TService, TImplementation> :
         ILifetime,
         IRegister
         where TImplementation : TService
     {
-
         #region Fields
 
         private readonly IEnumerable<Type> _serviceTypes;
@@ -42,21 +22,11 @@ namespace FluentRegistration.Internal
 
         #region Constructor
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="serviceTypes"></param>
         public ComponentImplementedByRegistration(IEnumerable<Type> serviceTypes)
             : this(serviceTypes, typeof(TImplementation), new LifetimeSelector())
         {
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="serviceTypes"></param>
-        /// <param name="implementedByType"></param>
-        /// <param name="lifetimeSelector"></param>
         public ComponentImplementedByRegistration(IEnumerable<Type> serviceTypes, Type implementedByType, LifetimeSelector lifetimeSelector)
         {
             _serviceTypes = serviceTypes;
@@ -68,19 +38,12 @@ namespace FluentRegistration.Internal
 
         #region Lifetime
 
-        /// <summary>
-        /// 
-        /// </summary>
         public ILifetimeSelector Lifetime => _lifetimeSelector;
 
         #endregion
 
         #region Register
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="services"></param>
         public void Register(IServiceCollection services)
         {
             if (services.Any(x => x.ImplementationType == _implementedByType))
@@ -111,7 +74,7 @@ namespace FluentRegistration.Internal
                 }
             }
 
-            if(_serviceTypes.Count() == 1)
+            if (_serviceTypes.Count() == 1)
             {
                 var serviceType = _serviceTypes.First();
                 var serviceDescriptor = new ServiceDescriptor(serviceType, _implementedByType, _lifetimeSelector.Lifetime);
@@ -121,7 +84,6 @@ namespace FluentRegistration.Internal
             {
                 // TODO: Workaround to solve problem with registering multiple implementation types under same shared interface
                 // TODO: Since they should be resolved to same instance in case of singleton or scoped lifestyle
-
                 var selfServiceDescriptor = new ServiceDescriptor(_implementedByType, _implementedByType, _lifetimeSelector.Lifetime);
                 services.Add(selfServiceDescriptor);
 
@@ -140,7 +102,5 @@ namespace FluentRegistration.Internal
         }
 
         #endregion
-
     }
-
 }

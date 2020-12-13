@@ -1,19 +1,4 @@
-﻿#region License
-// Copyright (c) Niklas Wendel 2016-2019
-// 
-// Licensed under the Apache License, Version 2.0 (the "License"); 
-// you may not use this file except in compliance with the License. 
-// You may obtain a copy of the License at 
-// 
-// http://www.apache.org/licenses/LICENSE-2.0 
-// 
-// Unless required by applicable law or agreed to in writing, software 
-// distributed under the License is distributed on an "AS IS" BASIS, 
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-// See the License for the specific language governing permissions and 
-// limitations under the License.
-#endregion
-using System;
+﻿using System;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -21,28 +6,20 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace FluentRegistration.Internal
 {
-
-    /// <summary>
-    /// 
-    /// </summary>
     public class Installation : IInstallation
     {
-
         #region Fields
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1011:Closing square brackets should be spaced correctly", Justification = "Stylecop can't handle this")]
         private IServiceInstaller[]? _installers;
 
         #endregion
 
         #region From Assembly
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="assembly"></param>
         public void FromAssembly(Assembly assembly)
         {
-            if(assembly == null)
+            if (assembly == null)
             {
                 throw new ArgumentNullException(nameof(assembly));
             }
@@ -60,10 +37,6 @@ namespace FluentRegistration.Internal
 
         #region From Assembly Containing
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="type"></param>
         public void FromAssemblyContaining(Type type)
         {
             if (type == null)
@@ -75,10 +48,6 @@ namespace FluentRegistration.Internal
             FromAssembly(assembly);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
         public void FromAssemblyContaining<T>()
         {
             FromAssemblyContaining(typeof(T));
@@ -88,9 +57,6 @@ namespace FluentRegistration.Internal
 
         #region From This Assembly
 
-        /// <summary>
-        /// 
-        /// </summary>
         [MethodImpl(MethodImplOptions.NoInlining)]
         public void FromThisAssembly()
         {
@@ -101,10 +67,6 @@ namespace FluentRegistration.Internal
 
         #region Install
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="services"></param>
         public void Install(IServiceCollection services)
         {
             if (_installers == null)
@@ -119,7 +81,5 @@ namespace FluentRegistration.Internal
         }
 
         #endregion
-
     }
-
 }

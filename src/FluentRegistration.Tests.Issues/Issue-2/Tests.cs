@@ -1,35 +1,12 @@
-﻿#region License
-// Copyright (c) Niklas Wendel 2016-2019
-// 
-// Licensed under the Apache License, Version 2.0 (the "License"); 
-// you may not use this file except in compliance with the License. 
-// You may obtain a copy of the License at 
-// 
-// http://www.apache.org/licenses/LICENSE-2.0 
-// 
-// Unless required by applicable law or agreed to in writing, software 
-// distributed under the License is distributed on an "AS IS" BASIS, 
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-// See the License for the specific language governing permissions and 
-// limitations under the License.
-#endregion
-using System.Linq;
+﻿using System.Linq;
+using FluentRegistration.Tests.Issues.Issue_2.Classes;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
-using FluentRegistration.Tests.Issues.Issue_2.Classes;
 
 namespace FluentRegistration.Tests.Issues.Issue_2
 {
-
-    /// <summary>
-    /// 
-    /// </summary>
     public class Tests
     {
-
-        /// <summary>
-        /// 
-        /// </summary>
         [Fact(Skip = "Something is strange with open generic types of open generic types")]
         public void CanInstantiate()
         {
@@ -41,9 +18,6 @@ namespace FluentRegistration.Tests.Issues.Issue_2
             var closedType = openContentAwareCommandValidatorType.MakeGenericType(typeof(AbstractPageData), typeof(AbstractPageExtensionProperties));
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         [Fact(Skip = "Something is strange with open generic types of open generic types")]
         public void CanRegister()
         {
@@ -55,8 +29,7 @@ namespace FluentRegistration.Tests.Issues.Issue_2
                 .WithServices.AllInterfaces());
 
             // ISSUE: Does not compile
-            //Assert.Contains(tested, x => x.ServiceType == typeof(IValidator<IContentAwareCommand<,>>));
-
+            // Assert.Contains(tested, x => x.ServiceType == typeof(IValidator<IContentAwareCommand<,>>));
             var openValidatorType = typeof(IValidator<>);
             var openContentAwareCommandType = typeof(IContentAwareCommand<,>);
             var openContentAwareCommandValidatorType = openValidatorType.MakeGenericType(openContentAwareCommandType);
@@ -68,9 +41,6 @@ namespace FluentRegistration.Tests.Issues.Issue_2
             Assert.Contains(tested, x => x.ImplementationType == typeof(ContentAwareCommandValidator<,>));
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         [Fact(Skip = "Something is strange with open generic types of open generic types")]
         public void CanResolve()
         {
@@ -86,7 +56,5 @@ namespace FluentRegistration.Tests.Issues.Issue_2
 
             Assert.NotNull(resolved);
         }
-
     }
-
 }

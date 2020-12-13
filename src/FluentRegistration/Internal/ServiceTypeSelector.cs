@@ -1,33 +1,13 @@
-﻿#region License
-// Copyright (c) Niklas Wendel 2016-2019
-// 
-// Licensed under the Apache License, Version 2.0 (the "License"); 
-// you may not use this file except in compliance with the License. 
-// You may obtain a copy of the License at 
-// 
-// http://www.apache.org/licenses/LICENSE-2.0 
-// 
-// Unless required by applicable law or agreed to in writing, software 
-// distributed under the License is distributed on an "AS IS" BASIS, 
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-// See the License for the specific language governing permissions and 
-// limitations under the License.
-#endregion
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
 namespace FluentRegistration.Internal
 {
-
-    /// <summary>
-    /// 
-    /// </summary>
     public class ServiceTypeSelector :
         IWithServices
     {
-
         #region Fields
 
         private readonly List<Func<Type, IEnumerable<Type>>> _serviceTypeSelectors = new List<Func<Type, IEnumerable<Type>>>();
@@ -37,10 +17,6 @@ namespace FluentRegistration.Internal
 
         #region All Interfaces
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public IWithServices AllInterfaces()
         {
             _serviceTypeSelectors.Add(type => type.GetTypeInfo().GetInterfaces());
@@ -48,13 +24,9 @@ namespace FluentRegistration.Internal
         }
 
         #endregion
-        
+
         #region Default Interface
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public IWithServices DefaultInterface()
         {
             _serviceTypeSelectors.Add(type =>
@@ -73,7 +45,7 @@ namespace FluentRegistration.Internal
                 });
                 return defaultInterfaces;
             });
-            
+
             return this;
         }
 
@@ -81,10 +53,6 @@ namespace FluentRegistration.Internal
 
         #region Service
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public IWithServices Service<TService>()
         {
             _serviceTypeSelectors.Add(type => new[] { typeof(TService) });
@@ -95,10 +63,6 @@ namespace FluentRegistration.Internal
 
         #region Self
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public IWithServices Self()
         {
             _serviceTypeSelectors.Add(type => new[] { type });
@@ -109,11 +73,6 @@ namespace FluentRegistration.Internal
 
         #region Get Services For
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
         public IEnumerable<Type> GetServicesFor(Type type)
         {
             return _serviceTypeSelectors.SelectMany(selector => selector(type));
@@ -123,23 +82,14 @@ namespace FluentRegistration.Internal
 
         #region Lifetime
 
-        /// <summary>
-        /// 
-        /// </summary>
         public ILifetimeSelector Lifetime => _lifetimeSelector;
 
         #endregion
 
         #region Get Lifetime Selector
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public LifetimeSelector GetLifetimeSelector() => _lifetimeSelector;
 
         #endregion
-
     }
-
 }
