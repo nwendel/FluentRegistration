@@ -1,4 +1,5 @@
 ﻿using System;
+using FluentRegistration.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FluentRegistration.Internal
@@ -6,7 +7,7 @@ namespace FluentRegistration.Internal
     public class ComponentRegistration<TService> :
         IComponentImplementationSelector<TService>,
         IRegister
-        where TService : notnull
+        where TService : class
     {
         #region Fields
 
@@ -40,10 +41,7 @@ namespace FluentRegistration.Internal
 
         public IValidRegistration Instance(TService instance)
         {
-            if (instance == null)
-            {
-                throw new ArgumentNullException(nameof(instance));
-            }
+            GuardAgainst.Null(instance, nameof(instance));
 
             var instanceRegistration = new ComponentInstanceRegistration(_serviceTypes, instance);
             _register = instanceRegistration;
@@ -57,10 +55,7 @@ namespace FluentRegistration.Internal
         public IValidRegistration UsingFactory<TFactory>(Func<TFactory, TService> factoryMethod)
             where TFactory : class
         {
-            if (factoryMethod == null)
-            {
-                throw new ArgumentNullException(nameof(factoryMethod));
-            }
+            GuardAgainst.Null(factoryMethod, nameof(factoryMethod));
 
             var factoryRegistration = new ComponentFactoryRegistration<TFactory, TService>(factoryMethod);
             _register = factoryRegistration;
@@ -73,20 +68,14 @@ namespace FluentRegistration.Internal
 
         public IValidRegistration UsingFactoryMethod(Func<TService> factoryMethod)
         {
-            if (factoryMethod == null)
-            {
-                throw new ArgumentNullException(nameof(factoryMethod));
-            }
+            GuardAgainst.Null(factoryMethod, nameof(factoryMethod));
 
             return UsingFactoryMethod(serviceProvider => factoryMethod());
         }
 
         public IValidRegistration UsingFactoryMethod(Func<IServiceProvider, TService> factoryMethod)
         {
-            if (factoryMethod == null)
-            {
-                throw new ArgumentNullException(nameof(factoryMethod));
-            }
+            GuardAgainst.Null(factoryMethod, nameof(factoryMethod));
 
             var factoryMethodRegistration = new ComponentFactoryMethodRegistration<TService>(factoryMethod);
             _register = factoryMethodRegistration;

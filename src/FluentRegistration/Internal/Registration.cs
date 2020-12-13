@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using FluentRegistration.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FluentRegistration.Internal
@@ -17,7 +17,7 @@ namespace FluentRegistration.Internal
         #region For
 
         public IComponentImplementationSelector<TService> For<TService>()
-            where TService : notnull
+            where TService : class
         {
             var registration = new ComponentRegistration<TService>(new[] { typeof(TService) });
             _register = registration;
@@ -26,20 +26,14 @@ namespace FluentRegistration.Internal
 
         public IComponentImplementationSelector<object> For(Type type)
         {
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
+            GuardAgainst.Null(type, nameof(type));
 
             return For(new[] { type });
         }
 
         public IComponentImplementationSelector<object> For(params Type[] types)
         {
-            if (!types.Any())
-            {
-                throw new ArgumentNullException(nameof(types));
-            }
+            GuardAgainst.NullOrEmpty(types, nameof(types));
 
             var registration = new ComponentRegistration<object>(types);
             _register = registration;
@@ -68,10 +62,7 @@ namespace FluentRegistration.Internal
 
         public ITypeSelector FromAssemblyContaining(Type type)
         {
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
+            GuardAgainst.Null(type, nameof(type));
 
             var assembly = type.GetTypeInfo().Assembly;
             return FromAssembly(assembly);
@@ -107,7 +98,7 @@ namespace FluentRegistration.Internal
         #region Instance
 
         public IWithServicesInitial Instance<T>(T instance)
-            where T : notnull
+            where T : class
         {
             var registration = new InstanceRegistration<T>(instance);
             _register = registration;

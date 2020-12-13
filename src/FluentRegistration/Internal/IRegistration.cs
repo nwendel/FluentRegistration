@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using FluentRegistration.Infrastructure;
 
 namespace FluentRegistration.Internal
 {
@@ -9,7 +10,7 @@ namespace FluentRegistration.Internal
         #region For
 
         IComponentImplementationSelector<TService> For<TService>()
-            where TService : notnull;
+            where TService : class;
 
         IComponentImplementationSelector<object> For(Type type);
 
@@ -46,7 +47,7 @@ namespace FluentRegistration.Internal
         #region Instance
 
         IWithServicesInitial Instance<T>(T instance)
-            where T : notnull;
+            where T : class;
 
         #endregion
     }

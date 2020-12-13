@@ -1,4 +1,6 @@
-﻿namespace FluentRegistration.Internal
+﻿using FluentRegistration.Infrastructure;
+
+namespace FluentRegistration.Internal
 {
     public interface IWithServicesInitial :
         IFluentInterface

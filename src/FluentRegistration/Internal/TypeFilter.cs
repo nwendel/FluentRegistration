@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using FluentRegistration.Infrastructure;
 
 namespace FluentRegistration.Internal
 {
@@ -20,10 +21,7 @@ namespace FluentRegistration.Internal
 
         public bool AssignableTo(Type type)
         {
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
+            GuardAgainst.Null(type, nameof(type));
 
             var typeInfo = type.GetTypeInfo();
             if (typeInfo.IsGenericTypeDefinition)
@@ -87,10 +85,7 @@ namespace FluentRegistration.Internal
 
         public bool InNamespace(string @namespace, bool includeSubNamespaces)
         {
-            if (string.IsNullOrWhiteSpace(@namespace))
-            {
-                throw new ArgumentNullException(nameof(@namespace));
-            }
+            GuardAgainst.NullOrWhiteSpace(@namespace, nameof(@namespace));
 
             if (ImplementationType.Namespace == @namespace)
             {
@@ -117,10 +112,7 @@ namespace FluentRegistration.Internal
 
         public bool InSameNamespaceAs(Type type, bool includeSubNamespaces)
         {
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
+            GuardAgainst.Null(type, nameof(type));
 
             return InNamespace(type.Namespace, includeSubNamespaces);
         }

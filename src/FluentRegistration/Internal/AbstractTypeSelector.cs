@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using FluentRegistration.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FluentRegistration.Internal
@@ -28,10 +29,7 @@ namespace FluentRegistration.Internal
 
         public ITypeSelector Where(Func<ITypeFilter, bool> predicate)
         {
-            if (predicate == null)
-            {
-                throw new ArgumentNullException(nameof(predicate));
-            }
+            GuardAgainst.Null(predicate, nameof(predicate));
 
             _wherePredicates.Add(predicate);
             return this;
@@ -43,10 +41,7 @@ namespace FluentRegistration.Internal
 
         public ITypeSelector Except(Func<ITypeFilter, bool> predicate)
         {
-            if (predicate == null)
-            {
-                throw new ArgumentNullException(nameof(predicate));
-            }
+            GuardAgainst.Null(predicate, nameof(predicate));
 
             _exceptPredicates.Add(predicate);
             return this;

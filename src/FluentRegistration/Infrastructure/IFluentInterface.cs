@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace FluentRegistration.Internal
+namespace FluentRegistration.Infrastructure
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
     public interface IFluentInterface

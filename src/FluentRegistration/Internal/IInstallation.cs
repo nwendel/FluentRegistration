@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using FluentRegistration.Infrastructure;
 
 namespace FluentRegistration.Internal
 {

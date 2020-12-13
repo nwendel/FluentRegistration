@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using FluentRegistration.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FluentRegistration.Internal
@@ -19,10 +20,7 @@ namespace FluentRegistration.Internal
 
         public void FromAssembly(Assembly assembly)
         {
-            if (assembly == null)
-            {
-                throw new ArgumentNullException(nameof(assembly));
-            }
+            GuardAgainst.Null(assembly, nameof(assembly));
 
             var allTypes = assembly.GetTypes();
             var installers = allTypes
@@ -39,10 +37,7 @@ namespace FluentRegistration.Internal
 
         public void FromAssemblyContaining(Type type)
         {
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
+            GuardAgainst.Null(type, nameof(type));
 
             var assembly = type.GetTypeInfo().Assembly;
             FromAssembly(assembly);

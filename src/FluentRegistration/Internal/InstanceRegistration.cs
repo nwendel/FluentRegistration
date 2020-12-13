@@ -1,4 +1,5 @@
 ﻿using System;
+using FluentRegistration.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FluentRegistration.Internal
@@ -6,7 +7,7 @@ namespace FluentRegistration.Internal
     public class InstanceRegistration<T> :
         IWithServicesInitial,
         IRegister
-        where T : notnull
+        where T : class
     {
         #region Fields
 
@@ -19,10 +20,7 @@ namespace FluentRegistration.Internal
 
         public InstanceRegistration(T instance)
         {
-            if (instance == null)
-            {
-                throw new ArgumentNullException(nameof(instance));
-            }
+            GuardAgainst.Null(instance, nameof(instance));
 
             _instance = instance;
         }

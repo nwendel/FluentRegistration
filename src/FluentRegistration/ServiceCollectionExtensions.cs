@@ -1,5 +1,6 @@
 ﻿using System;
 using AttachedProperties;
+using FluentRegistration.Infrastructure;
 using FluentRegistration.Internal;
 using FluentRegistration.Options;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,15 +13,8 @@ namespace FluentRegistration
 
         public static void Register(this IServiceCollection self, Func<IRegistration, IValidRegistration> registrationAction)
         {
-            if (self == null)
-            {
-                throw new ArgumentNullException(nameof(self));
-            }
-
-            if (registrationAction == null)
-            {
-                throw new ArgumentNullException(nameof(registrationAction));
-            }
+            GuardAgainst.Null(self, nameof(self));
+            GuardAgainst.Null(registrationAction, nameof(registrationAction));
 
             var registration = new Registration();
             registrationAction(registration);
@@ -40,15 +34,8 @@ namespace FluentRegistration
 
         public static void Install(this IServiceCollection self, Action<IInstallation> installationAction)
         {
-            if (self == null)
-            {
-                throw new ArgumentNullException(nameof(self));
-            }
-
-            if (installationAction == null)
-            {
-                throw new ArgumentNullException(nameof(installationAction));
-            }
+            GuardAgainst.Null(self, nameof(self));
+            GuardAgainst.Null(installationAction, nameof(installationAction));
 
             var installation = new Installation();
             installationAction(installation);
@@ -61,15 +48,8 @@ namespace FluentRegistration
 
         public static void Configure(this IServiceCollection self, Action<FluentRegistrationOptions> optionsAction)
         {
-            if (self == null)
-            {
-                throw new ArgumentNullException(nameof(self));
-            }
-
-            if (optionsAction == null)
-            {
-                throw new ArgumentNullException(nameof(optionsAction));
-            }
+            GuardAgainst.Null(self, nameof(self));
+            GuardAgainst.Null(optionsAction, nameof(optionsAction));
 
             var options = self.GetAttachedValue(ServiceCollectionAttachedProperties.Options) ?? new FluentRegistrationOptions();
             optionsAction(options);
