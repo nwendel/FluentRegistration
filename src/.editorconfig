@@ -26,3 +26,9 @@ dotnet_diagnostic.SA1202.severity = none
 
 # SA1201: Elements should appear in the correct order
 dotnet_diagnostic.SA1201.severity = none
+
+# SX1309: Field names must begin with underscore
+dotnet_diagnostic.SX1309.severity = error
+
+# SX1309S: Static field names must begin with underscore
+dotnet_diagnostic.SX1309.severity = error

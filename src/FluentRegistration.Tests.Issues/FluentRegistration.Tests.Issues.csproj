@@ -13,9 +13,6 @@
 
   <ItemGroup>
     <None Remove="FluentRegistration.Tests.Issues.xml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 
