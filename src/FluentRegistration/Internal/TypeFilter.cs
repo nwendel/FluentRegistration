@@ -114,7 +114,7 @@ namespace FluentRegistration.Internal
         {
             GuardAgainst.Null(type, nameof(type));
 
-            return InNamespace(type.Namespace, includeSubNamespaces);
+            return InNamespace(type.Namespace!, includeSubNamespaces);
         }
 
         public bool InSameNamespaceAs<T>()
@@ -148,15 +148,15 @@ namespace FluentRegistration.Internal
         {
             var stackTrace = new StackTrace();
             var stackFrame = stackTrace.GetFrame(2);
-            var method = stackFrame.GetMethod();
-            var declaringType = method.DeclaringType;
+            var method = stackFrame!.GetMethod();
+            var declaringType = method!.DeclaringType;
 
             if (declaringType == null)
             {
                 throw new RegistrationException($"Unable to determine declaring type for method {method.Name}");
             }
 
-            return InNamespace(declaringType.Namespace, includeSubNamespaces);
+            return InNamespace(declaringType.Namespace!, includeSubNamespaces);
         }
 
         #endregion

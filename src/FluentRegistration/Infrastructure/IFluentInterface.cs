@@ -23,7 +23,7 @@ namespace FluentRegistration.Infrastructure
         #region To String
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        string ToString();
+        string? ToString();
 
         #endregion
 

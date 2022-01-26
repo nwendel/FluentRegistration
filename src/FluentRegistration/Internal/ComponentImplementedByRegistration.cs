@@ -95,7 +95,7 @@ namespace FluentRegistration.Internal
                         continue;
                     }
 
-                    var serviceDescriptor = new ServiceDescriptor(serviceType, serviceProvider => serviceProvider.GetService(_implementedByType), _lifetimeSelector.Lifetime);
+                    var serviceDescriptor = new ServiceDescriptor(serviceType, serviceProvider => serviceProvider.GetRequiredService(_implementedByType), _lifetimeSelector.Lifetime);
                     services.Add(serviceDescriptor);
                 }
             }
