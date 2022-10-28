@@ -13,8 +13,8 @@ namespace FluentRegistration
 
         public static void Register(this IServiceCollection self, Func<IRegistration, IValidRegistration> registrationAction)
         {
-            GuardAgainst.Null(self, nameof(self));
-            GuardAgainst.Null(registrationAction, nameof(registrationAction));
+            GuardAgainst.Null(self);
+            GuardAgainst.Null(registrationAction);
 
             var registration = new Registration();
             registrationAction(registration);
@@ -34,8 +34,8 @@ namespace FluentRegistration
 
         public static void Install(this IServiceCollection self, Action<IInstallation> installationAction)
         {
-            GuardAgainst.Null(self, nameof(self));
-            GuardAgainst.Null(installationAction, nameof(installationAction));
+            GuardAgainst.Null(self);
+            GuardAgainst.Null(installationAction);
 
             var installation = new Installation();
             installationAction(installation);
@@ -48,8 +48,8 @@ namespace FluentRegistration
 
         public static void Configure(this IServiceCollection self, Action<FluentRegistrationOptions> optionsAction)
         {
-            GuardAgainst.Null(self, nameof(self));
-            GuardAgainst.Null(optionsAction, nameof(optionsAction));
+            GuardAgainst.Null(self);
+            GuardAgainst.Null(optionsAction);
 
             var options = self.GetAttachedValue(ServiceCollectionAttachedProperties.Options) ?? new FluentRegistrationOptions();
             optionsAction(options);

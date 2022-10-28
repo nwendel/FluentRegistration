@@ -20,7 +20,7 @@ namespace FluentRegistration.Internal
 
         public void FromAssembly(Assembly assembly)
         {
-            GuardAgainst.Null(assembly, nameof(assembly));
+            GuardAgainst.Null(assembly);
 
             var allTypes = assembly.GetTypes();
             var installers = allTypes
@@ -37,7 +37,7 @@ namespace FluentRegistration.Internal
 
         public void FromAssemblyContaining(Type type)
         {
-            GuardAgainst.Null(type, nameof(type));
+            GuardAgainst.Null(type);
 
             var assembly = type.GetTypeInfo().Assembly;
             FromAssembly(assembly);

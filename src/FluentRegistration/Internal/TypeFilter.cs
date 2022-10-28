@@ -21,7 +21,7 @@ namespace FluentRegistration.Internal
 
         public bool AssignableTo(Type type)
         {
-            GuardAgainst.Null(type, nameof(type));
+            GuardAgainst.Null(type);
 
             var typeInfo = type.GetTypeInfo();
             if (typeInfo.IsGenericTypeDefinition)
@@ -85,7 +85,7 @@ namespace FluentRegistration.Internal
 
         public bool InNamespace(string @namespace, bool includeSubNamespaces)
         {
-            GuardAgainst.NullOrWhiteSpace(@namespace, nameof(@namespace));
+            GuardAgainst.NullOrWhiteSpace(@namespace);
 
             if (ImplementationType.Namespace == @namespace)
             {
@@ -112,7 +112,7 @@ namespace FluentRegistration.Internal
 
         public bool InSameNamespaceAs(Type type, bool includeSubNamespaces)
         {
-            GuardAgainst.Null(type, nameof(type));
+            GuardAgainst.Null(type);
 
             return InNamespace(type.Namespace!, includeSubNamespaces);
         }

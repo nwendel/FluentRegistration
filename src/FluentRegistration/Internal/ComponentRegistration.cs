@@ -41,7 +41,7 @@ namespace FluentRegistration.Internal
 
         public IValidRegistration Instance(TService instance)
         {
-            GuardAgainst.Null(instance, nameof(instance));
+            GuardAgainst.Null(instance);
 
             var instanceRegistration = new ComponentInstanceRegistration(_serviceTypes, instance);
             _register = instanceRegistration;
@@ -55,7 +55,7 @@ namespace FluentRegistration.Internal
         public IValidRegistration UsingFactory<TFactory>(Func<TFactory, TService> factoryMethod)
             where TFactory : class
         {
-            GuardAgainst.Null(factoryMethod, nameof(factoryMethod));
+            GuardAgainst.Null(factoryMethod);
 
             var factoryRegistration = new ComponentFactoryRegistration<TFactory, TService>(factoryMethod);
             _register = factoryRegistration;
@@ -68,14 +68,14 @@ namespace FluentRegistration.Internal
 
         public IValidRegistration UsingFactoryMethod(Func<TService> factoryMethod)
         {
-            GuardAgainst.Null(factoryMethod, nameof(factoryMethod));
+            GuardAgainst.Null(factoryMethod);
 
             return UsingFactoryMethod(serviceProvider => factoryMethod());
         }
 
         public IValidRegistration UsingFactoryMethod(Func<IServiceProvider, TService> factoryMethod)
         {
-            GuardAgainst.Null(factoryMethod, nameof(factoryMethod));
+            GuardAgainst.Null(factoryMethod);
 
             var factoryMethodRegistration = new ComponentFactoryMethodRegistration<TService>(factoryMethod);
             _register = factoryMethodRegistration;
