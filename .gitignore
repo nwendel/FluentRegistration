@@ -234,6 +234,3 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
-src/FluentRegistration.Tests.Issues/FluentRegistration.Tests.Issues.xml
-src/FluentRegistration.Tests/FluentRegistration.Tests.xml
-src/FluentRegistration/FluentRegistration.xml
