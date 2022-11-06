@@ -29,7 +29,7 @@ namespace FluentRegistration.Internal
 
         public ITypeSelector Where(Func<ITypeFilter, bool> predicate)
         {
-            GuardAgainst.Null(predicate, nameof(predicate));
+            GuardAgainst.Null(predicate);
 
             _wherePredicates.Add(predicate);
             return this;
@@ -41,7 +41,7 @@ namespace FluentRegistration.Internal
 
         public ITypeSelector Except(Func<ITypeFilter, bool> predicate)
         {
-            GuardAgainst.Null(predicate, nameof(predicate));
+            GuardAgainst.Null(predicate);
 
             _exceptPredicates.Add(predicate);
             return this;

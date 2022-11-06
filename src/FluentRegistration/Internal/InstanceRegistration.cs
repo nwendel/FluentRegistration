@@ -1,5 +1,4 @@
-﻿using System;
-using FluentRegistration.Infrastructure;
+﻿using FluentRegistration.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FluentRegistration.Internal
@@ -20,7 +19,7 @@ namespace FluentRegistration.Internal
 
         public InstanceRegistration(T instance)
         {
-            GuardAgainst.Null(instance, nameof(instance));
+            GuardAgainst.Null(instance);
 
             _instance = instance;
         }

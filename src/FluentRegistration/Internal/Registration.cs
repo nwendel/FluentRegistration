@@ -26,14 +26,14 @@ namespace FluentRegistration.Internal
 
         public IComponentImplementationSelector<object> For(Type type)
         {
-            GuardAgainst.Null(type, nameof(type));
+            GuardAgainst.Null(type);
 
             return For(new[] { type });
         }
 
         public IComponentImplementationSelector<object> For(params Type[] types)
         {
-            GuardAgainst.NullOrEmpty(types, nameof(types));
+            GuardAgainst.NullOrEmpty(types);
 
             var registration = new ComponentRegistration<object>(types);
             _register = registration;
@@ -62,7 +62,7 @@ namespace FluentRegistration.Internal
 
         public ITypeSelector FromAssemblyContaining(Type type)
         {
-            GuardAgainst.Null(type, nameof(type));
+            GuardAgainst.Null(type);
 
             var assembly = type.GetTypeInfo().Assembly;
             return FromAssembly(assembly);

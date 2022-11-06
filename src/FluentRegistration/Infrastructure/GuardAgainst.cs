@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace FluentRegistration.Infrastructure
 {
-    public static class GuardAgainst
+    internal static class GuardAgainst
     {
-        public static void Null<T>(T argument, string argumentName)
+        public static void Null<T>(T argument, [CallerArgumentExpression("argument")] string? argumentName = null)
             where T : class
         {
             if (argument == null)
@@ -15,7 +16,7 @@ namespace FluentRegistration.Infrastructure
             }
         }
 
-        public static void NullOrEmpty<T>(IEnumerable<T> argument, string argumentName)
+        public static void NullOrEmpty<T>(IEnumerable<T> argument, [CallerArgumentExpression("argument")] string? argumentName = null)
             where T : class
         {
             if (argument == null || !argument.Any())
@@ -24,7 +25,7 @@ namespace FluentRegistration.Infrastructure
             }
         }
 
-        public static void NullOrWhiteSpace(string argument, string argumentName)
+        public static void NullOrWhiteSpace(string argument, [CallerArgumentExpression("argument")] string? argumentName = null)
         {
             if (string.IsNullOrWhiteSpace(argument))
             {
