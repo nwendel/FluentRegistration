@@ -10,7 +10,7 @@
     <PackageId>FluentRegistration</PackageId>
     <Title>FluentRegistration</Title>
     <Description>FluentRegistration</Description>
-    <Version>2.8.0</Version>
+    <Version>2.8.1</Version>
     <Copyright>Niklas Wendel 2016-2022</Copyright>
     <Authors>Niklas Wendel</Authors>
     <PackageTags>Dependency;Injection;Fluent;Registration;DI;Assembly;Scanning;Conventions</PackageTags>
@@ -18,6 +18,8 @@
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/nwendel/fluentregistration</RepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>  
   </PropertyGroup>
 
   <PropertyGroup>
