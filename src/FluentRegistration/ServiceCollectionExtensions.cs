@@ -9,8 +9,6 @@ namespace FluentRegistration;
 
 public static class ServiceCollectionExtensions
 {
-    #region Register
-
     public static void Register(this IServiceCollection self, Func<IRegistration, IValidRegistration> registrationAction)
     {
         GuardAgainst.Null(self);
@@ -20,10 +18,6 @@ public static class ServiceCollectionExtensions
         registrationAction(registration);
         registration.Register(self);
     }
-
-    #endregion
-
-    #region Install
 
     public static void Install<TInstaller>(this IServiceCollection self)
         where TInstaller : IServiceInstaller, new()
@@ -42,10 +36,6 @@ public static class ServiceCollectionExtensions
         installation.Install(self);
     }
 
-    #endregion
-
-    #region Configure
-
     public static void Configure(this IServiceCollection self, Action<FluentRegistrationOptions> optionsAction)
     {
         GuardAgainst.Null(self);
@@ -55,6 +45,4 @@ public static class ServiceCollectionExtensions
         optionsAction(options);
         self.SetAttachedValue(ServiceCollectionAttachedProperties.Options, options);
     }
-
-    #endregion
 }

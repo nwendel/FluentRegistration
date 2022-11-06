@@ -3,9 +3,6 @@
 # Prefer file-scoped namespace declarations
 csharp_style_namespace_declarations = file_scoped:error
 
-# SA1124: Do not use regions
-dotnet_diagnostic.SA1124.severity = none
-
 # SA1309: Field names should not begin with underscore
 dotnet_diagnostic.SA1309.severity = none
 

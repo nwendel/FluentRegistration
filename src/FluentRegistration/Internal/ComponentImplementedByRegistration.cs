@@ -13,15 +13,9 @@ public class ComponentImplementedByRegistration<TService, TImplementation> :
     IRegister
     where TImplementation : TService
 {
-    #region Fields
-
     private readonly IEnumerable<Type> _serviceTypes;
     private readonly Type _implementedByType;
     private readonly LifetimeSelector _lifetimeSelector;
-
-    #endregion
-
-    #region Constructor
 
     public ComponentImplementedByRegistration(IEnumerable<Type> serviceTypes)
         : this(serviceTypes, typeof(TImplementation), new LifetimeSelector())
@@ -35,15 +29,7 @@ public class ComponentImplementedByRegistration<TService, TImplementation> :
         _lifetimeSelector = lifetimeSelector;
     }
 
-    #endregion
-
-    #region Lifetime
-
     public ILifetimeSelector Lifetime => _lifetimeSelector;
-
-    #endregion
-
-    #region Register
 
     public void Register(IServiceCollection services)
     {
@@ -101,6 +87,4 @@ public class ComponentImplementedByRegistration<TService, TImplementation> :
             }
         }
     }
-
-    #endregion
 }

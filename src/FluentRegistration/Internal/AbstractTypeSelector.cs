@@ -11,21 +11,11 @@ public abstract class AbstractTypeSelector :
     ITypeSelector,
     IRegister
 {
-    #region Fields
-
     private readonly List<Func<ITypeFilter, bool>> _wherePredicates = new List<Func<ITypeFilter, bool>>();
     private readonly List<Func<ITypeFilter, bool>> _exceptPredicates = new List<Func<ITypeFilter, bool>>();
     private ServiceTypeSelector _serviceTypeSelector = new ServiceTypeSelector();
 
-    #endregion
-
-    #region Types
-
     protected abstract IEnumerable<Type> Types { get; }
-
-    #endregion
-
-    #region Where
 
     public ITypeSelector Where(Func<ITypeFilter, bool> predicate)
     {
@@ -35,10 +25,6 @@ public abstract class AbstractTypeSelector :
         return this;
     }
 
-    #endregion
-
-    #region Except
-
     public ITypeSelector Except(Func<ITypeFilter, bool> predicate)
     {
         GuardAgainst.Null(predicate);
@@ -46,10 +32,6 @@ public abstract class AbstractTypeSelector :
         _exceptPredicates.Add(predicate);
         return this;
     }
-
-    #endregion
-
-    #region Filtered Types
 
     public IEnumerable<Type> FilteredTypes
     {
@@ -66,10 +48,6 @@ public abstract class AbstractTypeSelector :
         }
     }
 
-    #endregion
-
-    #region With Services
-
     public IServiceSelector WithServices
     {
         get
@@ -77,10 +55,6 @@ public abstract class AbstractTypeSelector :
             return _serviceTypeSelector;
         }
     }
-
-    #endregion
-
-    #region Register
 
     public void Register(IServiceCollection services)
     {
@@ -95,6 +69,4 @@ public abstract class AbstractTypeSelector :
             componentRegistration.Register(services);
         }
     }
-
-    #endregion
 }

@@ -8,16 +8,10 @@ namespace FluentRegistration.Internal;
 
 public class TypeFilter : ITypeFilter
 {
-    #region Constructor
-
     public TypeFilter(Type type)
     {
         ImplementationType = type;
     }
-
-    #endregion
-
-    #region Assignable To
 
     public bool AssignableTo(Type type)
     {
@@ -74,10 +68,6 @@ public class TypeFilter : ITypeFilter
         return false;
     }
 
-    #endregion
-
-    #region In Namespace
-
     public bool InNamespace(string @namespace)
     {
         return InNamespace(@namespace, false);
@@ -102,10 +92,6 @@ public class TypeFilter : ITypeFilter
         return false;
     }
 
-    #endregion
-
-    #region In Same Namespace As
-
     public bool InSameNamespaceAs(Type type)
     {
         return InSameNamespaceAs(type, false);
@@ -127,10 +113,6 @@ public class TypeFilter : ITypeFilter
     {
         return InSameNamespaceAs(typeof(T), includeSubNamespaces);
     }
-
-    #endregion
-
-    #region In This Namespace
 
     [MethodImpl(MethodImplOptions.NoInlining)]
     public bool InThisNamespace()
@@ -175,11 +157,5 @@ public class TypeFilter : ITypeFilter
         return InNamespace(@namespace, includeSubNamespaces);
     }
 
-    #endregion
-
-    #region Implementation Type
-
     public Type ImplementationType { get; }
-
-    #endregion
 }

@@ -9,23 +9,13 @@ public class ComponentRegistration<TService> :
     IRegister
     where TService : class
 {
-    #region Fields
-
     private readonly Type[] _serviceTypes;
     private IRegister? _register;
-
-    #endregion
-
-    #region Constructor
 
     public ComponentRegistration(Type[] serviceTypes)
     {
         _serviceTypes = serviceTypes;
     }
-
-    #endregion
-
-    #region Implemented By
 
     public ILifetime ImplementedBy<TImplementation>()
         where TImplementation : TService
@@ -34,10 +24,6 @@ public class ComponentRegistration<TService> :
         _register = implementedByRegistration;
         return implementedByRegistration;
     }
-
-    #endregion
-
-    #region Instance
 
     public IValidRegistration Instance(TService instance)
     {
@@ -48,10 +34,6 @@ public class ComponentRegistration<TService> :
         return instanceRegistration;
     }
 
-    #endregion
-
-    #region Using Factory
-
     public IValidRegistration UsingFactory<TFactory>(Func<TFactory, TService> factoryMethod)
         where TFactory : class
     {
@@ -61,10 +43,6 @@ public class ComponentRegistration<TService> :
         _register = factoryRegistration;
         return factoryRegistration;
     }
-
-    #endregion
-
-    #region Using Factory Method
 
     public IValidRegistration UsingFactoryMethod(Func<TService> factoryMethod)
     {
@@ -82,10 +60,6 @@ public class ComponentRegistration<TService> :
         return factoryMethodRegistration;
     }
 
-    #endregion
-
-    #region Register
-
     public void Register(IServiceCollection services)
     {
         if (_register == null)
@@ -95,6 +69,4 @@ public class ComponentRegistration<TService> :
 
         _register.Register(services);
     }
-
-    #endregion
 }
