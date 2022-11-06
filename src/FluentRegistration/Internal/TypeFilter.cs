@@ -149,15 +149,30 @@ public class TypeFilter : ITypeFilter
     {
         var stackTrace = new StackTrace();
         var stackFrame = stackTrace.GetFrame(2);
-        var method = stackFrame!.GetMethod();
-        var declaringType = method!.DeclaringType;
+        if (stackFrame == null)
+        {
+            throw new RegistrationException($"Unable to get callstack");
+        }
 
+        var method = stackFrame.GetMethod();
+        if (method == null)
+        {
+            throw new RegistrationException($"Unable to get method");
+        }
+
+        var declaringType = method.DeclaringType;
         if (declaringType == null)
         {
             throw new RegistrationException($"Unable to determine declaring type for method {method.Name}");
         }
 
-        return InNamespace(declaringType.Namespace!, includeSubNamespaces);
+        var @namespace = declaringType.Namespace;
+        if (@namespace == null)
+        {
+            return false;
+        }
+
+        return InNamespace(@namespace, includeSubNamespaces);
     }
 
     #endregion
