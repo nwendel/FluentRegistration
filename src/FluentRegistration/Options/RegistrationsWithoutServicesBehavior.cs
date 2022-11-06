@@ -1,8 +1,7 @@
-﻿namespace FluentRegistration.Options
+﻿namespace FluentRegistration.Options;
+
+public enum RegistrationsWithoutServicesBehavior
 {
-    public enum RegistrationsWithoutServicesBehavior
-    {
-        Ignore,
-        ThrowException,
-    }
+    Ignore,
+    ThrowException,
 }

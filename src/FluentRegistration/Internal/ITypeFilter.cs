@@ -1,43 +1,42 @@
 ﻿using System;
 using FluentRegistration.Infrastructure;
 
-namespace FluentRegistration.Internal
+namespace FluentRegistration.Internal;
+
+public interface ITypeFilter :
+    IFluentInterface
 {
-    public interface ITypeFilter :
-        IFluentInterface
-    {
-        #region Assignable To
+    #region Assignable To
 
-        bool AssignableTo(Type type);
+    bool AssignableTo(Type type);
 
-        bool AssignableTo<T>();
+    bool AssignableTo<T>();
 
-        #endregion
+    #endregion
 
-        #region In Namespace
+    #region In Namespace
 
-        bool InNamespace(string @namespace);
+    bool InNamespace(string @namespace);
 
-        #endregion
+    #endregion
 
-        #region In Same Namespace As
+    #region In Same Namespace As
 
-        bool InSameNamespaceAs(Type type);
+    bool InSameNamespaceAs(Type type);
 
-        bool InSameNamespaceAs<T>();
+    bool InSameNamespaceAs<T>();
 
-        #endregion
+    #endregion
 
-        #region In This Namespace
+    #region In This Namespace
 
-        bool InThisNamespace();
+    bool InThisNamespace();
 
-        #endregion
+    #endregion
 
-        #region Implementation Type
+    #region Implementation Type
 
-        Type ImplementationType { get; }
+    Type ImplementationType { get; }
 
-        #endregion
-    }
+    #endregion
 }

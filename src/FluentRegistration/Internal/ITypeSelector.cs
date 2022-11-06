@@ -1,20 +1,19 @@
 ﻿using System;
 
-namespace FluentRegistration.Internal
+namespace FluentRegistration.Internal;
+
+public interface ITypeSelector :
+    IWithServicesInitial
 {
-    public interface ITypeSelector :
-        IWithServicesInitial
-    {
-        #region Where
+    #region Where
 
-        ITypeSelector Where(Func<ITypeFilter, bool> predicate);
+    ITypeSelector Where(Func<ITypeFilter, bool> predicate);
 
-        #endregion
+    #endregion
 
-        #region Except
+    #region Except
 
-        ITypeSelector Except(Func<ITypeFilter, bool> predicate);
+    ITypeSelector Except(Func<ITypeFilter, bool> predicate);
 
-        #endregion
-    }
+    #endregion
 }

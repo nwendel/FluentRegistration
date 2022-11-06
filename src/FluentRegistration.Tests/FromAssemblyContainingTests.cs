@@ -2,26 +2,25 @@
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace FluentRegistration.Tests
+namespace FluentRegistration.Tests;
+
+public class FromAssemblyContainingTests
 {
-    public class FromAssemblyContainingTests
+    [Fact]
+    public void ThrowsOnRegisterNullType()
     {
-        [Fact]
-        public void ThrowsOnRegisterNullType()
-        {
-            var tested = new ServiceCollection();
+        var tested = new ServiceCollection();
 
-            Assert.Throws<ArgumentNullException>("type", () => tested.Register(r => r
-                .FromAssemblyContaining(null)
-                .WithServices.Self()));
-        }
+        Assert.Throws<ArgumentNullException>("type", () => tested.Register(r => r
+            .FromAssemblyContaining(null)
+            .WithServices.Self()));
+    }
 
-        [Fact]
-        public void ThrowsOnInstallNullType()
-        {
-            var tested = new ServiceCollection();
+    [Fact]
+    public void ThrowsOnInstallNullType()
+    {
+        var tested = new ServiceCollection();
 
-            Assert.Throws<ArgumentNullException>("type", () => tested.Install(i => i.FromAssemblyContaining(null)));
-        }
+        Assert.Throws<ArgumentNullException>("type", () => tested.Install(i => i.FromAssemblyContaining(null)));
     }
 }

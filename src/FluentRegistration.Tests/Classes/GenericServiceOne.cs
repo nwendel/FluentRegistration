@@ -1,6 +1,5 @@
-﻿namespace FluentRegistration.Tests.Classes
+﻿namespace FluentRegistration.Tests.Classes;
+
+public class GenericServiceOne<T>
 {
-    public class GenericServiceOne<T>
-    {
-    }
 }

@@ -3,55 +3,54 @@ using FluentRegistration.Tests.Classes;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace FluentRegistration.Tests
+namespace FluentRegistration.Tests;
+
+public class InstanceTests
 {
-    public class InstanceTests
+    [Fact]
+    public void ThrowsOnRegisterNullInstance()
     {
-        [Fact]
-        public void ThrowsOnRegisterNullInstance()
-        {
-            var tested = new ServiceCollection();
+        var tested = new ServiceCollection();
 
-            Assert.Throws<ArgumentNullException>("instance", () =>
-                tested.Register(r => r
-                    .Instance<SimpleService>(null)
-                    .WithServices.AllInterfaces()));
-        }
-
-        [Fact]
-        public void CanRegister()
-        {
-            var tested = new ServiceCollection();
-            var instance = new SimpleService();
-
+        Assert.Throws<ArgumentNullException>("instance", () =>
             tested.Register(r => r
-                .Instance(instance)
-                .WithServices.AllInterfaces());
+                .Instance<SimpleService>(null)
+                .WithServices.AllInterfaces()));
+    }
 
-            Assert.Single(tested);
-            Assert.All(tested, service =>
-            {
-                Assert.Equal(typeof(ISimpleService), service.ServiceType);
-                Assert.Same(instance, service.ImplementationInstance);
-            });
-        }
+    [Fact]
+    public void CanRegister()
+    {
+        var tested = new ServiceCollection();
+        var instance = new SimpleService();
 
-        [Fact]
-        public void CanRegisterDeclared()
+        tested.Register(r => r
+            .Instance(instance)
+            .WithServices.AllInterfaces());
+
+        Assert.Single(tested);
+        Assert.All(tested, service =>
         {
-            var tested = new ServiceCollection();
-            var instance = new SimpleService();
+            Assert.Equal(typeof(ISimpleService), service.ServiceType);
+            Assert.Same(instance, service.ImplementationInstance);
+        });
+    }
 
-            tested.Register(r => r
-                .Instance<object>(instance)
-                .WithServices.AllInterfaces());
+    [Fact]
+    public void CanRegisterDeclared()
+    {
+        var tested = new ServiceCollection();
+        var instance = new SimpleService();
 
-            Assert.Single(tested);
-            Assert.All(tested, service =>
-            {
-                Assert.Equal(typeof(ISimpleService), service.ServiceType);
-                Assert.Same(instance, service.ImplementationInstance);
-            });
-        }
+        tested.Register(r => r
+            .Instance<object>(instance)
+            .WithServices.AllInterfaces());
+
+        Assert.Single(tested);
+        Assert.All(tested, service =>
+        {
+            Assert.Equal(typeof(ISimpleService), service.ServiceType);
+            Assert.Same(instance, service.ImplementationInstance);
+        });
     }
 }

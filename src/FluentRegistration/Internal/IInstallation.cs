@@ -2,29 +2,28 @@
 using System.Reflection;
 using FluentRegistration.Infrastructure;
 
-namespace FluentRegistration.Internal
+namespace FluentRegistration.Internal;
+
+public interface IInstallation :
+    IFluentInterface
 {
-    public interface IInstallation :
-        IFluentInterface
-    {
-        #region From Assembly
+    #region From Assembly
 
-        void FromAssembly(Assembly assembly);
+    void FromAssembly(Assembly assembly);
 
-        #endregion
+    #endregion
 
-        #region From Assembly Containing
+    #region From Assembly Containing
 
-        void FromAssemblyContaining(Type type);
+    void FromAssemblyContaining(Type type);
 
-        void FromAssemblyContaining<T>();
+    void FromAssemblyContaining<T>();
 
-        #endregion
+    #endregion
 
-        #region From This Assembly
+    #region From This Assembly
 
-        void FromThisAssembly();
+    void FromThisAssembly();
 
-        #endregion
-    }
+    #endregion
 }

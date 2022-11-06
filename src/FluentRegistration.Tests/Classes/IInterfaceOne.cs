@@ -1,7 +1,6 @@
-﻿namespace FluentRegistration.Tests.Classes
+﻿namespace FluentRegistration.Tests.Classes;
+
+public interface IInterfaceOne
 {
-    public interface IInterfaceOne
-    {
-        void OperationOne();
-    }
+    void OperationOne();
 }

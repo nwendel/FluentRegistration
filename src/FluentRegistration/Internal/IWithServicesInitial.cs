@@ -1,14 +1,13 @@
 ﻿using FluentRegistration.Infrastructure;
 
-namespace FluentRegistration.Internal
+namespace FluentRegistration.Internal;
+
+public interface IWithServicesInitial :
+    IFluentInterface
 {
-    public interface IWithServicesInitial :
-        IFluentInterface
-    {
-        #region With Services
+    #region With Services
 
-        IServiceSelector WithServices { get; }
+    IServiceSelector WithServices { get; }
 
-        #endregion
-    }
+    #endregion
 }

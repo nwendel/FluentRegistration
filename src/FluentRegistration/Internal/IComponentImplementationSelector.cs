@@ -1,37 +1,36 @@
 ﻿using System;
 using FluentRegistration.Infrastructure;
 
-namespace FluentRegistration.Internal
+namespace FluentRegistration.Internal;
+
+public interface IComponentImplementationSelector<TService> :
+    IFluentInterface
 {
-    public interface IComponentImplementationSelector<TService> :
-        IFluentInterface
-    {
-        #region Implemented By
+    #region Implemented By
 
-        ILifetime ImplementedBy<TImplementation>()
-            where TImplementation : TService;
+    ILifetime ImplementedBy<TImplementation>()
+        where TImplementation : TService;
 
-        #endregion
+    #endregion
 
-        #region Instance
+    #region Instance
 
-        IValidRegistration Instance(TService instance);
+    IValidRegistration Instance(TService instance);
 
-        #endregion
+    #endregion
 
-        #region Using Factory
+    #region Using Factory
 
-        IValidRegistration UsingFactory<TFactory>(Func<TFactory, TService> factoryMethod)
-            where TFactory : class;
+    IValidRegistration UsingFactory<TFactory>(Func<TFactory, TService> factoryMethod)
+        where TFactory : class;
 
-        #endregion
+    #endregion
 
-        #region Using Factory Method
+    #region Using Factory Method
 
-        IValidRegistration UsingFactoryMethod(Func<TService> factoryMethod);
+    IValidRegistration UsingFactoryMethod(Func<TService> factoryMethod);
 
-        IValidRegistration UsingFactoryMethod(Func<IServiceProvider, TService> factoryMethod);
+    IValidRegistration UsingFactoryMethod(Func<IServiceProvider, TService> factoryMethod);
 
-        #endregion
-    }
+    #endregion
 }

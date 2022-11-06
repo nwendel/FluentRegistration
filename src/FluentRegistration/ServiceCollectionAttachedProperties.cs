@@ -2,14 +2,13 @@
 using FluentRegistration.Options;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace FluentRegistration
+namespace FluentRegistration;
+
+public static class ServiceCollectionAttachedProperties
 {
-    public static class ServiceCollectionAttachedProperties
-    {
-        #region Attached Properties
+    #region Attached Properties
 
-        public static readonly AttachedProperty<IServiceCollection, FluentRegistrationOptions> Options = new AttachedProperty<IServiceCollection, FluentRegistrationOptions>(nameof(Options));
+    public static readonly AttachedProperty<IServiceCollection, FluentRegistrationOptions> Options = new AttachedProperty<IServiceCollection, FluentRegistrationOptions>(nameof(Options));
 
-        #endregion
-    }
+    #endregion
 }

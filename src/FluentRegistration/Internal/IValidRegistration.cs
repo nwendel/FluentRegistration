@@ -1,9 +1,8 @@
 ﻿using FluentRegistration.Infrastructure;
 
-namespace FluentRegistration.Internal
+namespace FluentRegistration.Internal;
+
+public interface IValidRegistration :
+    IFluentInterface
 {
-    public interface IValidRegistration :
-        IFluentInterface
-    {
-    }
 }

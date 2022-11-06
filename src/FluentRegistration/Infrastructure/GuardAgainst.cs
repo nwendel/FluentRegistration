@@ -2,34 +2,33 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FluentRegistration.Infrastructure
+namespace FluentRegistration.Infrastructure;
+
+public static class GuardAgainst
 {
-    public static class GuardAgainst
+    public static void Null<T>(T argument, string argumentName)
+        where T : class
     {
-        public static void Null<T>(T argument, string argumentName)
-            where T : class
+        if (argument == null)
         {
-            if (argument == null)
-            {
-                throw new ArgumentNullException(argumentName);
-            }
+            throw new ArgumentNullException(argumentName);
         }
+    }
 
-        public static void NullOrEmpty<T>(IEnumerable<T> argument, string argumentName)
-            where T : class
+    public static void NullOrEmpty<T>(IEnumerable<T> argument, string argumentName)
+        where T : class
+    {
+        if (argument == null || !argument.Any())
         {
-            if (argument == null || !argument.Any())
-            {
-                throw new ArgumentNullException(argumentName);
-            }
+            throw new ArgumentNullException(argumentName);
         }
+    }
 
-        public static void NullOrWhiteSpace(string argument, string argumentName)
+    public static void NullOrWhiteSpace(string argument, string argumentName)
+    {
+        if (string.IsNullOrWhiteSpace(argument))
         {
-            if (string.IsNullOrWhiteSpace(argument))
-            {
-                throw new ArgumentNullException(argumentName);
-            }
+            throw new ArgumentNullException(argumentName);
         }
     }
 }

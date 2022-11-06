@@ -2,79 +2,78 @@
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace FluentRegistration.Tests
+namespace FluentRegistration.Tests;
+
+public class WithServicesTests
 {
-    public class WithServicesTests
+    [Fact]
+    public void CanRegisterWithServicesSelf()
     {
-        [Fact]
-        public void CanRegisterWithServicesSelf()
+        var tested = new ServiceCollection();
+
+        tested.Register(r => r
+            .FromAssemblyContaining<SimpleService>()
+            .Where(c => c.ImplementationType == typeof(SimpleService))
+            .WithServices.Self());
+
+        Assert.Single(tested);
+        Assert.All(tested, service =>
         {
-            var tested = new ServiceCollection();
+            Assert.Equal(typeof(SimpleService), service.ServiceType);
+            Assert.Equal(typeof(SimpleService), service.ImplementationType);
+        });
+    }
 
-            tested.Register(r => r
-                .FromAssemblyContaining<SimpleService>()
-                .Where(c => c.ImplementationType == typeof(SimpleService))
-                .WithServices.Self());
+    [Fact]
+    public void CanRegisterWithDefaultInterface()
+    {
+        var tested = new ServiceCollection();
 
-            Assert.Single(tested);
-            Assert.All(tested, service =>
-            {
-                Assert.Equal(typeof(SimpleService), service.ServiceType);
-                Assert.Equal(typeof(SimpleService), service.ImplementationType);
-            });
-        }
+        tested.Register(r => r
+            .FromAssemblyContaining<SimpleService>()
+            .Where(c => c.ImplementationType == typeof(SimpleService))
+            .WithServices.DefaultInterface());
 
-        [Fact]
-        public void CanRegisterWithDefaultInterface()
+        Assert.Single(tested);
+        Assert.All(tested, service =>
         {
-            var tested = new ServiceCollection();
+            Assert.Equal(typeof(ISimpleService), service.ServiceType);
+            Assert.Equal(typeof(SimpleService), service.ImplementationType);
+        });
+    }
 
-            tested.Register(r => r
-                .FromAssemblyContaining<SimpleService>()
-                .Where(c => c.ImplementationType == typeof(SimpleService))
-                .WithServices.DefaultInterface());
+    [Fact]
+    public void CanRegisterWithSpecificInterface()
+    {
+        var tested = new ServiceCollection();
 
-            Assert.Single(tested);
-            Assert.All(tested, service =>
-            {
-                Assert.Equal(typeof(ISimpleService), service.ServiceType);
-                Assert.Equal(typeof(SimpleService), service.ImplementationType);
-            });
-        }
+        tested.Register(r => r
+            .FromAssemblyContaining<SimpleService>()
+            .Where(c => c.ImplementationType == typeof(SimpleService))
+                .WithServices.Service<ISimpleService>());
 
-        [Fact]
-        public void CanRegisterWithSpecificInterface()
+        Assert.Single(tested);
+        Assert.All(tested, service =>
         {
-            var tested = new ServiceCollection();
+            Assert.Equal(typeof(ISimpleService), service.ServiceType);
+            Assert.Equal(typeof(SimpleService), service.ImplementationType);
+        });
+    }
 
-            tested.Register(r => r
-                .FromAssemblyContaining<SimpleService>()
-                .Where(c => c.ImplementationType == typeof(SimpleService))
-                    .WithServices.Service<ISimpleService>());
+    [Fact]
+    public void CanRegisterWithServicesDefaultInterfaceSelf()
+    {
+        var tested = new ServiceCollection();
 
-            Assert.Single(tested);
-            Assert.All(tested, service =>
-            {
-                Assert.Equal(typeof(ISimpleService), service.ServiceType);
-                Assert.Equal(typeof(SimpleService), service.ImplementationType);
-            });
-        }
+        tested.Register(r => r
+            .FromAssemblyContaining<SimpleService>()
+            .Where(c => c.ImplementationType == typeof(SimpleService))
+            .WithServices
+                .Self()
+                .DefaultInterface());
 
-        [Fact]
-        public void CanRegisterWithServicesDefaultInterfaceSelf()
-        {
-            var tested = new ServiceCollection();
-
-            tested.Register(r => r
-                .FromAssemblyContaining<SimpleService>()
-                .Where(c => c.ImplementationType == typeof(SimpleService))
-                .WithServices
-                    .Self()
-                    .DefaultInterface());
-
-            Assert.Equal(2, tested.Count);
-            Assert.Contains(tested, x => x.ServiceType == typeof(ISimpleService));
-            Assert.Contains(tested, x => x.ServiceType == typeof(SimpleService));
-        }
+        Assert.Equal(2, tested.Count);
+        Assert.Contains(tested, x => x.ServiceType == typeof(ISimpleService));
+        Assert.Contains(tested, x => x.ServiceType == typeof(SimpleService));
     }
 }

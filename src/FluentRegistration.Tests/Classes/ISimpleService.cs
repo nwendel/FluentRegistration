@@ -1,7 +1,6 @@
-﻿namespace FluentRegistration.Tests.Classes
+﻿namespace FluentRegistration.Tests.Classes;
+
+public interface ISimpleService
 {
-    public interface ISimpleService
-    {
-        void Operation();
-    }
+    void Operation();
 }

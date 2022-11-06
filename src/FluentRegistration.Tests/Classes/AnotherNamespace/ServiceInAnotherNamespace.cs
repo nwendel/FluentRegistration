@@ -1,9 +1,8 @@
-﻿namespace FluentRegistration.Tests.Classes.AnotherNamespace
+﻿namespace FluentRegistration.Tests.Classes.AnotherNamespace;
+
+public class ServiceInAnotherNamespace : IServiceInAnotherNamespace
 {
-    public class ServiceInAnotherNamespace : IServiceInAnotherNamespace
+    public void Operation()
     {
-        public void Operation()
-        {
-        }
     }
 }

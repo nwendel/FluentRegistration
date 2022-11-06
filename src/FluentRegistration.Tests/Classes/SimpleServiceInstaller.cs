@@ -1,14 +1,13 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace FluentRegistration.Tests.Classes
+namespace FluentRegistration.Tests.Classes;
+
+public class SimpleServiceInstaller : IServiceInstaller
 {
-    public class SimpleServiceInstaller : IServiceInstaller
+    public void Install(IServiceCollection services)
     {
-        public void Install(IServiceCollection services)
-        {
-            services.Register(c => c
-                .For<ISimpleService>()
-                .ImplementedBy<SimpleService>());
-        }
+        services.Register(c => c
+            .For<ISimpleService>()
+            .ImplementedBy<SimpleService>());
     }
 }

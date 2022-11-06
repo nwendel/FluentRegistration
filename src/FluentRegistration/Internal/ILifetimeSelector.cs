@@ -1,26 +1,25 @@
 ﻿using FluentRegistration.Infrastructure;
 
-namespace FluentRegistration.Internal
+namespace FluentRegistration.Internal;
+
+public interface ILifetimeSelector :
+    IFluentInterface
 {
-    public interface ILifetimeSelector :
-        IFluentInterface
-    {
-        #region Singleton
+    #region Singleton
 
-        IValidRegistration Singleton();
+    IValidRegistration Singleton();
 
-        #endregion
+    #endregion
 
-        #region Scoped
+    #region Scoped
 
-        IValidRegistration Scoped();
+    IValidRegistration Scoped();
 
-        #endregion
+    #endregion
 
-        #region Transient
+    #region Transient
 
-        IValidRegistration Transient();
+    IValidRegistration Transient();
 
-        #endregion
-    }
+    #endregion
 }

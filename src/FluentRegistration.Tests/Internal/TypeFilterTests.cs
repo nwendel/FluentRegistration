@@ -3,64 +3,63 @@ using FluentRegistration.Internal;
 using FluentRegistration.Tests.Classes;
 using Xunit;
 
-namespace FluentRegistration.Tests.Internal
+namespace FluentRegistration.Tests.Internal;
+
+public class TypeFilterTests
 {
-    public class TypeFilterTests
+    [Fact]
+    public void ThrowsOnInNamespaceNull()
     {
-        [Fact]
-        public void ThrowsOnInNamespaceNull()
-        {
-            var tested = new TypeFilter(typeof(SimpleService));
+        var tested = new TypeFilter(typeof(SimpleService));
 
-            Assert.Throws<ArgumentNullException>("namespace", () => tested.InNamespace(null));
-        }
+        Assert.Throws<ArgumentNullException>("namespace", () => tested.InNamespace(null));
+    }
 
-        [Fact]
-        public void ThrowsOnAssignableToNull()
-        {
-            var tested = new TypeFilter(typeof(SimpleService));
+    [Fact]
+    public void ThrowsOnAssignableToNull()
+    {
+        var tested = new TypeFilter(typeof(SimpleService));
 
-            Assert.Throws<ArgumentNullException>("type", () => tested.AssignableTo(null));
-        }
+        Assert.Throws<ArgumentNullException>("type", () => tested.AssignableTo(null));
+    }
 
-        [Fact]
-        public void CanAssignableTo()
-        {
-            var tested = new TypeFilter(typeof(SimpleService));
+    [Fact]
+    public void CanAssignableTo()
+    {
+        var tested = new TypeFilter(typeof(SimpleService));
 
-            Assert.True(tested.AssignableTo<ISimpleService>());
-        }
+        Assert.True(tested.AssignableTo<ISimpleService>());
+    }
 
-        [Fact]
-        public void CanAssignableToGenericClassTrue()
-        {
-            var tested = new TypeFilter(typeof(GenericServiceThree<>));
+    [Fact]
+    public void CanAssignableToGenericClassTrue()
+    {
+        var tested = new TypeFilter(typeof(GenericServiceThree<>));
 
-            Assert.True(tested.AssignableTo(typeof(GenericServiceOne<>)));
-        }
+        Assert.True(tested.AssignableTo(typeof(GenericServiceOne<>)));
+    }
 
-        [Fact]
-        public void CanAssignableToGenericClassFalse()
-        {
-            var tested = new TypeFilter(typeof(object));
+    [Fact]
+    public void CanAssignableToGenericClassFalse()
+    {
+        var tested = new TypeFilter(typeof(object));
 
-            Assert.False(tested.AssignableTo(typeof(GenericServiceOne<>)));
-        }
+        Assert.False(tested.AssignableTo(typeof(GenericServiceOne<>)));
+    }
 
-        [Fact]
-        public void CanAssignableToGenericInterfaceTrue()
-        {
-            var tested = new TypeFilter(typeof(GenericServiceThree<>));
+    [Fact]
+    public void CanAssignableToGenericInterfaceTrue()
+    {
+        var tested = new TypeFilter(typeof(GenericServiceThree<>));
 
-            Assert.True(tested.AssignableTo(typeof(IGenericInterface<>)));
-        }
+        Assert.True(tested.AssignableTo(typeof(IGenericInterface<>)));
+    }
 
-        [Fact]
-        public void CanAssignableToGenericInterfaceFalse()
-        {
-            var tested = new TypeFilter(typeof(object));
+    [Fact]
+    public void CanAssignableToGenericInterfaceFalse()
+    {
+        var tested = new TypeFilter(typeof(object));
 
-            Assert.False(tested.AssignableTo(typeof(IGenericInterface<>)));
-        }
+        Assert.False(tested.AssignableTo(typeof(IGenericInterface<>)));
     }
 }

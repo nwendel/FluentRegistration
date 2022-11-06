@@ -3,58 +3,57 @@ using FluentRegistration.Tests.Issues.Issue_2.Classes;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace FluentRegistration.Tests.Issues.Issue_2
+namespace FluentRegistration.Tests.Issues.Issue_2;
+
+public class Tests
 {
-    public class Tests
+    [Fact(Skip = "Something is strange with open generic types of open generic types")]
+    public void CanInstantiate()
     {
-        [Fact(Skip = "Something is strange with open generic types of open generic types")]
-        public void CanInstantiate()
-        {
-            var openValidatorType = typeof(IValidator<>);
-            var openContentAwareCommandType = typeof(IContentAwareCommand<,>);
-            var openContentAwareCommandValidatorType = openValidatorType.MakeGenericType(openContentAwareCommandType);
+        var openValidatorType = typeof(IValidator<>);
+        var openContentAwareCommandType = typeof(IContentAwareCommand<,>);
+        var openContentAwareCommandValidatorType = openValidatorType.MakeGenericType(openContentAwareCommandType);
 
-            // ISSUE: Cannot close type, IsGenericTypeDefinition returns false
-            var closedType = openContentAwareCommandValidatorType.MakeGenericType(typeof(AbstractPageData), typeof(AbstractPageExtensionProperties));
-        }
+        // ISSUE: Cannot close type, IsGenericTypeDefinition returns false
+        var closedType = openContentAwareCommandValidatorType.MakeGenericType(typeof(AbstractPageData), typeof(AbstractPageExtensionProperties));
+    }
 
-        [Fact(Skip = "Something is strange with open generic types of open generic types")]
-        public void CanRegister()
-        {
-            var tested = new ServiceCollection();
+    [Fact(Skip = "Something is strange with open generic types of open generic types")]
+    public void CanRegister()
+    {
+        var tested = new ServiceCollection();
 
-            tested.Register(r => r
-                .FromThisAssembly()
-                .Where(c => c.InSameNamespaceAs<IValidator>() && c.AssignableTo<IValidator>())
-                .WithServices.AllInterfaces());
+        tested.Register(r => r
+            .FromThisAssembly()
+            .Where(c => c.InSameNamespaceAs<IValidator>() && c.AssignableTo<IValidator>())
+            .WithServices.AllInterfaces());
 
-            // ISSUE: Does not compile
-            // Assert.Contains(tested, x => x.ServiceType == typeof(IValidator<IContentAwareCommand<,>>));
-            var openValidatorType = typeof(IValidator<>);
-            var openContentAwareCommandType = typeof(IContentAwareCommand<,>);
-            var openContentAwareCommandValidatorType = openValidatorType.MakeGenericType(openContentAwareCommandType);
+        // ISSUE: Does not compile
+        // Assert.Contains(tested, x => x.ServiceType == typeof(IValidator<IContentAwareCommand<,>>));
+        var openValidatorType = typeof(IValidator<>);
+        var openContentAwareCommandType = typeof(IContentAwareCommand<,>);
+        var openContentAwareCommandValidatorType = openValidatorType.MakeGenericType(openContentAwareCommandType);
 
-            // ISSUE: Returns a different type than the one created above
-            var registeredServiceType = tested.Single(x => x.ImplementationType == typeof(ContentAwareCommandValidator<,>)).ServiceType;
+        // ISSUE: Returns a different type than the one created above
+        var registeredServiceType = tested.Single(x => x.ImplementationType == typeof(ContentAwareCommandValidator<,>)).ServiceType;
 
-            Assert.Contains(tested, x => x.ServiceType == openContentAwareCommandValidatorType);
-            Assert.Contains(tested, x => x.ImplementationType == typeof(ContentAwareCommandValidator<,>));
-        }
+        Assert.Contains(tested, x => x.ServiceType == openContentAwareCommandValidatorType);
+        Assert.Contains(tested, x => x.ImplementationType == typeof(ContentAwareCommandValidator<,>));
+    }
 
-        [Fact(Skip = "Something is strange with open generic types of open generic types")]
-        public void CanResolve()
-        {
-            var tested = new ServiceCollection();
-            tested.Register(r => r
-                .FromThisAssembly()
-                .Where(c => c.InSameNamespaceAs<IValidator>() && c.AssignableTo<IValidator>())
-                .WithServices.AllInterfaces());
-            var serviceProvider = tested.BuildServiceProvider();
+    [Fact(Skip = "Something is strange with open generic types of open generic types")]
+    public void CanResolve()
+    {
+        var tested = new ServiceCollection();
+        tested.Register(r => r
+            .FromThisAssembly()
+            .Where(c => c.InSameNamespaceAs<IValidator>() && c.AssignableTo<IValidator>())
+            .WithServices.AllInterfaces());
+        var serviceProvider = tested.BuildServiceProvider();
 
-            // ISSUE: Cannot instantiate implementation type
-            var resolved = serviceProvider.GetService<IValidator<IContentAwareCommand<AbstractPageData, AbstractPageExtensionProperties>>>();
+        // ISSUE: Cannot instantiate implementation type
+        var resolved = serviceProvider.GetService<IValidator<IContentAwareCommand<AbstractPageData, AbstractPageExtensionProperties>>>();
 
-            Assert.NotNull(resolved);
-        }
+        Assert.NotNull(resolved);
     }
 }
