@@ -1,34 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
-namespace FluentRegistration.Infrastructure;
-
-public static class GuardAgainst
+namespace FluentRegistration.Infrastructure
 {
-    public static void Null<T>(T argument, string argumentName)
-        where T : class
+    internal static class GuardAgainst
     {
-        if (argument == null)
+        public static void Null<T>(T argument, [CallerArgumentExpression("argument")] string? argumentName = null)
+            where T : class
         {
-            throw new ArgumentNullException(argumentName);
+            if (argument == null)
+            {
+                throw new ArgumentNullException(argumentName);
+            }
         }
-    }
 
-    public static void NullOrEmpty<T>(IEnumerable<T> argument, string argumentName)
-        where T : class
-    {
-        if (argument == null || !argument.Any())
+        public static void NullOrEmpty<T>(IEnumerable<T> argument, [CallerArgumentExpression("argument")] string? argumentName = null)
+            where T : class
         {
-            throw new ArgumentNullException(argumentName);
+            if (argument == null || !argument.Any())
+            {
+                throw new ArgumentNullException(argumentName);
+            }
         }
-    }
 
-    public static void NullOrWhiteSpace(string argument, string argumentName)
-    {
-        if (string.IsNullOrWhiteSpace(argument))
+        public static void NullOrWhiteSpace(string argument, [CallerArgumentExpression("argument")] string? argumentName = null)
         {
-            throw new ArgumentNullException(argumentName);
+            if (string.IsNullOrWhiteSpace(argument))
+            {
+                throw new ArgumentNullException(argumentName);
+            }
         }
     }
 }

@@ -1,52 +1,52 @@
-﻿using System;
-using FluentRegistration.Infrastructure;
+﻿using FluentRegistration.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace FluentRegistration.Internal;
-
-public class InstanceRegistration<T> :
-    IWithServicesInitial,
-    IRegister
-    where T : class
+namespace FluentRegistration.Internal
 {
-    #region Fields
-
-    private readonly T _instance;
-    private ServiceTypeSelector _serviceTypeSelector = new ServiceTypeSelector();
-
-    #endregion
-
-    #region Constructor
-
-    public InstanceRegistration(T instance)
+    public class InstanceRegistration<T> :
+        IWithServicesInitial,
+        IRegister
+        where T : class
     {
-        GuardAgainst.Null(instance, nameof(instance));
+        #region Fields
 
-        _instance = instance;
-    }
+        private readonly T _instance;
+        private ServiceTypeSelector _serviceTypeSelector = new ServiceTypeSelector();
 
-    #endregion
+        #endregion
 
-    #region With Service
+        #region Constructor
 
-    public IServiceSelector WithServices
-    {
-        get
+        public InstanceRegistration(T instance)
         {
-            return _serviceTypeSelector;
+            GuardAgainst.Null(instance);
+
+            _instance = instance;
         }
+
+        #endregion
+
+        #region With Service
+
+        public IServiceSelector WithServices
+        {
+            get
+            {
+                return _serviceTypeSelector;
+            }
+        }
+
+        #endregion
+
+        #region Register
+
+        public void Register(IServiceCollection services)
+        {
+            var serviceTypes = _serviceTypeSelector.GetServicesFor(_instance.GetType());
+            var componentRegistration = new ComponentInstanceRegistration(serviceTypes, _instance);
+            componentRegistration.Register(services);
+        }
+
+        #endregion
     }
-
-    #endregion
-
-    #region Register
-
-    public void Register(IServiceCollection services)
-    {
-        var serviceTypes = _serviceTypeSelector.GetServicesFor(_instance.GetType());
-        var componentRegistration = new ComponentInstanceRegistration(serviceTypes, _instance);
-        componentRegistration.Register(services);
-    }
-
-    #endregion
 }

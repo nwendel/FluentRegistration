@@ -5,75 +5,76 @@ using System.Runtime.CompilerServices;
 using FluentRegistration.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace FluentRegistration.Internal;
-
-public class Installation : IInstallation
+namespace FluentRegistration.Internal
 {
-    #region Fields
-
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1011:Closing square brackets should be spaced correctly", Justification = "Stylecop can't handle this")]
-    private IServiceInstaller[]? _installers;
-
-    #endregion
-
-    #region From Assembly
-
-    public void FromAssembly(Assembly assembly)
+    public class Installation : IInstallation
     {
-        GuardAgainst.Null(assembly, nameof(assembly));
+        #region Fields
 
-        var allTypes = assembly.GetTypes();
-        var installers = allTypes
-            .Where(x => typeof(IServiceInstaller).GetTypeInfo().IsAssignableFrom(x))
-            .Select(x => Activator.CreateInstance(x))
-            .Cast<IServiceInstaller>()
-            .ToArray();
-        _installers = installers;
-    }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1011:Closing square brackets should be spaced correctly", Justification = "Stylecop can't handle this")]
+        private IServiceInstaller[]? _installers;
 
-    #endregion
+        #endregion
 
-    #region From Assembly Containing
+        #region From Assembly
 
-    public void FromAssemblyContaining(Type type)
-    {
-        GuardAgainst.Null(type, nameof(type));
-
-        var assembly = type.GetTypeInfo().Assembly;
-        FromAssembly(assembly);
-    }
-
-    public void FromAssemblyContaining<T>()
-    {
-        FromAssemblyContaining(typeof(T));
-    }
-
-    #endregion
-
-    #region From This Assembly
-
-    [MethodImpl(MethodImplOptions.NoInlining)]
-    public void FromThisAssembly()
-    {
-        FromAssembly(Assembly.GetCallingAssembly());
-    }
-
-    #endregion
-
-    #region Install
-
-    public void Install(IServiceCollection services)
-    {
-        if (_installers == null)
+        public void FromAssembly(Assembly assembly)
         {
-            throw new InvalidOperationException("Install called without defining what to install via the fluent Api.");
+            GuardAgainst.Null(assembly);
+
+            var allTypes = assembly.GetTypes();
+            var installers = allTypes
+                .Where(x => typeof(IServiceInstaller).GetTypeInfo().IsAssignableFrom(x))
+                .Select(x => Activator.CreateInstance(x))
+                .Cast<IServiceInstaller>()
+                .ToArray();
+            _installers = installers;
         }
 
-        foreach (var installer in _installers)
-        {
-            installer.Install(services);
-        }
-    }
+        #endregion
 
-    #endregion
+        #region From Assembly Containing
+
+        public void FromAssemblyContaining(Type type)
+        {
+            GuardAgainst.Null(type);
+
+            var assembly = type.GetTypeInfo().Assembly;
+            FromAssembly(assembly);
+        }
+
+        public void FromAssemblyContaining<T>()
+        {
+            FromAssemblyContaining(typeof(T));
+        }
+
+        #endregion
+
+        #region From This Assembly
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public void FromThisAssembly()
+        {
+            FromAssembly(Assembly.GetCallingAssembly());
+        }
+
+        #endregion
+
+        #region Install
+
+        public void Install(IServiceCollection services)
+        {
+            if (_installers == null)
+            {
+                throw new InvalidOperationException("Install called without defining what to install via the fluent Api.");
+            }
+
+            foreach (var installer in _installers)
+            {
+                installer.Install(services);
+            }
+        }
+
+        #endregion
+    }
 }

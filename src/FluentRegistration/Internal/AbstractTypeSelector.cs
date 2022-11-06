@@ -5,96 +5,97 @@ using System.Reflection;
 using FluentRegistration.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace FluentRegistration.Internal;
-
-public abstract class AbstractTypeSelector :
-    ITypeSelector,
-    IRegister
+namespace FluentRegistration.Internal
 {
-    #region Fields
-
-    private readonly List<Func<ITypeFilter, bool>> _wherePredicates = new List<Func<ITypeFilter, bool>>();
-    private readonly List<Func<ITypeFilter, bool>> _exceptPredicates = new List<Func<ITypeFilter, bool>>();
-    private ServiceTypeSelector _serviceTypeSelector = new ServiceTypeSelector();
-
-    #endregion
-
-    #region Types
-
-    protected abstract IEnumerable<Type> Types { get; }
-
-    #endregion
-
-    #region Where
-
-    public ITypeSelector Where(Func<ITypeFilter, bool> predicate)
+    public abstract class AbstractTypeSelector :
+        ITypeSelector,
+        IRegister
     {
-        GuardAgainst.Null(predicate, nameof(predicate));
+        #region Fields
 
-        _wherePredicates.Add(predicate);
-        return this;
-    }
+        private readonly List<Func<ITypeFilter, bool>> _wherePredicates = new List<Func<ITypeFilter, bool>>();
+        private readonly List<Func<ITypeFilter, bool>> _exceptPredicates = new List<Func<ITypeFilter, bool>>();
+        private ServiceTypeSelector _serviceTypeSelector = new ServiceTypeSelector();
 
-    #endregion
+        #endregion
 
-    #region Except
+        #region Types
 
-    public ITypeSelector Except(Func<ITypeFilter, bool> predicate)
-    {
-        GuardAgainst.Null(predicate, nameof(predicate));
+        protected abstract IEnumerable<Type> Types { get; }
 
-        _exceptPredicates.Add(predicate);
-        return this;
-    }
+        #endregion
 
-    #endregion
+        #region Where
 
-    #region Filtered Types
-
-    public IEnumerable<Type> FilteredTypes
-    {
-        get
+        public ITypeSelector Where(Func<ITypeFilter, bool> predicate)
         {
-            return Types
-                .Where(type =>
-                {
-                    var typeInfo = type.GetTypeInfo();
-                    return typeInfo.IsClass && !typeInfo.IsAbstract;
-                })
-                .Where(type => _wherePredicates.Count == 0 || _wherePredicates.Any(filter => filter(new TypeFilter(type))))
-                .Where(type => _exceptPredicates.Count == 0 || !_exceptPredicates.Any(filter => filter(new TypeFilter(type))));
+            GuardAgainst.Null(predicate);
+
+            _wherePredicates.Add(predicate);
+            return this;
         }
-    }
 
-    #endregion
+        #endregion
 
-    #region With Services
+        #region Except
 
-    public IServiceSelector WithServices
-    {
-        get
+        public ITypeSelector Except(Func<ITypeFilter, bool> predicate)
         {
-            return _serviceTypeSelector;
+            GuardAgainst.Null(predicate);
+
+            _exceptPredicates.Add(predicate);
+            return this;
         }
-    }
 
-    #endregion
+        #endregion
 
-    #region Register
+        #region Filtered Types
 
-    public void Register(IServiceCollection services)
-    {
-        var filteredTypes = FilteredTypes;
-
-        foreach (var type in filteredTypes)
+        public IEnumerable<Type> FilteredTypes
         {
-            var serviceTypes = _serviceTypeSelector.GetServicesFor(type);
-            var serviceLifetimeSelector = _serviceTypeSelector.GetLifetimeSelector();
-
-            var componentRegistration = new ComponentImplementedByRegistration<object, object>(serviceTypes, type, serviceLifetimeSelector);
-            componentRegistration.Register(services);
+            get
+            {
+                return Types
+                    .Where(type =>
+                    {
+                        var typeInfo = type.GetTypeInfo();
+                        return typeInfo.IsClass && !typeInfo.IsAbstract;
+                    })
+                    .Where(type => _wherePredicates.Count == 0 || _wherePredicates.Any(filter => filter(new TypeFilter(type))))
+                    .Where(type => _exceptPredicates.Count == 0 || !_exceptPredicates.Any(filter => filter(new TypeFilter(type))));
+            }
         }
-    }
 
-    #endregion
+        #endregion
+
+        #region With Services
+
+        public IServiceSelector WithServices
+        {
+            get
+            {
+                return _serviceTypeSelector;
+            }
+        }
+
+        #endregion
+
+        #region Register
+
+        public void Register(IServiceCollection services)
+        {
+            var filteredTypes = FilteredTypes;
+
+            foreach (var type in filteredTypes)
+            {
+                var serviceTypes = _serviceTypeSelector.GetServicesFor(type);
+                var serviceLifetimeSelector = _serviceTypeSelector.GetLifetimeSelector();
+
+                var componentRegistration = new ComponentImplementedByRegistration<object, object>(serviceTypes, type, serviceLifetimeSelector);
+                componentRegistration.Register(services);
+            }
+        }
+
+        #endregion
+    }
 }

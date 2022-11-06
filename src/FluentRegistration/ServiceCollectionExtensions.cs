@@ -5,56 +5,57 @@ using FluentRegistration.Internal;
 using FluentRegistration.Options;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace FluentRegistration;
-
-public static class ServiceCollectionExtensions
+namespace FluentRegistration
 {
-    #region Register
-
-    public static void Register(this IServiceCollection self, Func<IRegistration, IValidRegistration> registrationAction)
+    public static class ServiceCollectionExtensions
     {
-        GuardAgainst.Null(self, nameof(self));
-        GuardAgainst.Null(registrationAction, nameof(registrationAction));
+        #region Register
 
-        var registration = new Registration();
-        registrationAction(registration);
-        registration.Register(self);
+        public static void Register(this IServiceCollection self, Func<IRegistration, IValidRegistration> registrationAction)
+        {
+            GuardAgainst.Null(self);
+            GuardAgainst.Null(registrationAction);
+
+            var registration = new Registration();
+            registrationAction(registration);
+            registration.Register(self);
+        }
+
+        #endregion
+
+        #region Install
+
+        public static void Install<TInstaller>(this IServiceCollection self)
+            where TInstaller : IServiceInstaller, new()
+        {
+            var installer = new TInstaller();
+            installer.Install(self);
+        }
+
+        public static void Install(this IServiceCollection self, Action<IInstallation> installationAction)
+        {
+            GuardAgainst.Null(self);
+            GuardAgainst.Null(installationAction);
+
+            var installation = new Installation();
+            installationAction(installation);
+            installation.Install(self);
+        }
+
+        #endregion
+
+        #region Configure
+
+        public static void Configure(this IServiceCollection self, Action<FluentRegistrationOptions> optionsAction)
+        {
+            GuardAgainst.Null(self);
+            GuardAgainst.Null(optionsAction);
+
+            var options = self.GetAttachedValue(ServiceCollectionAttachedProperties.Options) ?? new FluentRegistrationOptions();
+            optionsAction(options);
+            self.SetAttachedValue(ServiceCollectionAttachedProperties.Options, options);
+        }
+
+        #endregion
     }
-
-    #endregion
-
-    #region Install
-
-    public static void Install<TInstaller>(this IServiceCollection self)
-        where TInstaller : IServiceInstaller, new()
-    {
-        var installer = new TInstaller();
-        installer.Install(self);
-    }
-
-    public static void Install(this IServiceCollection self, Action<IInstallation> installationAction)
-    {
-        GuardAgainst.Null(self, nameof(self));
-        GuardAgainst.Null(installationAction, nameof(installationAction));
-
-        var installation = new Installation();
-        installationAction(installation);
-        installation.Install(self);
-    }
-
-    #endregion
-
-    #region Configure
-
-    public static void Configure(this IServiceCollection self, Action<FluentRegistrationOptions> optionsAction)
-    {
-        GuardAgainst.Null(self, nameof(self));
-        GuardAgainst.Null(optionsAction, nameof(optionsAction));
-
-        var options = self.GetAttachedValue(ServiceCollectionAttachedProperties.Options) ?? new FluentRegistrationOptions();
-        optionsAction(options);
-        self.SetAttachedValue(ServiceCollectionAttachedProperties.Options, options);
-    }
-
-    #endregion
 }

@@ -4,166 +4,167 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using FluentRegistration.Infrastructure;
 
-namespace FluentRegistration.Internal;
-
-public class TypeFilter : ITypeFilter
+namespace FluentRegistration.Internal
 {
-    #region Constructor
-
-    public TypeFilter(Type type)
+    public class TypeFilter : ITypeFilter
     {
-        ImplementationType = type;
-    }
+        #region Constructor
 
-    #endregion
-
-    #region Assignable To
-
-    public bool AssignableTo(Type type)
-    {
-        GuardAgainst.Null(type, nameof(type));
-
-        var typeInfo = type.GetTypeInfo();
-        if (typeInfo.IsGenericTypeDefinition)
+        public TypeFilter(Type type)
         {
-            if (typeInfo.IsInterface)
-            {
-                return AssignableToGenericInterface(typeInfo);
-            }
-
-            return AssignableToGenericClass(typeInfo);
+            ImplementationType = type;
         }
 
-        return type.GetTypeInfo().IsAssignableFrom(ImplementationType);
-    }
+        #endregion
 
-    public bool AssignableTo<T>()
-    {
-        return AssignableTo(typeof(T));
-    }
+        #region Assignable To
 
-    private bool AssignableToGenericInterface(Type type)
-    {
-        var interfaces = ImplementationType.GetInterfaces();
-        foreach (var @interface in interfaces)
+        public bool AssignableTo(Type type)
         {
-            var interfaceTypeInfo = @interface.GetTypeInfo();
-            if (interfaceTypeInfo.IsGenericType && @interface.GetGenericTypeDefinition() == type)
+            GuardAgainst.Null(type);
+
+            var typeInfo = type.GetTypeInfo();
+            if (typeInfo.IsGenericTypeDefinition)
+            {
+                if (typeInfo.IsInterface)
+                {
+                    return AssignableToGenericInterface(typeInfo);
+                }
+
+                return AssignableToGenericClass(typeInfo);
+            }
+
+            return type.GetTypeInfo().IsAssignableFrom(ImplementationType);
+        }
+
+        public bool AssignableTo<T>()
+        {
+            return AssignableTo(typeof(T));
+        }
+
+        private bool AssignableToGenericInterface(Type type)
+        {
+            var interfaces = ImplementationType.GetInterfaces();
+            foreach (var @interface in interfaces)
+            {
+                var interfaceTypeInfo = @interface.GetTypeInfo();
+                if (interfaceTypeInfo.IsGenericType && @interface.GetGenericTypeDefinition() == type)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool AssignableToGenericClass(Type type)
+        {
+            var candidateType = ImplementationType;
+            while (candidateType != null)
+            {
+                var candidateTypeInfo = candidateType.GetTypeInfo();
+                if (candidateTypeInfo.IsGenericType && candidateTypeInfo.GetGenericTypeDefinition() == type)
+                {
+                    return true;
+                }
+
+                candidateType = candidateTypeInfo.BaseType;
+            }
+
+            return false;
+        }
+
+        #endregion
+
+        #region In Namespace
+
+        public bool InNamespace(string @namespace)
+        {
+            return InNamespace(@namespace, false);
+        }
+
+        public bool InNamespace(string @namespace, bool includeSubNamespaces)
+        {
+            GuardAgainst.NullOrWhiteSpace(@namespace);
+
+            if (ImplementationType.Namespace == @namespace)
             {
                 return true;
             }
-        }
 
-        return false;
-    }
-
-    private bool AssignableToGenericClass(Type type)
-    {
-        var candidateType = ImplementationType;
-        while (candidateType != null)
-        {
-            var candidateTypeInfo = candidateType.GetTypeInfo();
-            if (candidateTypeInfo.IsGenericType && candidateTypeInfo.GetGenericTypeDefinition() == type)
+            if (includeSubNamespaces)
             {
-                return true;
+                return ImplementationType.Namespace != null &&
+                       ImplementationType.Namespace.StartsWith(@namespace + ".");
             }
 
-            candidateType = candidateTypeInfo.BaseType;
+            return false;
         }
 
-        return false;
-    }
+        #endregion
 
-    #endregion
+        #region In Same Namespace As
 
-    #region In Namespace
-
-    public bool InNamespace(string @namespace)
-    {
-        return InNamespace(@namespace, false);
-    }
-
-    public bool InNamespace(string @namespace, bool includeSubNamespaces)
-    {
-        GuardAgainst.NullOrWhiteSpace(@namespace, nameof(@namespace));
-
-        if (ImplementationType.Namespace == @namespace)
+        public bool InSameNamespaceAs(Type type)
         {
-            return true;
+            return InSameNamespaceAs(type, false);
         }
 
-        if (includeSubNamespaces)
+        public bool InSameNamespaceAs(Type type, bool includeSubNamespaces)
         {
-            return ImplementationType.Namespace != null &&
-                   ImplementationType.Namespace.StartsWith(@namespace + ".");
+            GuardAgainst.Null(type);
+
+            return InNamespace(type.Namespace!, includeSubNamespaces);
         }
 
-        return false;
-    }
-
-    #endregion
-
-    #region In Same Namespace As
-
-    public bool InSameNamespaceAs(Type type)
-    {
-        return InSameNamespaceAs(type, false);
-    }
-
-    public bool InSameNamespaceAs(Type type, bool includeSubNamespaces)
-    {
-        GuardAgainst.Null(type, nameof(type));
-
-        return InNamespace(type.Namespace!, includeSubNamespaces);
-    }
-
-    public bool InSameNamespaceAs<T>()
-    {
-        return InSameNamespaceAs<T>(false);
-    }
-
-    public bool InSameNamespaceAs<T>(bool includeSubNamespaces)
-    {
-        return InSameNamespaceAs(typeof(T), includeSubNamespaces);
-    }
-
-    #endregion
-
-    #region In This Namespace
-
-    [MethodImpl(MethodImplOptions.NoInlining)]
-    public bool InThisNamespace()
-    {
-        return InThisNamespaceCore(false);
-    }
-
-    [MethodImpl(MethodImplOptions.NoInlining)]
-    public bool InThisNamespace(bool includeSubNamespaces)
-    {
-        return InThisNamespaceCore(includeSubNamespaces);
-    }
-
-    [MethodImpl(MethodImplOptions.NoInlining)]
-    public bool InThisNamespaceCore(bool includeSubNamespaces)
-    {
-        var stackTrace = new StackTrace();
-        var stackFrame = stackTrace.GetFrame(2);
-        var method = stackFrame!.GetMethod();
-        var declaringType = method!.DeclaringType;
-
-        if (declaringType == null)
+        public bool InSameNamespaceAs<T>()
         {
-            throw new RegistrationException($"Unable to determine declaring type for method {method.Name}");
+            return InSameNamespaceAs<T>(false);
         }
 
-        return InNamespace(declaringType.Namespace!, includeSubNamespaces);
+        public bool InSameNamespaceAs<T>(bool includeSubNamespaces)
+        {
+            return InSameNamespaceAs(typeof(T), includeSubNamespaces);
+        }
+
+        #endregion
+
+        #region In This Namespace
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public bool InThisNamespace()
+        {
+            return InThisNamespaceCore(false);
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public bool InThisNamespace(bool includeSubNamespaces)
+        {
+            return InThisNamespaceCore(includeSubNamespaces);
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public bool InThisNamespaceCore(bool includeSubNamespaces)
+        {
+            var stackTrace = new StackTrace();
+            var stackFrame = stackTrace.GetFrame(2);
+            var method = stackFrame!.GetMethod();
+            var declaringType = method!.DeclaringType;
+
+            if (declaringType == null)
+            {
+                throw new RegistrationException($"Unable to determine declaring type for method {method.Name}");
+            }
+
+            return InNamespace(declaringType.Namespace!, includeSubNamespaces);
+        }
+
+        #endregion
+
+        #region Implementation Type
+
+        public Type ImplementationType { get; }
+
+        #endregion
     }
-
-    #endregion
-
-    #region Implementation Type
-
-    public Type ImplementationType { get; }
-
-    #endregion
 }
