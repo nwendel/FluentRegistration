@@ -1,5 +1,8 @@
 ﻿[*.cs]
 
+# Prefer file-scoped namespace declarations
+csharp_style_namespace_declarations = file_scoped:error
+
 # SA1124: Do not use regions
 dotnet_diagnostic.SA1124.severity = none
 

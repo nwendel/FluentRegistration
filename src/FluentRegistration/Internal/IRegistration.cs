@@ -2,53 +2,52 @@
 using System.Reflection;
 using FluentRegistration.Infrastructure;
 
-namespace FluentRegistration.Internal
+namespace FluentRegistration.Internal;
+
+public interface IRegistration :
+    IFluentInterface
 {
-    public interface IRegistration :
-        IFluentInterface
-    {
-        #region For
+    #region For
 
-        IComponentImplementationSelector<TService> For<TService>()
-            where TService : class;
+    IComponentImplementationSelector<TService> For<TService>()
+        where TService : class;
 
-        IComponentImplementationSelector<object> For(Type type);
+    IComponentImplementationSelector<object> For(Type type);
 
-        IComponentImplementationSelector<object> For(params Type[] types);
+    IComponentImplementationSelector<object> For(params Type[] types);
 
-        #endregion
+    #endregion
 
-        #region From Assembly
+    #region From Assembly
 
-        ITypeSelector FromAssembly(Assembly assembly);
+    ITypeSelector FromAssembly(Assembly assembly);
 
-        #endregion
+    #endregion
 
-        #region From Assembly Containing
+    #region From Assembly Containing
 
-        ITypeSelector FromAssemblyContaining(Type type);
+    ITypeSelector FromAssemblyContaining(Type type);
 
-        ITypeSelector FromAssemblyContaining<T>();
+    ITypeSelector FromAssemblyContaining<T>();
 
-        #endregion
+    #endregion
 
-        #region From This Assembly
+    #region From This Assembly
 
-        ITypeSelector FromThisAssembly();
+    ITypeSelector FromThisAssembly();
 
-        #endregion
+    #endregion
 
-        #region Implemented By
+    #region Implemented By
 
-        IWithServicesInitial ImplementedBy<T>();
+    IWithServicesInitial ImplementedBy<T>();
 
-        #endregion
+    #endregion
 
-        #region Instance
+    #region Instance
 
-        IWithServicesInitial Instance<T>(T instance)
-            where T : class;
+    IWithServicesInitial Instance<T>(T instance)
+        where T : class;
 
-        #endregion
-    }
+    #endregion
 }

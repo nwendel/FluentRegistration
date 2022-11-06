@@ -1,13 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace FluentRegistration.Internal
+namespace FluentRegistration.Internal;
+
+public interface IRegister
 {
-    public interface IRegister
-    {
-        #region Register
+    #region Register
 
-        void Register(IServiceCollection services);
+    void Register(IServiceCollection services);
 
-        #endregion
-    }
+    #endregion
 }

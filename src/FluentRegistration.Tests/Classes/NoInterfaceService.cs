@@ -1,6 +1,5 @@
-﻿namespace FluentRegistration.Tests.Classes
+﻿namespace FluentRegistration.Tests.Classes;
+
+public class NoInterfaceService
 {
-    public class NoInterfaceService
-    {
-    }
 }

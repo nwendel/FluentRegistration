@@ -1,6 +1,5 @@
-﻿namespace FluentRegistration.Tests.Issues.Issue_2.Classes
+﻿namespace FluentRegistration.Tests.Issues.Issue_2.Classes;
+
+public abstract class AbstractExtensionProperties : AbstractEntity
 {
-    public abstract class AbstractExtensionProperties : AbstractEntity
-    {
-    }
 }

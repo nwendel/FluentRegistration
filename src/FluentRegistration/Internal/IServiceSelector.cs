@@ -1,32 +1,31 @@
 ﻿using FluentRegistration.Infrastructure;
 
-namespace FluentRegistration.Internal
+namespace FluentRegistration.Internal;
+
+public interface IServiceSelector :
+    IFluentInterface
 {
-    public interface IServiceSelector :
-        IFluentInterface
-    {
-        #region All Interfaces
+    #region All Interfaces
 
-        IWithServices AllInterfaces();
+    IWithServices AllInterfaces();
 
-        #endregion
+    #endregion
 
-        #region Default Interface
+    #region Default Interface
 
-        IWithServices DefaultInterface();
+    IWithServices DefaultInterface();
 
-        #endregion
+    #endregion
 
-        #region Interface
+    #region Interface
 
-        IWithServices Service<TService>();
+    IWithServices Service<TService>();
 
-        #endregion
+    #endregion
 
-        #region Self
+    #region Self
 
-        IWithServices Self();
+    IWithServices Self();
 
-        #endregion
-    }
+    #endregion
 }

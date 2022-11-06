@@ -1,6 +1,5 @@
-﻿namespace FluentRegistration.Tests.Issues.Issue_2.Classes
+﻿namespace FluentRegistration.Tests.Issues.Issue_2.Classes;
+
+public class AbstractContentData : AbstractEntity
 {
-    public class AbstractContentData : AbstractEntity
-    {
-    }
 }

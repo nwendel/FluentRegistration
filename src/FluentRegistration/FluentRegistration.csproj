@@ -28,7 +28,6 @@
 
   <ItemGroup>
     <None Remove="FluentRegistration.xml" />
-    <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 
   <ItemGroup>

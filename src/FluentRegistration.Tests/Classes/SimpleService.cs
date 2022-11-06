@@ -1,9 +1,8 @@
-﻿namespace FluentRegistration.Tests.Classes
+﻿namespace FluentRegistration.Tests.Classes;
+
+public class SimpleService : ISimpleService
 {
-    public class SimpleService : ISimpleService
+    public void Operation()
     {
-        public void Operation()
-        {
-        }
     }
 }

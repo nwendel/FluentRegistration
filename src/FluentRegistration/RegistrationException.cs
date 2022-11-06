@@ -1,16 +1,15 @@
 ﻿using System;
 
-namespace FluentRegistration
+namespace FluentRegistration;
+
+public class RegistrationException : Exception
 {
-    public class RegistrationException : Exception
+    #region Constructor
+
+    public RegistrationException(string message)
+        : base(message)
     {
-        #region Constructor
-
-        public RegistrationException(string message)
-            : base(message)
-        {
-        }
-
-        #endregion
     }
+
+    #endregion
 }

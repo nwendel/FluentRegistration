@@ -1,10 +1,9 @@
-﻿namespace FluentRegistration.Tests.Issues.Issue_2.Classes
-{
-    public interface IValidator
-    {
-    }
+﻿namespace FluentRegistration.Tests.Issues.Issue_2.Classes;
 
-    public interface IValidator<in T> : IValidator
-    {
-    }
+public interface IValidator
+{
+}
+
+public interface IValidator<in T> : IValidator
+{
 }

@@ -1,37 +1,36 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace FluentRegistration.Infrastructure
+namespace FluentRegistration.Infrastructure;
+
+[EditorBrowsable(EditorBrowsableState.Never)]
+public interface IFluentInterface
 {
+    #region Get Type
+
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public interface IFluentInterface
-    {
-        #region Get Type
+    Type GetType();
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        Type GetType();
+    #endregion
 
-        #endregion
+    #region Get Hash Code
 
-        #region Get Hash Code
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    int GetHashCode();
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        int GetHashCode();
+    #endregion
 
-        #endregion
+    #region To String
 
-        #region To String
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    string? ToString();
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        string? ToString();
+    #endregion
 
-        #endregion
+    #region Equals
 
-        #region Equals
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    bool Equals(object obj);
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        bool Equals(object obj);
-
-        #endregion
-    }
+    #endregion
 }

@@ -1,9 +1,8 @@
-﻿namespace FluentRegistration.Options
+﻿namespace FluentRegistration.Options;
+
+public enum MultipleRegistrationsBehavior
 {
-    public enum MultipleRegistrationsBehavior
-    {
-        Ignore,
-        Register,
-        ThrowException,
-    }
+    Ignore,
+    Register,
+    ThrowException,
 }

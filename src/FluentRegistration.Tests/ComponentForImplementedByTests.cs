@@ -2,101 +2,100 @@
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace FluentRegistration.Tests
-{
-    public class ComponentForImplementedByTests
-    {
-        [Fact]
-        public void CanRegisterNoLifetime()
-        {
-            var tested = new ServiceCollection();
+namespace FluentRegistration.Tests;
 
-            tested.Register(r => r
-                .For<ISimpleService>()
+public class ComponentForImplementedByTests
+{
+    [Fact]
+    public void CanRegisterNoLifetime()
+    {
+        var tested = new ServiceCollection();
+
+        tested.Register(r => r
+            .For<ISimpleService>()
+            .ImplementedBy<SimpleService>());
+
+        Assert.Single(tested);
+        Assert.All(tested, service =>
+        {
+            Assert.Equal(ServiceLifetime.Singleton, service.Lifetime);
+            Assert.Equal(typeof(ISimpleService), service.ServiceType);
+            Assert.Equal(typeof(SimpleService), service.ImplementationType);
+        });
+    }
+
+    [Fact]
+    public void CanRegisterSingletonLifetime()
+    {
+        var tested = new ServiceCollection();
+
+        tested.Register(r => r
+            .For<ISimpleService>()
+            .ImplementedBy<SimpleService>()
+            .Lifetime.Singleton());
+
+        Assert.Single(tested);
+        Assert.All(tested, service =>
+        {
+            Assert.Equal(ServiceLifetime.Singleton, service.Lifetime);
+            Assert.Equal(typeof(ISimpleService), service.ServiceType);
+            Assert.Equal(typeof(SimpleService), service.ImplementationType);
+        });
+    }
+
+    [Fact]
+    public void CanRegisterScopedLifetime()
+    {
+        var tested = new ServiceCollection();
+
+        tested.Register(r => r
+            .For<ISimpleService>()
+            .ImplementedBy<SimpleService>()
+            .Lifetime.Scoped());
+
+        Assert.Single(tested);
+        Assert.All(tested, service =>
+        {
+            Assert.Equal(ServiceLifetime.Scoped, service.Lifetime);
+            Assert.Equal(typeof(ISimpleService), service.ServiceType);
+            Assert.Equal(typeof(SimpleService), service.ImplementationType);
+        });
+    }
+
+    [Fact]
+    public void CanRegisterTransientLifetime()
+    {
+        var tested = new ServiceCollection();
+
+        tested.Register(r => r
+            .For<ISimpleService>()
+            .ImplementedBy<SimpleService>()
+            .Lifetime.Transient());
+
+        Assert.Single(tested);
+        Assert.All(tested, service =>
+        {
+            Assert.Equal(ServiceLifetime.Transient, service.Lifetime);
+            Assert.Equal(typeof(ISimpleService), service.ServiceType);
+            Assert.Equal(typeof(SimpleService), service.ImplementationType);
+        });
+    }
+
+    [Fact]
+    public void CanRegisterForNonGeneric()
+    {
+        var tested = new ServiceCollection();
+
+        tested.Register(c => c
+                .For(typeof(ISimpleService))
                 .ImplementedBy<SimpleService>());
 
-            Assert.Single(tested);
-            Assert.All(tested, service =>
-            {
-                Assert.Equal(ServiceLifetime.Singleton, service.Lifetime);
-                Assert.Equal(typeof(ISimpleService), service.ServiceType);
-                Assert.Equal(typeof(SimpleService), service.ImplementationType);
-            });
-        }
-
-        [Fact]
-        public void CanRegisterSingletonLifetime()
+        Assert.Single(tested);
+        Assert.All(tested, service =>
         {
-            var tested = new ServiceCollection();
-
-            tested.Register(r => r
-                .For<ISimpleService>()
-                .ImplementedBy<SimpleService>()
-                .Lifetime.Singleton());
-
-            Assert.Single(tested);
-            Assert.All(tested, service =>
-            {
-                Assert.Equal(ServiceLifetime.Singleton, service.Lifetime);
-                Assert.Equal(typeof(ISimpleService), service.ServiceType);
-                Assert.Equal(typeof(SimpleService), service.ImplementationType);
-            });
-        }
-
-        [Fact]
-        public void CanRegisterScopedLifetime()
-        {
-            var tested = new ServiceCollection();
-
-            tested.Register(r => r
-                .For<ISimpleService>()
-                .ImplementedBy<SimpleService>()
-                .Lifetime.Scoped());
-
-            Assert.Single(tested);
-            Assert.All(tested, service =>
-            {
-                Assert.Equal(ServiceLifetime.Scoped, service.Lifetime);
-                Assert.Equal(typeof(ISimpleService), service.ServiceType);
-                Assert.Equal(typeof(SimpleService), service.ImplementationType);
-            });
-        }
-
-        [Fact]
-        public void CanRegisterTransientLifetime()
-        {
-            var tested = new ServiceCollection();
-
-            tested.Register(r => r
-                .For<ISimpleService>()
-                .ImplementedBy<SimpleService>()
-                .Lifetime.Transient());
-
-            Assert.Single(tested);
-            Assert.All(tested, service =>
-            {
-                Assert.Equal(ServiceLifetime.Transient, service.Lifetime);
-                Assert.Equal(typeof(ISimpleService), service.ServiceType);
-                Assert.Equal(typeof(SimpleService), service.ImplementationType);
-            });
-        }
-
-        [Fact]
-        public void CanRegisterForNonGeneric()
-        {
-            var tested = new ServiceCollection();
-
-            tested.Register(c => c
-                    .For(typeof(ISimpleService))
-                    .ImplementedBy<SimpleService>());
-
-            Assert.Single(tested);
-            Assert.All(tested, service =>
-            {
-                Assert.Equal(ServiceLifetime.Singleton, service.Lifetime);
-                Assert.Equal(typeof(ISimpleService), service.ServiceType);
-                Assert.Equal(typeof(SimpleService), service.ImplementationType);
-            });
-        }
+            Assert.Equal(ServiceLifetime.Singleton, service.Lifetime);
+            Assert.Equal(typeof(ISimpleService), service.ServiceType);
+            Assert.Equal(typeof(SimpleService), service.ImplementationType);
+        });
     }
 }

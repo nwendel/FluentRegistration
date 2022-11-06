@@ -2,92 +2,91 @@
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace FluentRegistration.Tests
+namespace FluentRegistration.Tests;
+
+public class LifestimeTests
 {
-    public class LifestimeTests
+    [Fact]
+    public void CanRegisterNoLifetime()
     {
-        [Fact]
-        public void CanRegisterNoLifetime()
+        var tested = new ServiceCollection();
+
+        tested.Register(r => r
+            .ImplementedBy<SimpleService>()
+            .WithServices.AllInterfaces());
+
+        Assert.Single(tested);
+        Assert.All(tested, service =>
         {
-            var tested = new ServiceCollection();
+            Assert.Equal(ServiceLifetime.Singleton, service.Lifetime);
+        });
+    }
 
-            tested.Register(r => r
-                .ImplementedBy<SimpleService>()
-                .WithServices.AllInterfaces());
+    [Fact]
+    public void CanRegisterSingletonLifetime()
+    {
+        var tested = new ServiceCollection();
 
-            Assert.Single(tested);
-            Assert.All(tested, service =>
-            {
-                Assert.Equal(ServiceLifetime.Singleton, service.Lifetime);
-            });
-        }
+        tested.Register(r => r
+            .ImplementedBy<SimpleService>()
+            .WithServices.AllInterfaces()
+            .Lifetime.Singleton());
 
-        [Fact]
-        public void CanRegisterSingletonLifetime()
+        Assert.Single(tested);
+        Assert.All(tested, service =>
         {
-            var tested = new ServiceCollection();
+            Assert.Equal(ServiceLifetime.Singleton, service.Lifetime);
+        });
+    }
 
-            tested.Register(r => r
-                .ImplementedBy<SimpleService>()
-                .WithServices.AllInterfaces()
-                .Lifetime.Singleton());
+    [Fact]
+    public void CanRegisterScopedLifetime()
+    {
+        var tested = new ServiceCollection();
 
-            Assert.Single(tested);
-            Assert.All(tested, service =>
-            {
-                Assert.Equal(ServiceLifetime.Singleton, service.Lifetime);
-            });
-        }
+        tested.Register(r => r
+            .ImplementedBy<SimpleService>()
+            .WithServices.AllInterfaces()
+            .Lifetime.Scoped());
 
-        [Fact]
-        public void CanRegisterScopedLifetime()
+        Assert.Single(tested);
+        Assert.All(tested, service =>
         {
-            var tested = new ServiceCollection();
+            Assert.Equal(ServiceLifetime.Scoped, service.Lifetime);
+        });
+    }
 
-            tested.Register(r => r
-                .ImplementedBy<SimpleService>()
-                .WithServices.AllInterfaces()
-                .Lifetime.Scoped());
+    [Fact]
+    public void CanRegisterTransientLifetime()
+    {
+        var tested = new ServiceCollection();
 
-            Assert.Single(tested);
-            Assert.All(tested, service =>
-            {
-                Assert.Equal(ServiceLifetime.Scoped, service.Lifetime);
-            });
-        }
+        tested.Register(r => r
+            .ImplementedBy<SimpleService>()
+            .WithServices.AllInterfaces()
+            .Lifetime.Transient());
 
-        [Fact]
-        public void CanRegisterTransientLifetime()
+        Assert.Single(tested);
+        Assert.All(tested, service =>
         {
-            var tested = new ServiceCollection();
+            Assert.Equal(ServiceLifetime.Transient, service.Lifetime);
+        });
+    }
 
-            tested.Register(r => r
-                .ImplementedBy<SimpleService>()
-                .WithServices.AllInterfaces()
-                .Lifetime.Transient());
+    [Fact]
+    public void CanRegisterSingletonLifetimeMultipleServices()
+    {
+        var services = new ServiceCollection();
+        services.Register(r => r
+            .FromAssemblyContaining<SimpleService>()
+            .Where(c => c.ImplementationType == typeof(SimpleService))
+            .WithServices
+                .Self()
+                .DefaultInterface());
+        var tested = services.BuildServiceProvider();
 
-            Assert.Single(tested);
-            Assert.All(tested, service =>
-            {
-                Assert.Equal(ServiceLifetime.Transient, service.Lifetime);
-            });
-        }
-
-        [Fact]
-        public void CanRegisterSingletonLifetimeMultipleServices()
-        {
-            var services = new ServiceCollection();
-            services.Register(r => r
-                .FromAssemblyContaining<SimpleService>()
-                .Where(c => c.ImplementationType == typeof(SimpleService))
-                .WithServices
-                    .Self()
-                    .DefaultInterface());
-            var tested = services.BuildServiceProvider();
-
-            var serviceOne = tested.GetRequiredService<ISimpleService>();
-            var serviceTwo = tested.GetRequiredService<SimpleService>();
-            Assert.Same(serviceOne, serviceTwo);
-        }
+        var serviceOne = tested.GetRequiredService<ISimpleService>();
+        var serviceTwo = tested.GetRequiredService<SimpleService>();
+        Assert.Same(serviceOne, serviceTwo);
     }
 }

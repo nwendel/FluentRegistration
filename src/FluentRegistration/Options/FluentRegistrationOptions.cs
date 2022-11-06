@@ -1,23 +1,22 @@
-﻿namespace FluentRegistration.Options
+﻿namespace FluentRegistration.Options;
+
+public class FluentRegistrationOptions
 {
-    public class FluentRegistrationOptions
+    #region Default
+
+    public static readonly FluentRegistrationOptions Default = new FluentRegistrationOptions
     {
-        #region Default
+        MultipleRegistrationsBehavior = MultipleRegistrationsBehavior.Ignore,
+        RegistrationsWithoutServicesBehavior = RegistrationsWithoutServicesBehavior.Ignore,
+    };
 
-        public static readonly FluentRegistrationOptions Default = new FluentRegistrationOptions
-        {
-            MultipleRegistrationsBehavior = MultipleRegistrationsBehavior.Ignore,
-            RegistrationsWithoutServicesBehavior = RegistrationsWithoutServicesBehavior.Ignore,
-        };
+    #endregion
 
-        #endregion
+    #region Properties
 
-        #region Properties
+    public MultipleRegistrationsBehavior MultipleRegistrationsBehavior { get; set; }
 
-        public MultipleRegistrationsBehavior MultipleRegistrationsBehavior { get; set; }
+    public RegistrationsWithoutServicesBehavior RegistrationsWithoutServicesBehavior { get; set; }
 
-        public RegistrationsWithoutServicesBehavior RegistrationsWithoutServicesBehavior { get; set; }
-
-        #endregion
-    }
+    #endregion
 }

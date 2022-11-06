@@ -1,12 +1,11 @@
-﻿namespace FluentRegistration.Internal
+﻿namespace FluentRegistration.Internal;
+
+public interface ILifetime :
+    IValidRegistration
 {
-    public interface ILifetime :
-        IValidRegistration
-    {
-        #region Lifetime
+    #region Lifetime
 
-        ILifetimeSelector Lifetime { get; }
+    ILifetimeSelector Lifetime { get; }
 
-        #endregion
-    }
+    #endregion
 }
