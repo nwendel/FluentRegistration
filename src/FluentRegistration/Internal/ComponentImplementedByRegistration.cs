@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AttachedProperties;
+using FluentRegistration.Infrastructure;
 using FluentRegistration.Options;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -61,7 +62,7 @@ public class ComponentImplementedByRegistration<TService, TImplementation> :
             }
         }
 
-        if (!_serviceTypes.Any())
+        if (_serviceTypes.None())
         {
             // No interfaces found
             var options = services.GetAttachedValue(ServiceCollectionAttachedProperties.Options) ?? FluentRegistrationOptions.Default;

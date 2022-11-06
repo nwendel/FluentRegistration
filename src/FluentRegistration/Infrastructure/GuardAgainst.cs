@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace FluentRegistration.Infrastructure;
@@ -19,7 +18,7 @@ internal static class GuardAgainst
     public static void NullOrEmpty<T>(IEnumerable<T> argument, [CallerArgumentExpression("argument")] string? argumentName = null)
         where T : class
     {
-        if (argument == null || !argument.Any())
+        if (argument == null || argument.None())
         {
             throw new ArgumentNullException(argumentName);
         }
