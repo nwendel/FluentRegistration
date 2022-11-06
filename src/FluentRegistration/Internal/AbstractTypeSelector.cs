@@ -62,7 +62,7 @@ public abstract class AbstractTypeSelector :
                     return typeInfo.IsClass && !typeInfo.IsAbstract;
                 })
                 .Where(type => _wherePredicates.Count == 0 || _wherePredicates.Any(filter => filter(new TypeFilter(type))))
-                .Where(type => _exceptPredicates.Count == 0 || !_exceptPredicates.Any(filter => filter(new TypeFilter(type))));
+                .Where(type => _exceptPredicates.Count == 0 || _exceptPredicates.None(filter => filter(new TypeFilter(type))));
         }
     }
 
