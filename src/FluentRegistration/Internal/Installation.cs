@@ -9,7 +9,6 @@ namespace FluentRegistration.Internal;
 
 public class Installation : IInstallation
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.SpacingRules", "SA1011:Closing square brackets should be spaced correctly", Justification = "Stylecop can't handle this")]
     private IServiceInstaller[]? _installers;
 
     public void FromAssembly(Assembly assembly)
