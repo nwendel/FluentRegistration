@@ -8,24 +8,14 @@ public class ComponentInstanceRegistration :
     IValidRegistration,
     IRegister
 {
-    #region Fields
-
     private readonly IEnumerable<Type> _serviceTypes;
     private readonly object _instance;
-
-    #endregion
-
-    #region Constructor
 
     public ComponentInstanceRegistration(IEnumerable<Type> serviceTypes, object instance)
     {
         _serviceTypes = serviceTypes;
         _instance = instance;
     }
-
-    #endregion
-
-    #region Register
 
     public void Register(IServiceCollection services)
     {
@@ -35,6 +25,4 @@ public class ComponentInstanceRegistration :
             services.Add(serviceDescriptor);
         }
     }
-
-    #endregion
 }

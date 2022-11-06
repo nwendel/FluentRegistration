@@ -8,14 +8,8 @@ public class InstanceRegistration<T> :
     IRegister
     where T : class
 {
-    #region Fields
-
     private readonly T _instance;
     private ServiceTypeSelector _serviceTypeSelector = new ServiceTypeSelector();
-
-    #endregion
-
-    #region Constructor
 
     public InstanceRegistration(T instance)
     {
@@ -23,10 +17,6 @@ public class InstanceRegistration<T> :
 
         _instance = instance;
     }
-
-    #endregion
-
-    #region With Service
 
     public IServiceSelector WithServices
     {
@@ -36,16 +26,10 @@ public class InstanceRegistration<T> :
         }
     }
 
-    #endregion
-
-    #region Register
-
     public void Register(IServiceCollection services)
     {
         var serviceTypes = _serviceTypeSelector.GetServicesFor(_instance.GetType());
         var componentRegistration = new ComponentInstanceRegistration(serviceTypes, _instance);
         componentRegistration.Register(services);
     }
-
-    #endregion
 }

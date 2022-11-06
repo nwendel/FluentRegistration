@@ -8,13 +8,7 @@ namespace FluentRegistration.Internal;
 
 public class Registration : IRegistration
 {
-    #region Fields
-
     private IRegister? _register;
-
-    #endregion
-
-    #region For
 
     public IComponentImplementationSelector<TService> For<TService>()
         where TService : class
@@ -40,10 +34,6 @@ public class Registration : IRegistration
         return registration;
     }
 
-    #endregion
-
-    #region From Assembly
-
     public ITypeSelector FromAssembly(Assembly assembly)
     {
         if (assembly == null)
@@ -55,10 +45,6 @@ public class Registration : IRegistration
         _register = registration;
         return registration;
     }
-
-    #endregion
-
-    #region From Assembly Containing
 
     public ITypeSelector FromAssemblyContaining(Type type)
     {
@@ -73,29 +59,17 @@ public class Registration : IRegistration
         return FromAssemblyContaining(typeof(T));
     }
 
-    #endregion
-
-    #region From This Assembly
-
     [MethodImpl(MethodImplOptions.NoInlining)]
     public ITypeSelector FromThisAssembly()
     {
         return FromAssembly(Assembly.GetCallingAssembly());
     }
 
-    #endregion
-
-    #region Implemented By
-
     public IWithServicesInitial ImplementedBy<T>()
     {
         return FromAssemblyContaining<T>()
             .Where(c => c.ImplementationType == typeof(T));
     }
-
-    #endregion
-
-    #region Instance
 
     public IWithServicesInitial Instance<T>(T instance)
         where T : class
@@ -104,10 +78,6 @@ public class Registration : IRegistration
         _register = registration;
         return registration;
     }
-
-    #endregion
-
-    #region Register
 
     public void Register(IServiceCollection services)
     {
@@ -118,6 +88,4 @@ public class Registration : IRegistration
 
         _register.Register(services);
     }
-
-    #endregion
 }

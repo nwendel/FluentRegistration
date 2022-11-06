@@ -9,22 +9,12 @@ public class ComponentFactoryRegistration<TFactory, TService> :
     where TFactory : class
     where TService : notnull
 {
-    #region Fields
-
     private readonly Func<TFactory, TService> _factoryMethod;
-
-    #endregion
-
-    #region Constructor
 
     public ComponentFactoryRegistration(Func<TFactory, TService> factoryMethod)
     {
         _factoryMethod = factoryMethod;
     }
-
-    #endregion
-
-    #region Register
 
     public void Register(IServiceCollection services)
     {
@@ -42,6 +32,4 @@ public class ComponentFactoryRegistration<TFactory, TService> :
             ServiceLifetime.Transient);
         services.Add(serviceDescriptor);
     }
-
-    #endregion
 }
