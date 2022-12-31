@@ -1,5 +1,4 @@
-﻿using System;
-using AttachedProperties;
+﻿using AttachedProperties;
 using FluentRegistration.Infrastructure;
 using FluentRegistration.Internal;
 using FluentRegistration.Options;

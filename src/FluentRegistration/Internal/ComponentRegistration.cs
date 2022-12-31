@@ -1,5 +1,4 @@
-﻿using System;
-using FluentRegistration.Infrastructure;
+﻿using FluentRegistration.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FluentRegistration.Internal;

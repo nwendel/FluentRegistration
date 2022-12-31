@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AttachedProperties;
+﻿using AttachedProperties;
 using FluentRegistration.Infrastructure;
 using FluentRegistration.Options;
 using Microsoft.Extensions.DependencyInjection;

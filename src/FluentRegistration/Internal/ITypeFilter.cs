@@ -1,5 +1,4 @@
-﻿using System;
-using FluentRegistration.Infrastructure;
+﻿using FluentRegistration.Infrastructure;
 
 namespace FluentRegistration.Internal;
 

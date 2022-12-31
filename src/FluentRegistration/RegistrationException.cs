@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace FluentRegistration;
+﻿namespace FluentRegistration;
 
 public class RegistrationException : Exception
 {
