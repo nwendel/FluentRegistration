@@ -8,8 +8,8 @@ namespace FluentRegistration.Internal;
 public class ServiceTypeSelector :
     IWithServices
 {
-    private readonly List<Func<Type, IEnumerable<Type>>> _serviceTypeSelectors = new List<Func<Type, IEnumerable<Type>>>();
-    private readonly LifetimeSelector _lifetimeSelector = new LifetimeSelector();
+    private readonly List<Func<Type, IEnumerable<Type>>> _serviceTypeSelectors = new();
+    private readonly LifetimeSelector _lifetimeSelector = new();
 
     public IWithServices AllInterfaces()
     {

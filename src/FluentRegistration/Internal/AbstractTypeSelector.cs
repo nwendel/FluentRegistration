@@ -11,9 +11,9 @@ public abstract class AbstractTypeSelector :
     ITypeSelector,
     IRegister
 {
-    private readonly List<Func<ITypeFilter, bool>> _wherePredicates = new List<Func<ITypeFilter, bool>>();
-    private readonly List<Func<ITypeFilter, bool>> _exceptPredicates = new List<Func<ITypeFilter, bool>>();
-    private ServiceTypeSelector _serviceTypeSelector = new ServiceTypeSelector();
+    private readonly List<Func<ITypeFilter, bool>> _wherePredicates = new();
+    private readonly List<Func<ITypeFilter, bool>> _exceptPredicates = new();
+    private ServiceTypeSelector _serviceTypeSelector = new();
 
     protected abstract IEnumerable<Type> Types { get; }
 

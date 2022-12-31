@@ -8,7 +8,7 @@ namespace FluentRegistration.Tests.Issues.Issue_3;
 
 public class Tests
 {
-    private readonly ServiceCollection _tested = new ServiceCollection();
+    private readonly ServiceCollection _tested = new();
     private readonly IServiceProvider _serviceProvider;
 
     public Tests()

@@ -2,7 +2,7 @@
 
 public class FluentRegistrationOptions
 {
-    public static readonly FluentRegistrationOptions Default = new FluentRegistrationOptions
+    public static readonly FluentRegistrationOptions Default = new()
     {
         MultipleRegistrationsBehavior = MultipleRegistrationsBehavior.Ignore,
         RegistrationsWithoutServicesBehavior = RegistrationsWithoutServicesBehavior.Ignore,

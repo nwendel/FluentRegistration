@@ -2,7 +2,7 @@
 
 public class SimpleServiceServiceFactory
 {
-    private static SimpleService _simpleService = new SimpleService();
+    private static SimpleService _simpleService = new();
 
     public static SimpleService SimpleService => _simpleService;
 
