@@ -11,7 +11,7 @@ public class TypeFilterTests
     {
         var tested = new TypeFilter(typeof(SimpleService));
 
-        Assert.Throws<ArgumentNullException>("namespace", () => tested.InNamespace(null));
+        Assert.Throws<ArgumentNullException>("@namespace", () => tested.InNamespace(null));
     }
 
     [Fact]

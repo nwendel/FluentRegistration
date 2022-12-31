@@ -70,8 +70,7 @@ public class TypeFilter : ITypeFilter
 
     public bool InNamespace(string @namespace, bool includeSubNamespaces)
     {
-        // TODO: Need to provide argument explicitly here, otherwise @ gets added to the argument name
-        GuardAgainst.NullOrWhiteSpace(@namespace, nameof(@namespace));
+        GuardAgainst.NullOrWhiteSpace(@namespace);
 
         if (ImplementationType.Namespace == @namespace)
         {
