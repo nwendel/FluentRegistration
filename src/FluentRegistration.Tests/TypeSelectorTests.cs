@@ -1,5 +1,4 @@
-﻿using System;
-using FluentRegistration.Internal;
+﻿using FluentRegistration.Internal;
 using Xunit;
 
 namespace FluentRegistration.Tests;

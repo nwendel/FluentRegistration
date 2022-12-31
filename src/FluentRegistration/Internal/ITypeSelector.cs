@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace FluentRegistration.Internal;
+﻿namespace FluentRegistration.Internal;
 
 public interface ITypeSelector :
     IWithServicesInitial

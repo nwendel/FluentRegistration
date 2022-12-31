@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace FluentRegistration.Infrastructure;
+﻿namespace FluentRegistration.Infrastructure;
 
 internal static class EnumerableExtensions
 {

@@ -1,7 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace FluentRegistration.Internal;
 
 public class ServiceTypeSelector :
@@ -26,9 +22,10 @@ public class ServiceTypeSelector :
                 var name = i.Name;
                 if (name.Length > 1 && name[0] == 'I' && char.IsUpper(name[1]))
                 {
-                    name = name.Substring(1);
+                    name = name[1..];
                 }
 
+                // TODO: Is "Contains" correct here?
                 return type.Name.Contains(name);
             });
             return defaultInterfaces;

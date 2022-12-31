@@ -1,6 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using FluentRegistration.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,7 +9,7 @@ public abstract class AbstractTypeSelector :
 {
     private readonly List<Func<ITypeFilter, bool>> _wherePredicates = new();
     private readonly List<Func<ITypeFilter, bool>> _exceptPredicates = new();
-    private ServiceTypeSelector _serviceTypeSelector = new();
+    private readonly ServiceTypeSelector _serviceTypeSelector = new();
 
     protected abstract IEnumerable<Type> Types { get; }
 

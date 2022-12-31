@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using FluentRegistration.Tests.Issues.Issue_3.Classes;
+﻿using FluentRegistration.Tests.Issues.Issue_3.Classes;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
