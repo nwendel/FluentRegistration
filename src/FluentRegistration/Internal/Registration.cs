@@ -35,10 +35,7 @@ public class Registration : IRegistration
 
     public ITypeSelector FromAssembly(Assembly assembly)
     {
-        if (assembly == null)
-        {
-            throw new ArgumentNullException(nameof(assembly));
-        }
+        GuardAgainst.Null(assembly);
 
         var registration = new AssemblyTypeSelector(assembly);
         _register = registration;
