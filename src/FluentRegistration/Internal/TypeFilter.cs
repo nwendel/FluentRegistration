@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Reflection;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using FluentRegistration.Infrastructure;
 
@@ -16,18 +15,17 @@ public class TypeFilter : ITypeFilter
     {
         GuardAgainst.Null(type);
 
-        var typeInfo = type.GetTypeInfo();
-        if (typeInfo.IsGenericTypeDefinition)
+        if (type.IsGenericTypeDefinition)
         {
-            if (typeInfo.IsInterface)
+            if (type.IsInterface)
             {
-                return AssignableToGenericInterface(typeInfo);
+                return AssignableToGenericInterface(type);
             }
 
-            return AssignableToGenericClass(typeInfo);
+            return AssignableToGenericClass(type);
         }
 
-        return type.GetTypeInfo().IsAssignableFrom(ImplementationType);
+        return type.IsAssignableFrom(ImplementationType);
     }
 
     public bool AssignableTo<T>()
@@ -40,8 +38,7 @@ public class TypeFilter : ITypeFilter
         var interfaces = ImplementationType.GetInterfaces();
         foreach (var @interface in interfaces)
         {
-            var interfaceTypeInfo = @interface.GetTypeInfo();
-            if (interfaceTypeInfo.IsGenericType && @interface.GetGenericTypeDefinition() == type)
+            if (@interface.IsGenericType && @interface.GetGenericTypeDefinition() == type)
             {
                 return true;
             }
@@ -55,13 +52,12 @@ public class TypeFilter : ITypeFilter
         var candidateType = ImplementationType;
         while (candidateType != null)
         {
-            var candidateTypeInfo = candidateType.GetTypeInfo();
-            if (candidateTypeInfo.IsGenericType && candidateTypeInfo.GetGenericTypeDefinition() == type)
+            if (candidateType.IsGenericType && candidateType.GetGenericTypeDefinition() == type)
             {
                 return true;
             }
 
-            candidateType = candidateTypeInfo.BaseType;
+            candidateType = candidateType.BaseType;
         }
 
         return false;

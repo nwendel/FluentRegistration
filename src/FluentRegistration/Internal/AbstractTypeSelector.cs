@@ -1,4 +1,3 @@
-﻿using System.Reflection;
 using FluentRegistration.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -35,11 +34,7 @@ public abstract class AbstractTypeSelector :
         get
         {
             return Types
-                .Where(type =>
-                {
-                    var typeInfo = type.GetTypeInfo();
-                    return typeInfo.IsClass && !typeInfo.IsAbstract;
-                })
+                .Where(type => type.IsClass && !type.IsAbstract)
                 .Where(type => _wherePredicates.Count == 0 || _wherePredicates.Any(filter => filter(new TypeFilter(type))))
                 .Where(type => _exceptPredicates.Count == 0 || _exceptPredicates.None(filter => filter(new TypeFilter(type))));
         }

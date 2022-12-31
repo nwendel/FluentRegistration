@@ -1,5 +1,3 @@
-﻿using System.Reflection;
-
 namespace FluentRegistration.Internal;
 
 public class ServiceTypeSelector :
@@ -10,7 +8,7 @@ public class ServiceTypeSelector :
 
     public IWithServices AllInterfaces()
     {
-        _serviceTypeSelectors.Add(type => type.GetTypeInfo().GetInterfaces());
+        _serviceTypeSelectors.Add(type => type.GetInterfaces());
         return this;
     }
 
@@ -18,8 +16,7 @@ public class ServiceTypeSelector :
     {
         _serviceTypeSelectors.Add(type =>
         {
-            var typeInfo = type.GetTypeInfo();
-            var interfaces = typeInfo.GetInterfaces();
+            var interfaces = type.GetInterfaces();
             var defaultInterfaces = interfaces.Where(i =>
             {
                 var name = i.Name;

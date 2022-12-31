@@ -49,7 +49,7 @@ public class Registration : IRegistration
     {
         GuardAgainst.Null(type);
 
-        var assembly = type.GetTypeInfo().Assembly;
+        var assembly = type.Assembly;
         return FromAssembly(assembly);
     }
 
