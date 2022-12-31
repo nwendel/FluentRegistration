@@ -17,7 +17,7 @@ public class Installation : IInstallation
 
         var allTypes = assembly.GetTypes();
         var installers = allTypes
-            .Where(x => typeof(IServiceInstaller).GetTypeInfo().IsAssignableFrom(x))
+            .Where(x => typeof(IServiceInstaller).IsAssignableFrom(x))
             .Select(x => Activator.CreateInstance(x))
             .Cast<IServiceInstaller>()
             .ToArray();
@@ -28,7 +28,7 @@ public class Installation : IInstallation
     {
         GuardAgainst.Null(type);
 
-        var assembly = type.GetTypeInfo().Assembly;
+        var assembly = type.Assembly;
         FromAssembly(assembly);
     }
 
