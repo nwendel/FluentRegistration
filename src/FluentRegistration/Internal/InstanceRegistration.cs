@@ -9,7 +9,7 @@ public class InstanceRegistration<T> :
     where T : class
 {
     private readonly T _instance;
-    private ServiceTypeSelector _serviceTypeSelector = new();
+    private readonly ServiceTypeSelector _serviceTypeSelector = new();
 
     public InstanceRegistration(T instance)
     {
