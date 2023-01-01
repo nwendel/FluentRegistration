@@ -1,9 +1,6 @@
-﻿using FluentRegistration.Infrastructure;
+﻿namespace FluentRegistration.Internal;
 
-namespace FluentRegistration.Internal;
-
-public interface IComponentImplementationSelector<TService> :
-    IFluentInterface
+public interface IComponentImplementationSelector<TService> : IFluentInterface
 {
     ILifetime ImplementedBy<TImplementation>()
         where TImplementation : TService;

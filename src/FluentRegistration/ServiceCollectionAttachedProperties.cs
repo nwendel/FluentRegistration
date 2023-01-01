@@ -1,6 +1,5 @@
 ﻿using AttachedProperties;
 using FluentRegistration.Options;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace FluentRegistration;
 

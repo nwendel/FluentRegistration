@@ -1,7 +1,6 @@
 namespace FluentRegistration.Internal;
 
-public class ServiceTypeSelector :
-    IWithServices
+public class ServiceTypeSelector : IWithServices
 {
     private readonly List<Func<Type, IEnumerable<Type>>> _serviceTypeSelectors = new();
     private readonly LifetimeSelector _lifetimeSelector = new();

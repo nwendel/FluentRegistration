@@ -1,13 +1,9 @@
 ﻿using AttachedProperties;
-using FluentRegistration.Infrastructure;
 using FluentRegistration.Options;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace FluentRegistration.Internal;
 
-public class ComponentImplementedByRegistration<TService, TImplementation> :
-    ILifetime,
-    IRegister
+public class ComponentImplementedByRegistration<TService, TImplementation> : ILifetime, IRegister
     where TImplementation : TService
 {
     private readonly IEnumerable<Type> _serviceTypes;

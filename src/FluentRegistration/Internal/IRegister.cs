@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-namespace FluentRegistration.Internal;
+﻿namespace FluentRegistration.Internal;
 
 public interface IRegister
 {

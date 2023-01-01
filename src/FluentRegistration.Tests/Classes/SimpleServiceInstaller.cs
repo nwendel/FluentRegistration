@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-namespace FluentRegistration.Tests.Classes;
+﻿namespace FluentRegistration.Tests.Classes;
 
 public class SimpleServiceInstaller : IServiceInstaller
 {

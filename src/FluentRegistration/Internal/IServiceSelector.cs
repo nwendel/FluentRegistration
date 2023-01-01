@@ -1,9 +1,6 @@
-﻿using FluentRegistration.Infrastructure;
+﻿namespace FluentRegistration.Internal;
 
-namespace FluentRegistration.Internal;
-
-public interface IServiceSelector :
-    IFluentInterface
+public interface IServiceSelector : IFluentInterface
 {
     IWithServices AllInterfaces();
 

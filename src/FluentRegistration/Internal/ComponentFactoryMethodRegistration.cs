@@ -1,10 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿namespace FluentRegistration.Internal;
 
-namespace FluentRegistration.Internal;
-
-public class ComponentFactoryMethodRegistration<TService> :
-    IValidRegistration,
-    IRegister
+public class ComponentFactoryMethodRegistration<TService> : IValidRegistration, IRegister
     where TService : notnull
 {
     private readonly Func<IServiceProvider, TService> _factoryMethod;

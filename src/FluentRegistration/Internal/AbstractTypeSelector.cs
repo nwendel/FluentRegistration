@@ -1,11 +1,6 @@
-using FluentRegistration.Infrastructure;
-using Microsoft.Extensions.DependencyInjection;
-
 namespace FluentRegistration.Internal;
 
-public abstract class AbstractTypeSelector :
-    ITypeSelector,
-    IRegister
+public abstract class AbstractTypeSelector : ITypeSelector, IRegister
 {
     private readonly List<Func<ITypeFilter, bool>> _wherePredicates = new();
     private readonly List<Func<ITypeFilter, bool>> _exceptPredicates = new();

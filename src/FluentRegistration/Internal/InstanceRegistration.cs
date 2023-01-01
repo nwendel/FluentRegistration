@@ -1,11 +1,6 @@
-﻿using FluentRegistration.Infrastructure;
-using Microsoft.Extensions.DependencyInjection;
+﻿namespace FluentRegistration.Internal;
 
-namespace FluentRegistration.Internal;
-
-public class InstanceRegistration<T> :
-    IWithServicesInitial,
-    IRegister
+public class InstanceRegistration<T> : IWithServicesInitial, IRegister
     where T : class
 {
     private readonly T _instance;

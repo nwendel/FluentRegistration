@@ -1,10 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿namespace FluentRegistration.Internal;
 
-namespace FluentRegistration.Internal;
-
-public class ComponentInstanceRegistration :
-    IValidRegistration,
-    IRegister
+public class ComponentInstanceRegistration : IValidRegistration, IRegister
 {
     private readonly IEnumerable<Type> _serviceTypes;
     private readonly object _instance;

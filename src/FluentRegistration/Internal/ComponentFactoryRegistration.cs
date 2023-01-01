@@ -1,10 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿namespace FluentRegistration.Internal;
 
-namespace FluentRegistration.Internal;
-
-public class ComponentFactoryRegistration<TFactory, TService> :
-    IValidRegistration,
-    IRegister
+public class ComponentFactoryRegistration<TFactory, TService> : IValidRegistration, IRegister
     where TFactory : class
     where TService : notnull
 {

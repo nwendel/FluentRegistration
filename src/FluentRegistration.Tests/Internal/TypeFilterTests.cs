@@ -1,6 +1,5 @@
 ﻿using FluentRegistration.Internal;
 using FluentRegistration.Tests.Classes;
-using Xunit;
 
 namespace FluentRegistration.Tests.Internal;
 
