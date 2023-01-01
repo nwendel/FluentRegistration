@@ -1,9 +1,6 @@
-﻿using FluentRegistration.Infrastructure;
+﻿namespace FluentRegistration.Internal;
 
-namespace FluentRegistration.Internal;
-
-public interface ITypeFilter :
-    IFluentInterface
+public interface ITypeFilter : IFluentInterface
 {
     bool AssignableTo(Type type);
 

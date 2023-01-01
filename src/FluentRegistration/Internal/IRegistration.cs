@@ -1,10 +1,8 @@
 ﻿using System.Reflection;
-using FluentRegistration.Infrastructure;
 
 namespace FluentRegistration.Internal;
 
-public interface IRegistration :
-    IFluentInterface
+public interface IRegistration : IFluentInterface
 {
     IComponentImplementationSelector<TService> For<TService>()
         where TService : class;

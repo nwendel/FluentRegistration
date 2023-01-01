@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-namespace FluentRegistration;
+﻿namespace FluentRegistration;
 
 public interface IServiceInstaller
 {

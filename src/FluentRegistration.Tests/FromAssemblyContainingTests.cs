@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Xunit;
-
-namespace FluentRegistration.Tests;
+﻿namespace FluentRegistration.Tests;
 
 public class FromAssemblyContainingTests
 {

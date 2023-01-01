@@ -1,6 +1,4 @@
 ﻿using FluentRegistration.Tests.Classes;
-using Microsoft.Extensions.DependencyInjection;
-using Xunit;
 
 namespace FluentRegistration.Tests;
 

@@ -1,11 +1,6 @@
-﻿using FluentRegistration.Infrastructure;
-using Microsoft.Extensions.DependencyInjection;
+﻿namespace FluentRegistration.Internal;
 
-namespace FluentRegistration.Internal;
-
-public class ComponentRegistration<TService> :
-    IComponentImplementationSelector<TService>,
-    IRegister
+public class ComponentRegistration<TService> : IComponentImplementationSelector<TService>, IRegister
     where TService : class
 {
     private readonly Type[] _serviceTypes;

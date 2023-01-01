@@ -1,9 +1,6 @@
-﻿using FluentRegistration.Infrastructure;
+﻿namespace FluentRegistration.Internal;
 
-namespace FluentRegistration.Internal;
-
-public interface IWithServicesInitial :
-    IFluentInterface
+public interface IWithServicesInitial : IFluentInterface
 {
     IServiceSelector WithServices { get; }
 }

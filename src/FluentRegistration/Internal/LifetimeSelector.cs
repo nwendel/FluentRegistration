@@ -1,10 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿namespace FluentRegistration.Internal;
 
-namespace FluentRegistration.Internal;
-
-public class LifetimeSelector :
-    ILifetimeSelector,
-    IValidRegistration
+public class LifetimeSelector : ILifetimeSelector, IValidRegistration
 {
     public ServiceLifetime Lifetime { get; private set; } = ServiceLifetime.Singleton;
 

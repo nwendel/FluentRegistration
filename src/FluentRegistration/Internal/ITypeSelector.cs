@@ -1,7 +1,6 @@
 ﻿namespace FluentRegistration.Internal;
 
-public interface ITypeSelector :
-    IWithServicesInitial
+public interface ITypeSelector : IWithServicesInitial
 {
     ITypeSelector Where(Func<ITypeFilter, bool> predicate);
 

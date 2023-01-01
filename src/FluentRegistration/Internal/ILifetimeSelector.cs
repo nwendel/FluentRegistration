@@ -1,9 +1,6 @@
-﻿using FluentRegistration.Infrastructure;
+﻿namespace FluentRegistration.Internal;
 
-namespace FluentRegistration.Internal;
-
-public interface ILifetimeSelector :
-    IFluentInterface
+public interface ILifetimeSelector : IFluentInterface
 {
     IValidRegistration Singleton();
 

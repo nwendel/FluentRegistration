@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Xunit;
-
-namespace FluentRegistration.Tests.Options;
+﻿namespace FluentRegistration.Tests.Options;
 
 public class InvalidConfigurationTests
 {

@@ -1,6 +1,4 @@
 ﻿using FluentRegistration.Tests.Issues.Issue_2.Classes;
-using Microsoft.Extensions.DependencyInjection;
-using Xunit;
 
 namespace FluentRegistration.Tests.Issues.Issue_2;
 
@@ -14,7 +12,7 @@ public class Tests
         var openContentAwareCommandValidatorType = openValidatorType.MakeGenericType(openContentAwareCommandType);
 
         // ISSUE: Cannot close type, IsGenericTypeDefinition returns false
-        var closedType = openContentAwareCommandValidatorType.MakeGenericType(typeof(AbstractPageData), typeof(AbstractPageExtensionProperties));
+        _ = openContentAwareCommandValidatorType.MakeGenericType(typeof(AbstractPageData), typeof(AbstractPageExtensionProperties));
     }
 
     [Fact(Skip = "Something is strange with open generic types of open generic types")]
@@ -34,7 +32,7 @@ public class Tests
         var openContentAwareCommandValidatorType = openValidatorType.MakeGenericType(openContentAwareCommandType);
 
         // ISSUE: Returns a different type than the one created above
-        var registeredServiceType = tested.Single(x => x.ImplementationType == typeof(ContentAwareCommandValidator<,>)).ServiceType;
+        _ = tested.Single(x => x.ImplementationType == typeof(ContentAwareCommandValidator<,>)).ServiceType;
 
         Assert.Contains(tested, x => x.ServiceType == openContentAwareCommandValidatorType);
         Assert.Contains(tested, x => x.ImplementationType == typeof(ContentAwareCommandValidator<,>));

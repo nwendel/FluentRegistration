@@ -1,6 +1,5 @@
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using FluentRegistration.Infrastructure;
 
 namespace FluentRegistration.Internal;
 
