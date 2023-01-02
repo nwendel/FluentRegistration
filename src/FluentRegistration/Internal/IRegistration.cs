@@ -19,6 +19,8 @@ public interface IRegistration : IFluentInterface
 
     ITypeSelector FromThisAssembly();
 
+    ITypeSelector FromAssemblies(IEnumerable<Assembly> assemblies);
+
     IWithServicesInitial ImplementedBy<T>();
 
     IWithServicesInitial Instance<T>(T instance)

@@ -35,9 +35,7 @@ public class Registration : IRegistration
     {
         GuardAgainst.Null(assembly);
 
-        var registration = new AssemblyTypeSelector(assembly);
-        _register = registration;
-        return registration;
+        return FromAssemblies(new[] { assembly });
     }
 
     public ITypeSelector FromAssemblyContaining(Type type)
@@ -57,6 +55,15 @@ public class Registration : IRegistration
     public ITypeSelector FromThisAssembly()
     {
         return FromAssembly(Assembly.GetCallingAssembly());
+    }
+
+    public ITypeSelector FromAssemblies(IEnumerable<Assembly> assemblies)
+    {
+        GuardAgainst.Null(assemblies);
+
+        var registration = new AssemblyTypeSelector(assemblies);
+        _register = registration;
+        return registration;
     }
 
     public IWithServicesInitial ImplementedBy<T>()
