@@ -11,6 +11,10 @@ public interface IRegistration : IFluentInterface
 
     IComponentImplementationSelector<object> For(params Type[] types);
 
+    ITypeSelector FromAssemblies(IEnumerable<Assembly> assemblies);
+
+    ITypeSelector FromAssemblies(params Assembly[] assemblies);
+
     ITypeSelector FromAssembly(Assembly assembly);
 
     ITypeSelector FromAssemblyContaining(Type type);

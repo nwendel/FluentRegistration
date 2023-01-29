@@ -4,12 +4,12 @@ namespace FluentRegistration.Internal;
 
 public class AssemblyTypeSelector : AbstractTypeSelector
 {
-    private readonly Assembly _assembly;
+    private readonly IEnumerable<Assembly> _assemblies;
 
-    public AssemblyTypeSelector(Assembly assembly)
+    public AssemblyTypeSelector(IEnumerable<Assembly> assemblies)
     {
-        _assembly = assembly;
+        _assemblies = assemblies;
     }
 
-    protected override IEnumerable<Type> Types => _assembly.GetTypes();
+    protected override IEnumerable<Type> Types => _assemblies.SelectMany(x => x.GetTypes());
 }

@@ -31,13 +31,23 @@ public class Registration : IRegistration
         return registration;
     }
 
+    public ITypeSelector FromAssemblies(IEnumerable<Assembly> assemblies)
+    {
+        GuardAgainst.Null(assemblies);
+
+        var registration = new AssemblyTypeSelector(assemblies);
+        _register = registration;
+        return registration;
+    }
+
+    public ITypeSelector FromAssemblies(params Assembly[] assemblies) =>
+        FromAssemblies(assemblies.AsEnumerable());
+
     public ITypeSelector FromAssembly(Assembly assembly)
     {
         GuardAgainst.Null(assembly);
 
-        var registration = new AssemblyTypeSelector(assembly);
-        _register = registration;
-        return registration;
+        return FromAssemblies(assembly);
     }
 
     public ITypeSelector FromAssemblyContaining(Type type)

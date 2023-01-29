@@ -1,0 +1,25 @@
+﻿using System.Reflection;
+using FluentRegistration.Infrastructure;
+using FluentRegistration.Internal;
+using Microsoft.Extensions.DependencyModel;
+
+namespace FluentRegistration;
+
+public static class IInstallationExtensions
+{
+    public static void FromDependencyContext(this IInstallation self, DependencyContext dependencyContext)
+    {
+        GuardAgainst.Null(self);
+        GuardAgainst.Null(dependencyContext);
+
+        var assemblies = dependencyContext.RuntimeLibraries
+            .SelectMany(x => x.GetDefaultAssemblyNames(dependencyContext))
+            .Select(x => Assembly.Load(x))
+            .ToList();
+
+        self.FromAssemblies(assemblies);
+    }
+
+    public static void FromDefaultDependencyContext(this IInstallation self) =>
+        self.FromDependencyContext(DependencyContext.Default);
+}
