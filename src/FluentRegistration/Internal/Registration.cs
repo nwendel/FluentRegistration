@@ -47,7 +47,7 @@ public class Registration : IRegistration
     {
         GuardAgainst.Null(assembly);
 
-        return FromAssemblies(new[] { assembly });
+        return FromAssemblies(assembly);
     }
 
     public ITypeSelector FromAssemblyContaining(Type type)

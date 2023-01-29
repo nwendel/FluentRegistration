@@ -5,9 +5,9 @@ using Microsoft.Extensions.DependencyModel;
 
 namespace FluentRegistration;
 
-public static class IRegistrationExtensions
+public static class IInstallationExtensions
 {
-    public static ITypeSelector FromDependencyContext(this IRegistration self, DependencyContext dependencyContext)
+    public static void FromDependencyContext(this IInstallation self, DependencyContext dependencyContext)
     {
         GuardAgainst.Null(self);
         GuardAgainst.Null(dependencyContext);
@@ -17,9 +17,9 @@ public static class IRegistrationExtensions
             .Select(x => Assembly.Load(x))
             .ToList();
 
-        return self.FromAssemblies(assemblies);
+        self.FromAssemblies(assemblies);
     }
 
-    public static ITypeSelector FromDefaultDependencyContext(this IRegistration self) =>
+    public static void FromDefaultDependencyContext(this IInstallation self) =>
         self.FromDependencyContext(DependencyContext.Default);
 }

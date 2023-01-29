@@ -7,17 +7,29 @@ public class Installation : IInstallation
 {
     private IServiceInstaller[]? _installers;
 
-    public void FromAssembly(Assembly assembly)
+    public void FromAssemblies(IEnumerable<Assembly> assemblies)
     {
-        GuardAgainst.Null(assembly);
+        GuardAgainst.Null(assemblies);
 
-        var allTypes = assembly.GetTypes();
-        var installers = allTypes
+        var types = assemblies
+            .SelectMany(x => x.GetTypes())
+            .ToList();
+        var installers = types
             .Where(x => typeof(IServiceInstaller).IsAssignableFrom(x))
             .Select(x => Activator.CreateInstance(x))
             .Cast<IServiceInstaller>()
             .ToArray();
         _installers = installers;
+    }
+
+    public void FromAssemblies(params Assembly[] assemblies) =>
+        FromAssemblies(assemblies.AsEnumerable());
+
+    public void FromAssembly(Assembly assembly)
+    {
+        GuardAgainst.Null(assembly);
+
+        FromAssemblies(assembly);
     }
 
     public void FromAssemblyContaining(Type type)
