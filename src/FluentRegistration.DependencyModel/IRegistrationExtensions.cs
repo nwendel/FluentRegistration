@@ -19,6 +19,6 @@ public static class IRegistrationExtensions
         return self.FromAssemblies(assemblies);
     }
 
-    public static ITypeSelector FromDefaultDependencyContext(this IRegistration self)
-        => self.FromDependencyContext(DependencyContext.Default);
+    public static ITypeSelector FromDefaultDependencyContext(this IRegistration self) =>
+        self.FromDependencyContext(DependencyContext.Default);
 }
