@@ -1,4 +1,4 @@
-# FluentRegistration [![Build status](https://ci.appveyor.com/api/projects/status/6o3s84ls1k92ktwp?svg=true)](https://ci.appveyor.com/project/nwendel/fluentregistration-p176b) [![Coverage Status](https://coveralls.io/repos/github/nwendel/FluentRegistration/badge.svg?branch=master)](https://coveralls.io/github/nwendel/FluentRegistration?branch=master)
+# FluentRegistration ![Build](https://github.com/nwendel/fluentregistration/actions/workflows/build.yml/badge.svg) [![Coverage](https://codecov.io/gh/nwendel/fluentregistration/branch/main/graph/badge.svg?token=BMNOSIWUMV)](https://codecov.io/gh/nwendel/fluentregistration)
 
 A fluent API for registering services with Microsoft.Extensions.DependencyInjection
 
