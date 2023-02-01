@@ -1,28 +1,10 @@
-namespace FluentRegistration.Internal;
+﻿namespace FluentRegistration.Internal;
 
 public abstract class AbstractTypeSelector : ITypeSelector, IRegister
 {
     private readonly List<Func<ITypeFilter, bool>> _wherePredicates = new();
     private readonly List<Func<ITypeFilter, bool>> _exceptPredicates = new();
     private readonly ServiceTypeSelector _serviceTypeSelector = new();
-
-    protected abstract IEnumerable<Type> Types { get; }
-
-    public ITypeSelector Where(Func<ITypeFilter, bool> predicate)
-    {
-        GuardAgainst.Null(predicate);
-
-        _wherePredicates.Add(predicate);
-        return this;
-    }
-
-    public ITypeSelector Except(Func<ITypeFilter, bool> predicate)
-    {
-        GuardAgainst.Null(predicate);
-
-        _exceptPredicates.Add(predicate);
-        return this;
-    }
 
     public IEnumerable<Type> FilteredTypes
     {
@@ -41,6 +23,24 @@ public abstract class AbstractTypeSelector : ITypeSelector, IRegister
         {
             return _serviceTypeSelector;
         }
+    }
+
+    protected abstract IEnumerable<Type> Types { get; }
+
+    public ITypeSelector Where(Func<ITypeFilter, bool> predicate)
+    {
+        GuardAgainst.Null(predicate);
+
+        _wherePredicates.Add(predicate);
+        return this;
+    }
+
+    public ITypeSelector Except(Func<ITypeFilter, bool> predicate)
+    {
+        GuardAgainst.Null(predicate);
+
+        _exceptPredicates.Add(predicate);
+        return this;
     }
 
     public void Register(IServiceCollection services)

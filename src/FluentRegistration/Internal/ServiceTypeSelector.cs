@@ -1,9 +1,11 @@
-namespace FluentRegistration.Internal;
+﻿namespace FluentRegistration.Internal;
 
 public class ServiceTypeSelector : IWithServices
 {
     private readonly List<Func<Type, IEnumerable<Type>>> _serviceTypeSelectors = new();
     private readonly LifetimeSelector _lifetimeSelector = new();
+
+    public ILifetimeSelector Lifetime => _lifetimeSelector;
 
     public IWithServices AllInterfaces()
     {
@@ -49,8 +51,6 @@ public class ServiceTypeSelector : IWithServices
     {
         return _serviceTypeSelectors.SelectMany(selector => selector(type));
     }
-
-    public ILifetimeSelector Lifetime => _lifetimeSelector;
 
     public LifetimeSelector GetLifetimeSelector() => _lifetimeSelector;
 }
