@@ -2,6 +2,8 @@
 
 public interface ITypeFilter : IFluentInterface
 {
+    Type ImplementationType { get; }
+
     bool AssignableTo(Type type);
 
     bool AssignableTo<T>();
@@ -13,6 +15,4 @@ public interface ITypeFilter : IFluentInterface
     bool InSameNamespaceAs<T>();
 
     bool InThisNamespace();
-
-    Type ImplementationType { get; }
 }

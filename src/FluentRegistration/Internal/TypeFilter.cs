@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
 namespace FluentRegistration.Internal;
@@ -9,6 +9,8 @@ public class TypeFilter : ITypeFilter
     {
         ImplementationType = type;
     }
+
+    public Type ImplementationType { get; }
 
     public bool AssignableTo(Type type)
     {
@@ -32,7 +34,7 @@ public class TypeFilter : ITypeFilter
         return AssignableTo(typeof(T));
     }
 
-    private bool AssignableToGenericInterface(Type type)
+    public bool AssignableToGenericInterface(Type type)
     {
         var interfaces = ImplementationType.GetInterfaces();
         foreach (var @interface in interfaces)
@@ -46,7 +48,7 @@ public class TypeFilter : ITypeFilter
         return false;
     }
 
-    private bool AssignableToGenericClass(Type type)
+    public bool AssignableToGenericClass(Type type)
     {
         var candidateType = ImplementationType;
         while (candidateType != null)
@@ -149,6 +151,4 @@ public class TypeFilter : ITypeFilter
 
         return InNamespace(@namespace, includeSubNamespaces);
     }
-
-    public Type ImplementationType { get; }
 }

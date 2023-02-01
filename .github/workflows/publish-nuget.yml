@@ -1,0 +1,36 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: Publish NuGet
+
+on: [workflow_dispatch]
+
+env:
+    SOLUTION_FILE: src/FluentRegistration.sln
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - uses: NuGet/setup-nuget@v1.1.1
+
+    - name: Restore dependencies
+      run: dotnet restore $SOLUTION_FILE
+
+    - name: Build
+      run: dotnet build $SOLUTION_FILE --no-restore
+
+    - name: Test
+      run: dotnet test $SOLUTION_FILE --no-build --verbosity normal
+
+    - name: Pack
+      run: dotnet pack $SOLUTION_FILE --configuration Release
+
+    - name: Publish
+      run: nuget push **\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
+
+    - name: Publish Symbols
+      run: nuget push **\*.snupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
