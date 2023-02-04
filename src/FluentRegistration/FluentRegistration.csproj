@@ -28,12 +28,12 @@
   </ItemGroup>
 
   <ItemGroup>
-		<InternalsVisibleTo Include="$(AssemblyName).DependencyModel"/>
+		<InternalsVisibleTo Include="$(AssemblyName).DependencyModel" />
 	</ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.1" />
-    <PackageReference Include="AttachedProperties" Version="2.1.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="AttachedProperties" Version="2.2.0" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

@@ -1,7 +1,5 @@
 ﻿using System.Reflection;
-using FluentRegistration.Infrastructure;
 using FluentRegistration.Internal;
-using Microsoft.Extensions.DependencyModel;
 
 namespace FluentRegistration;
 
@@ -20,6 +18,13 @@ public static class IInstallationExtensions
         self.FromAssemblies(assemblies);
     }
 
-    public static void FromDefaultDependencyContext(this IInstallation self) =>
+    public static void FromDefaultDependencyContext(this IInstallation self)
+    {
+        if (DependencyContext.Default == null)
+        {
+            throw new InvalidOperationException("No default depency context");
+        }
+
         self.FromDependencyContext(DependencyContext.Default);
+    }
 }
