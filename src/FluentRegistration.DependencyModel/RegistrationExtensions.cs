@@ -3,7 +3,7 @@ using FluentRegistration.Internal;
 
 namespace FluentRegistration;
 
-public static class IRegistrationExtensions
+public static class RegistrationExtensions
 {
     public static ITypeSelector FromDependencyContext(this IRegistration self, DependencyContext dependencyContext)
     {
