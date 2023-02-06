@@ -3,7 +3,7 @@ using FluentRegistration.Internal;
 
 namespace FluentRegistration;
 
-public static class IInstallationExtensions
+public static class InstallationExtensions
 {
     public static void FromDependencyContext(this IInstallation self, DependencyContext dependencyContext)
     {
