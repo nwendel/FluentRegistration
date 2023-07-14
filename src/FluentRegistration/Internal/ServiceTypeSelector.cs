@@ -27,6 +27,7 @@ public class ServiceTypeSelector : IWithServices
                 }
 
                 // TODO: Is "Contains" correct here?
+                //       Possibly EndWith?
                 return type.Name.Contains(name);
             });
             return defaultInterfaces;

@@ -5,24 +5,6 @@ namespace FluentRegistration.Tests;
 public class ComponentForImplementedByTests
 {
     [Fact]
-    public void CanRegisterNoLifetime()
-    {
-        var tested = new ServiceCollection();
-
-        tested.Register(r => r
-            .For<ISimpleService>()
-            .ImplementedBy<SimpleService>());
-
-        Assert.Single(tested);
-        Assert.All(tested, service =>
-        {
-            Assert.Equal(ServiceLifetime.Singleton, service.Lifetime);
-            Assert.Equal(typeof(ISimpleService), service.ServiceType);
-            Assert.Equal(typeof(SimpleService), service.ImplementationType);
-        });
-    }
-
-    [Fact]
     public void CanRegisterSingletonLifetime()
     {
         var tested = new ServiceCollection();
@@ -86,7 +68,8 @@ public class ComponentForImplementedByTests
 
         tested.Register(c => c
                 .For(typeof(ISimpleService))
-                .ImplementedBy<SimpleService>());
+                .ImplementedBy<SimpleService>()
+                .Lifetime.Singleton());
 
         Assert.Single(tested);
         Assert.All(tested, service =>

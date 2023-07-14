@@ -12,7 +12,8 @@ public class Tests
         _tested.Register(r => r
             .FromThisAssembly()
             .Where(c => c.InSameNamespaceAs<IInterfaceOne>())
-            .WithServices.AllInterfaces());
+            .WithServices.AllInterfaces()
+            .Lifetime.Singleton());
         _serviceProvider = _tested.BuildServiceProvider();
     }
 

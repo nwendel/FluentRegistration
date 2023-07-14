@@ -23,7 +23,8 @@ public class Tests
         tested.Register(r => r
             .FromThisAssembly()
             .Where(c => c.InSameNamespaceAs<IValidator>() && c.AssignableTo<IValidator>())
-            .WithServices.AllInterfaces());
+            .WithServices.AllInterfaces()
+            .Lifetime.Singleton());
 
         // ISSUE: Does not compile
         // Assert.Contains(tested, x => x.ServiceType == typeof(IValidator<IContentAwareCommand<,>>));
@@ -45,7 +46,8 @@ public class Tests
         tested.Register(r => r
             .FromThisAssembly()
             .Where(c => c.InSameNamespaceAs<IValidator>() && c.AssignableTo<IValidator>())
-            .WithServices.AllInterfaces());
+            .WithServices.AllInterfaces()
+            .Lifetime.Singleton());
         var serviceProvider = tested.BuildServiceProvider();
 
         // ISSUE: Cannot instantiate implementation type

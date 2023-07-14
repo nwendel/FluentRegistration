@@ -12,7 +12,8 @@ public class FactoryTests
         Assert.Throws<ArgumentNullException>("factoryMethod", () =>
             tested.Register(c => c
             .For<ISimpleService>()
-            .UsingFactory<SimpleServiceServiceFactory>(null)));
+            .UsingFactory<SimpleServiceServiceFactory>(null)
+            .Lifetime.Singleton()));
     }
 
     [Fact]
@@ -22,10 +23,12 @@ public class FactoryTests
 
         tested.Register(c => c
             .For<SimpleServiceServiceFactory>()
-            .ImplementedBy<SimpleServiceServiceFactory>());
+            .ImplementedBy<SimpleServiceServiceFactory>()
+            .Lifetime.Singleton());
         tested.Register(c => c
             .For<ISimpleService>()
-            .UsingFactory<SimpleServiceServiceFactory>(f => f.CreateSimpleService()));
+            .UsingFactory<SimpleServiceServiceFactory>(f => f.CreateSimpleService())
+            .Lifetime.Singleton());
         var serviceProvider = tested.BuildServiceProvider();
         var service = serviceProvider.GetService<ISimpleService>();
 
@@ -40,7 +43,8 @@ public class FactoryTests
         var simpleService = new SimpleService();
         tested.Register(c => c
                 .For<ISimpleService>()
-                .UsingFactoryMethod(() => simpleService));
+                .UsingFactoryMethod(() => simpleService)
+                .Lifetime.Singleton());
         var serviceProvider = tested.BuildServiceProvider();
         var service = serviceProvider.GetService<ISimpleService>();
 
@@ -55,7 +59,8 @@ public class FactoryTests
         Assert.Throws<ArgumentNullException>("factoryMethod", () =>
             tested.Register(c => c
                 .For<ISimpleService>()
-                .UsingFactoryMethod((Func<ISimpleService>)null)));
+                .UsingFactoryMethod((Func<ISimpleService>)null)
+                .Lifetime.Singleton()));
     }
 
     [Fact]
@@ -66,6 +71,7 @@ public class FactoryTests
         Assert.Throws<ArgumentNullException>("factoryMethod", () =>
             tested.Register(c => c
                 .For<ISimpleService>()
-                .UsingFactoryMethod((Func<IServiceProvider, ISimpleService>)null)));
+                .UsingFactoryMethod((Func<IServiceProvider, ISimpleService>)null)
+                .Lifetime.Singleton()));
     }
 }

@@ -55,7 +55,7 @@ public class Installation : IInstallation
     {
         if (_installers == null)
         {
-            throw new InvalidOperationException("Install called without defining what to install via the fluent Api.");
+            throw new InvalidOperationException("Install called without defining what to install via the fluent Api");
         }
 
         foreach (var installer in _installers)

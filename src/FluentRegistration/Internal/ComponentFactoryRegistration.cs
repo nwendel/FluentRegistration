@@ -1,22 +1,21 @@
 ﻿namespace FluentRegistration.Internal;
 
-public class ComponentFactoryRegistration<TFactory, TService> : IValidRegistration, IRegister
+public class ComponentFactoryRegistration<TFactory, TService> : ILifetime, IRegister
     where TFactory : class
     where TService : notnull
 {
     private readonly Func<TFactory, TService> _factoryMethod;
+    private readonly LifetimeSelector _lifetimeSelector = new();
 
     public ComponentFactoryRegistration(Func<TFactory, TService> factoryMethod)
     {
         _factoryMethod = factoryMethod;
     }
 
+    public ILifetimeSelector Lifetime => _lifetimeSelector;
+
     public void Register(IServiceCollection services)
     {
-        // TODO: Is this correct to add TFactory here as a singleton?
-        // TODO: Should lifetime always be controlled by factory?
-        services.AddSingleton<TFactory, TFactory>();
-
         var serviceDescriptor = new ServiceDescriptor(
             typeof(TService),
             serviceProvider =>
@@ -24,7 +23,7 @@ public class ComponentFactoryRegistration<TFactory, TService> : IValidRegistrati
                 var factory = serviceProvider.GetRequiredService<TFactory>();
                 return _factoryMethod(factory);
             },
-            ServiceLifetime.Transient);
+            _lifetimeSelector.Lifetime);
         services.Add(serviceDescriptor);
     }
 }

@@ -19,7 +19,7 @@ public class Registration : IRegistration
     {
         GuardAgainst.Null(type);
 
-        return For(new[] { type });
+        return For(types: type);
     }
 
     public IComponentImplementationSelector<object> For(params Type[] types)
@@ -87,7 +87,7 @@ public class Registration : IRegistration
     {
         if (_register == null)
         {
-            throw new InvalidOperationException("Register called without defining what to register via the fluent Api.");
+            throw new InvalidOperationException("Register called without defining what to register via the fluent Api");
         }
 
         _register.Register(services);

@@ -12,7 +12,8 @@ public class InstanceTests
         Assert.Throws<ArgumentNullException>("instance", () =>
             tested.Register(r => r
                 .Instance<SimpleService>(null)
-                .WithServices.AllInterfaces()));
+                .WithServices.AllInterfaces()
+                .Lifetime.Singleton()));
     }
 
     [Fact]
@@ -23,7 +24,8 @@ public class InstanceTests
 
         tested.Register(r => r
             .Instance(instance)
-            .WithServices.AllInterfaces());
+            .WithServices.AllInterfaces()
+            .Lifetime.Singleton());
 
         Assert.Single(tested);
         Assert.All(tested, service =>
@@ -41,7 +43,8 @@ public class InstanceTests
 
         tested.Register(r => r
             .Instance<object>(instance)
-            .WithServices.AllInterfaces());
+            .WithServices.AllInterfaces()
+            .Lifetime.Singleton());
 
         Assert.Single(tested);
         Assert.All(tested, service =>

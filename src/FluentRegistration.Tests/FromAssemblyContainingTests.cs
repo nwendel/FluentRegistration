@@ -7,9 +7,12 @@ public class FromAssemblyContainingTests
     {
         var tested = new ServiceCollection();
 
-        Assert.Throws<ArgumentNullException>("type", () => tested.Register(r => r
-            .FromAssemblyContaining(null)
-            .WithServices.Self()));
+        Assert.Throws<ArgumentNullException>(
+            "type",
+            () => tested.Register(r => r
+                .FromAssemblyContaining(null)
+                .WithServices.Self()
+                .Lifetime.Singleton()));
     }
 
     [Fact]
@@ -17,6 +20,8 @@ public class FromAssemblyContainingTests
     {
         var tested = new ServiceCollection();
 
-        Assert.Throws<ArgumentNullException>("type", () => tested.Install(i => i.FromAssemblyContaining(null)));
+        Assert.Throws<ArgumentNullException>(
+            "type",
+            () => tested.Install(i => i.FromAssemblyContaining(null)));
     }
 }

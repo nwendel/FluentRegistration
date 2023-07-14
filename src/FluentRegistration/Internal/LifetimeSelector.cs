@@ -2,23 +2,25 @@
 
 public class LifetimeSelector : ILifetimeSelector, IValidRegistration
 {
-    public ServiceLifetime Lifetime { get; private set; } = ServiceLifetime.Singleton;
+    private ServiceLifetime? _lifetime;
+
+    public ServiceLifetime Lifetime => _lifetime ?? throw new InvalidOperationException("No lifetime defined");
 
     public IValidRegistration Singleton()
     {
-        Lifetime = ServiceLifetime.Singleton;
+        _lifetime = ServiceLifetime.Singleton;
         return this;
     }
 
     public IValidRegistration Scoped()
     {
-        Lifetime = ServiceLifetime.Scoped;
+        _lifetime = ServiceLifetime.Scoped;
         return this;
     }
 
     public IValidRegistration Transient()
     {
-        Lifetime = ServiceLifetime.Transient;
+        _lifetime = ServiceLifetime.Transient;
         return this;
     }
 }

@@ -12,7 +12,8 @@ public class WithServicesTests
         tested.Register(r => r
             .FromAssemblyContaining<SimpleService>()
             .Where(c => c.ImplementationType == typeof(SimpleService))
-            .WithServices.Self());
+            .WithServices.Self()
+            .Lifetime.Singleton());
 
         Assert.Single(tested);
         Assert.All(tested, service =>
@@ -30,7 +31,8 @@ public class WithServicesTests
         tested.Register(r => r
             .FromAssemblyContaining<SimpleService>()
             .Where(c => c.ImplementationType == typeof(SimpleService))
-            .WithServices.DefaultInterface());
+            .WithServices.DefaultInterface()
+            .Lifetime.Singleton());
 
         Assert.Single(tested);
         Assert.All(tested, service =>
@@ -48,7 +50,8 @@ public class WithServicesTests
         tested.Register(r => r
             .FromAssemblyContaining<SimpleService>()
             .Where(c => c.ImplementationType == typeof(SimpleService))
-                .WithServices.Service<ISimpleService>());
+            .WithServices.Service<ISimpleService>()
+            .Lifetime.Singleton());
 
         Assert.Single(tested);
         Assert.All(tested, service =>
@@ -68,7 +71,8 @@ public class WithServicesTests
             .Where(c => c.ImplementationType == typeof(SimpleService))
             .WithServices
                 .Self()
-                .DefaultInterface());
+                .DefaultInterface()
+            .Lifetime.Singleton());
 
         Assert.Equal(2, tested.Count);
         Assert.Contains(tested, x => x.ServiceType == typeof(ISimpleService));

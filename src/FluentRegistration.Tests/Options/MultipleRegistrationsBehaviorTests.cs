@@ -12,10 +12,12 @@ public class MultipleRegistrationsBehaviorTests
 
         tested.Register(c => c
             .For<ISimpleService>()
-            .ImplementedBy<SimpleService>());
+            .ImplementedBy<SimpleService>()
+            .Lifetime.Singleton());
         tested.Register(c => c
             .For<ISimpleService>()
-            .ImplementedBy<SimpleService>());
+            .ImplementedBy<SimpleService>()
+            .Lifetime.Singleton());
 
         Assert.Single(tested);
         Assert.All(tested, service =>
@@ -34,10 +36,12 @@ public class MultipleRegistrationsBehaviorTests
 
         tested.Register(c => c
             .For<ISimpleService>()
-            .ImplementedBy<SimpleService>());
+            .ImplementedBy<SimpleService>()
+            .Lifetime.Singleton());
         tested.Register(c => c
             .For<ISimpleService>()
-            .ImplementedBy<SimpleService>());
+            .ImplementedBy<SimpleService>()
+            .Lifetime.Singleton());
 
         Assert.Single(tested);
         Assert.All(tested, service =>
@@ -56,10 +60,12 @@ public class MultipleRegistrationsBehaviorTests
 
         tested.Register(c => c
             .For<ISimpleService>()
-            .ImplementedBy<SimpleService>());
+            .ImplementedBy<SimpleService>()
+            .Lifetime.Singleton());
         tested.Register(c => c
             .For<ISimpleService>()
-            .ImplementedBy<SimpleService>());
+            .ImplementedBy<SimpleService>()
+            .Lifetime.Singleton());
 
         Assert.Equal(2, tested.Count);
         Assert.All(tested, service =>
@@ -78,11 +84,13 @@ public class MultipleRegistrationsBehaviorTests
 
         tested.Register(c => c
             .For<ISimpleService>()
-            .ImplementedBy<SimpleService>());
+            .ImplementedBy<SimpleService>()
+            .Lifetime.Singleton());
 
         Assert.Throws<RegistrationException>(() =>
             tested.Register(c => c
                 .For<ISimpleService>()
-                .ImplementedBy<SimpleService>()));
+                .ImplementedBy<SimpleService>()
+                .Lifetime.Singleton()));
     }
 }

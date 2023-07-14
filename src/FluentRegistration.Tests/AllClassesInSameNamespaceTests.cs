@@ -12,7 +12,8 @@ public class AllClassesInSameNamespaceTests
         tested.Register(r => r
             .FromAssemblyContaining<AllClassesInSameNamespaceTests>()
             .Where(c => c.InSameNamespaceAs<ServiceInAnotherNamespace>())
-            .WithServices.AllInterfaces());
+            .WithServices.AllInterfaces()
+            .Lifetime.Singleton());
 
         Assert.Single(tested);
         Assert.All(tested, service =>
@@ -31,7 +32,8 @@ public class AllClassesInSameNamespaceTests
             .FromAssemblyContaining<AllClassesInSameNamespaceTests>()
             .Where(c => c.InSameNamespaceAs<ServiceInAnotherNamespace>())
             .Except(c => c.ImplementationType == typeof(ServiceInAnotherNamespace))
-            .WithServices.AllInterfaces());
+            .WithServices.AllInterfaces()
+            .Lifetime.Singleton());
 
         Assert.Empty(tested);
     }

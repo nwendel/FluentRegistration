@@ -7,10 +7,10 @@ public interface IComponentImplementationSelector<TService> : IFluentInterface
 
     IValidRegistration Instance(TService instance);
 
-    IValidRegistration UsingFactory<TFactory>(Func<TFactory, TService> factoryMethod)
+    ILifetime UsingFactory<TFactory>(Func<TFactory, TService> factoryMethod)
         where TFactory : class;
 
-    IValidRegistration UsingFactoryMethod(Func<TService> factoryMethod);
+    ILifetime UsingFactoryMethod(Func<TService> factoryMethod);
 
-    IValidRegistration UsingFactoryMethod(Func<IServiceProvider, TService> factoryMethod);
+    ILifetime UsingFactoryMethod(Func<IServiceProvider, TService> factoryMethod);
 }

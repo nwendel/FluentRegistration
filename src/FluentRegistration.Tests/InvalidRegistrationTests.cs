@@ -21,7 +21,8 @@ public class InvalidRegistrationTests
         Assert.Throws<ArgumentNullException>("self", () =>
             tested.Register(r => r
                 .For<ISimpleService>()
-                .ImplementedBy<SimpleService>()));
+                .ImplementedBy<SimpleService>()
+                .Lifetime.Singleton()));
     }
 
     [Fact]
@@ -32,7 +33,8 @@ public class InvalidRegistrationTests
         Assert.Throws<ArgumentNullException>("type", () =>
             tested.Register(c => c
                 .For((Type)null)
-                .ImplementedBy<SimpleService>()));
+                .ImplementedBy<SimpleService>()
+                .Lifetime.Singleton()));
     }
 
     [Fact]
@@ -43,7 +45,8 @@ public class InvalidRegistrationTests
         Assert.Throws<ArgumentNullException>(() =>
             tested.Register(c => c
                 .For()
-                .ImplementedBy<SimpleService>()));
+                .ImplementedBy<SimpleService>()
+                .Lifetime.Singleton()));
     }
 
     [Fact]
@@ -54,6 +57,7 @@ public class InvalidRegistrationTests
         Assert.Throws<ArgumentNullException>("assembly", () =>
             tested.Register(r => r
                 .FromAssembly(null)
-                .WithServices.AllInterfaces()));
+                .WithServices.AllInterfaces()
+                .Lifetime.Singleton()));
     }
 }

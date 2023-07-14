@@ -6,6 +6,7 @@ public class SimpleServiceInstaller : IServiceInstaller
     {
         services.Register(c => c
             .For<ISimpleService>()
-            .ImplementedBy<SimpleService>());
+            .ImplementedBy<SimpleService>()
+            .Lifetime.Singleton());
     }
 }

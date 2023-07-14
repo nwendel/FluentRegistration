@@ -11,7 +11,8 @@ public class ImplementedByTests
 
         tested.Register(r => r
             .ImplementedBy<SimpleService>()
-            .WithServices.AllInterfaces());
+            .WithServices.AllInterfaces()
+            .Lifetime.Singleton());
 
         Assert.Single(tested);
         Assert.All(tested, service =>

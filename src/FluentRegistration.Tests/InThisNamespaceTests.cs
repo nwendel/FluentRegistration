@@ -10,7 +10,8 @@ public class InThisNamespaceTests
         tested.Register(r => r
             .FromThisAssembly()
             .Where(c => c.InThisNamespace())
-            .WithServices.Self());
+            .WithServices.Self()
+            .Lifetime.Singleton());
 
         Assert.Contains(tested, x => x.ImplementationType == typeof(InThisNamespaceTests));
     }

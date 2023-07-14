@@ -62,8 +62,8 @@ public class ComponentImplementedByRegistration<TService, TImplementation> : ILi
         }
         else
         {
-            // TODO: Workaround to solve problem with registering multiple implementation types under same shared interface
-            // TODO: Since they should be resolved to same instance in case of singleton or scoped lifestyle
+            // TODO: Workaround to solve problem with registering multiple implementation types under same shared interface.
+            //       Since they should be resolved to same instance in case of singleton or scoped lifestyle.
             var selfServiceDescriptor = new ServiceDescriptor(_implementedByType, _implementedByType, _lifetimeSelector.Lifetime);
             services.Add(selfServiceDescriptor);
 

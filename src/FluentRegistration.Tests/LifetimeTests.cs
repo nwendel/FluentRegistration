@@ -2,24 +2,8 @@
 
 namespace FluentRegistration.Tests;
 
-public class LifestimeTests
+public class LifetimeTests
 {
-    [Fact]
-    public void CanRegisterNoLifetime()
-    {
-        var tested = new ServiceCollection();
-
-        tested.Register(r => r
-            .ImplementedBy<SimpleService>()
-            .WithServices.AllInterfaces());
-
-        Assert.Single(tested);
-        Assert.All(tested, service =>
-        {
-            Assert.Equal(ServiceLifetime.Singleton, service.Lifetime);
-        });
-    }
-
     [Fact]
     public void CanRegisterSingletonLifetime()
     {
@@ -80,7 +64,8 @@ public class LifestimeTests
             .Where(c => c.ImplementationType == typeof(SimpleService))
             .WithServices
                 .Self()
-                .DefaultInterface());
+                .DefaultInterface()
+            .Lifetime.Singleton());
         var tested = services.BuildServiceProvider();
 
         var serviceOne = tested.GetRequiredService<ISimpleService>();

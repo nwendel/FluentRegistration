@@ -13,7 +13,8 @@ public class RegistrationsWithoutServicesBehaviourTests
         tested.Register(r => r
             .FromAssemblyContaining<RegistrationsWithoutServicesBehaviourTests>()
             .Where(c => c.ImplementationType == typeof(NoInterfaceService))
-            .WithServices.DefaultInterface());
+            .WithServices.DefaultInterface()
+            .Lifetime.Singleton());
 
         Assert.Empty(tested);
     }
@@ -27,7 +28,8 @@ public class RegistrationsWithoutServicesBehaviourTests
         tested.Register(r => r
             .FromAssemblyContaining<RegistrationsWithoutServicesBehaviourTests>()
             .Where(c => c.ImplementationType == typeof(NoInterfaceService))
-            .WithServices.DefaultInterface());
+            .WithServices.DefaultInterface()
+            .Lifetime.Singleton());
 
         Assert.Empty(tested);
     }
@@ -42,6 +44,7 @@ public class RegistrationsWithoutServicesBehaviourTests
             tested.Register(r => r
                 .FromAssemblyContaining<RegistrationsWithoutServicesBehaviourTests>()
                 .Where(c => c.ImplementationType == typeof(NoInterfaceService))
-                .WithServices.DefaultInterface()));
+                .WithServices.DefaultInterface()
+                .Lifetime.Singleton()));
     }
 }

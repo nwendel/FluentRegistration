@@ -28,7 +28,7 @@ public class ComponentRegistration<TService> : IComponentImplementationSelector<
         return instanceRegistration;
     }
 
-    public IValidRegistration UsingFactory<TFactory>(Func<TFactory, TService> factoryMethod)
+    public ILifetime UsingFactory<TFactory>(Func<TFactory, TService> factoryMethod)
         where TFactory : class
     {
         GuardAgainst.Null(factoryMethod);
@@ -38,14 +38,14 @@ public class ComponentRegistration<TService> : IComponentImplementationSelector<
         return factoryRegistration;
     }
 
-    public IValidRegistration UsingFactoryMethod(Func<TService> factoryMethod)
+    public ILifetime UsingFactoryMethod(Func<TService> factoryMethod)
     {
         GuardAgainst.Null(factoryMethod);
 
         return UsingFactoryMethod(serviceProvider => factoryMethod());
     }
 
-    public IValidRegistration UsingFactoryMethod(Func<IServiceProvider, TService> factoryMethod)
+    public ILifetime UsingFactoryMethod(Func<IServiceProvider, TService> factoryMethod)
     {
         GuardAgainst.Null(factoryMethod);
 
@@ -58,7 +58,7 @@ public class ComponentRegistration<TService> : IComponentImplementationSelector<
     {
         if (_register == null)
         {
-            throw new InvalidOperationException("Register called without defining what to register via the fluent Api.");
+            throw new InvalidOperationException("Register called without defining what to register via the fluent Api");
         }
 
         _register.Register(services);
