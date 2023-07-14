@@ -12,7 +12,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A1587995-4BA2-4169-9360-654117B95D11}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		..\.github\workflows\build.yml = ..\.github\workflows\build.yml
 		..\LICENSE = ..\LICENSE
+		..\.github\workflows\publish-nuget.yml = ..\.github\workflows\publish-nuget.yml
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
@@ -20,7 +22,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentRegistration.Dependen
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{ACDAB498-3C27-4A51-B890-DBE9DBC1ACD7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FluentRegistration.DependencyModel.Tests", "FluentRegistration.DependencyModel.Tests\FluentRegistration.DependencyModel.Tests.csproj", "{0A7A5231-672E-44F7-8706-8421B5C26AEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentRegistration.DependencyModel.Tests", "FluentRegistration.DependencyModel.Tests\FluentRegistration.DependencyModel.Tests.csproj", "{0A7A5231-672E-44F7-8706-8421B5C26AEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
