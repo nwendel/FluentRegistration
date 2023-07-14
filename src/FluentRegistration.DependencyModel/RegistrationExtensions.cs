@@ -22,7 +22,7 @@ public static class RegistrationExtensions
     {
         if (DependencyContext.Default == null)
         {
-            throw new InvalidOperationException("No default depency context");
+            throw new InvalidOperationException("No default dependency context");
         }
 
         return self.FromDependencyContext(DependencyContext.Default);

@@ -22,7 +22,7 @@ public static class InstallationExtensions
     {
         if (DependencyContext.Default == null)
         {
-            throw new InvalidOperationException("No default depency context");
+            throw new InvalidOperationException("No default dependency context");
         }
 
         self.FromDependencyContext(DependencyContext.Default);

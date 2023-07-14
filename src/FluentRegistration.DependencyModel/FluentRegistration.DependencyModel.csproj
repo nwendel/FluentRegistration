@@ -4,9 +4,9 @@
 		<TargetFramework>net7.0</TargetFramework>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 		<Nullable>enable</Nullable>
-		<PackageId>FluentRegistration.DeoendencyModel</PackageId>
-		<Title>FluentRegistration.DeoendencyModel</Title>
-		<Description>FluentRegistration.DeoendencyModel</Description>
+		<PackageId>FluentRegistration.DependencyModel</PackageId>
+		<Title>FluentRegistration.DependencyModel</Title>
+		<Description>FluentRegistration.DependencyModel</Description>
 		<Version>3.0.0</Version>
 		<Copyright>Niklas Wendel 2016-2023</Copyright>
 		<Authors>Niklas Wendel</Authors>

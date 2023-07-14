@@ -20,7 +20,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <NoWarn>1701;1702;1591</NoWarn>
-	<ImplicitUsings>enable</ImplicitUsings>
+  	<ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
