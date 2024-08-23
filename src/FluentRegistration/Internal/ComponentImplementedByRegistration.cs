@@ -8,21 +8,21 @@ public class ComponentImplementedByRegistration<TService, TImplementation> : ILi
 {
     private readonly IEnumerable<Type> _serviceTypes;
     private readonly Type _implementedByType;
-    private readonly LifetimeSelector _lifetimeSelector;
+    private readonly LifetimeAndKeySelector _lifetimeAndKeySelector;
 
     public ComponentImplementedByRegistration(IEnumerable<Type> serviceTypes)
-        : this(serviceTypes, typeof(TImplementation), new LifetimeSelector())
+        : this(serviceTypes, typeof(TImplementation), new LifetimeAndKeySelector())
     {
     }
 
-    public ComponentImplementedByRegistration(IEnumerable<Type> serviceTypes, Type implementedByType, LifetimeSelector lifetimeSelector)
+    public ComponentImplementedByRegistration(IEnumerable<Type> serviceTypes, Type implementedByType, LifetimeAndKeySelector lifetimeSelector)
     {
         _serviceTypes = serviceTypes;
         _implementedByType = implementedByType;
-        _lifetimeSelector = lifetimeSelector;
+        _lifetimeAndKeySelector = lifetimeSelector;
     }
 
-    public ILifetimeSelector Lifetime => _lifetimeSelector;
+    public ILifetimeSelector Lifetime => _lifetimeAndKeySelector;
 
     public void Register(IServiceCollection services)
     {
@@ -57,14 +57,14 @@ public class ComponentImplementedByRegistration<TService, TImplementation> : ILi
         if (_serviceTypes.Count() == 1)
         {
             var serviceType = _serviceTypes.First();
-            var serviceDescriptor = new ServiceDescriptor(serviceType, _implementedByType, _lifetimeSelector.Lifetime);
+            var serviceDescriptor = new ServiceDescriptor(serviceType, _lifetimeAndKeySelector.Key, _implementedByType, _lifetimeAndKeySelector.Lifetime);
             services.Add(serviceDescriptor);
         }
         else
         {
             // TODO: Workaround to solve problem with registering multiple implementation types under same shared interface.
             //       Since they should be resolved to same instance in case of singleton or scoped lifestyle.
-            var selfServiceDescriptor = new ServiceDescriptor(_implementedByType, _implementedByType, _lifetimeSelector.Lifetime);
+            var selfServiceDescriptor = new ServiceDescriptor(_implementedByType, _lifetimeAndKeySelector.Key, _implementedByType, _lifetimeAndKeySelector.Lifetime);
             services.Add(selfServiceDescriptor);
 
             foreach (var serviceType in _serviceTypes)
@@ -75,7 +75,7 @@ public class ComponentImplementedByRegistration<TService, TImplementation> : ILi
                     continue;
                 }
 
-                var serviceDescriptor = new ServiceDescriptor(serviceType, serviceProvider => serviceProvider.GetRequiredService(_implementedByType), _lifetimeSelector.Lifetime);
+                var serviceDescriptor = new ServiceDescriptor(serviceType, _lifetimeAndKeySelector.Key, (serviceProvider, serviceKey) => serviceProvider.GetRequiredService(_implementedByType), _lifetimeAndKeySelector.Lifetime);
                 services.Add(serviceDescriptor);
             }
         }

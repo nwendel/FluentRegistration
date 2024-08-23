@@ -2,9 +2,9 @@
 
 public interface ILifetimeSelector : IFluentInterface
 {
-    IValidRegistration Singleton();
+    IHasKey Singleton();
 
-    IValidRegistration Scoped();
+    IHasKey Scoped();
 
-    IValidRegistration Transient();
+    IHasKey Transient();
 }

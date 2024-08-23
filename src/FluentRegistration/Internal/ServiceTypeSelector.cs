@@ -3,9 +3,9 @@
 public class ServiceTypeSelector : IWithServices
 {
     private readonly List<Func<Type, IEnumerable<Type>>> _serviceTypeSelectors = new();
-    private readonly LifetimeSelector _lifetimeSelector = new();
+    private readonly LifetimeAndKeySelector _lifetimeAndKeySelector = new();
 
-    public ILifetimeSelector Lifetime => _lifetimeSelector;
+    public ILifetimeSelector Lifetime => _lifetimeAndKeySelector;
 
     public IWithServices AllInterfaces()
     {
@@ -53,5 +53,5 @@ public class ServiceTypeSelector : IWithServices
         return _serviceTypeSelectors.SelectMany(selector => selector(type));
     }
 
-    public LifetimeSelector GetLifetimeSelector() => _lifetimeSelector;
+    public LifetimeAndKeySelector GetLifetimeSelector() => _lifetimeAndKeySelector;
 }
