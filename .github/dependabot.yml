@@ -11,9 +11,6 @@ updates:
     schedule:
       interval: "daily"
     groups:
-      system-dependencies:
-        patterns:
-         - "System.*"
       microsoft-dependencies:
         patterns:
          - "Microsoft.*"
