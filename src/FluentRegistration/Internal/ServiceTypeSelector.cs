@@ -2,7 +2,7 @@
 
 public class ServiceTypeSelector : IWithServices
 {
-    private readonly List<Func<Type, IEnumerable<Type>>> _serviceTypeSelectors = new();
+    private readonly List<Func<Type, IEnumerable<Type>>> _serviceTypeSelectors = [];
     private readonly LifetimeAndKeySelector<IHasKeySelectorComponent> _lifetimeAndKeySelector = new();
 
     public ILifetimeSelector<IHasKeySelectorComponent> Lifetime => _lifetimeAndKeySelector;
@@ -38,13 +38,13 @@ public class ServiceTypeSelector : IWithServices
 
     public IWithServices Service<TService>()
     {
-        _serviceTypeSelectors.Add(type => new[] { typeof(TService) });
+        _serviceTypeSelectors.Add(type => [typeof(TService)]);
         return this;
     }
 
     public IWithServices Self()
     {
-        _serviceTypeSelectors.Add(type => new[] { type });
+        _serviceTypeSelectors.Add(type => [type]);
         return this;
     }
 
