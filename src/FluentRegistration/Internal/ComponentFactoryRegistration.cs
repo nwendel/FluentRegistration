@@ -16,13 +16,15 @@ public class ComponentFactoryRegistration<TFactory, TService> : ILifetime<IHasKe
 
     public void Register(IServiceCollection services)
     {
-        // TODO: The GetRequiredService below how to deal with keys there?
+        var serviceKey = _lifetimeAndKeySelector.FactoryKey(typeof(TService));
         var serviceDescriptor = new ServiceDescriptor(
             typeof(TService),
-            _lifetimeAndKeySelector.FactoryKey(typeof(TService)),
+            serviceKey,
             (serviceProvider, serviceKey) =>
             {
-                var factory = serviceProvider.GetRequiredService<TFactory>();
+                // TODO: Assumption is that the factory is also registered under the same key
+                //       Is this correct?
+                var factory = serviceProvider.GetRequiredKeyedService<TFactory>(serviceKey);
                 return _factoryMethod(factory);
             },
             _lifetimeAndKeySelector.Lifetime);
