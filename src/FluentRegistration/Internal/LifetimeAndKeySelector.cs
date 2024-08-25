@@ -1,5 +1,6 @@
 ﻿namespace FluentRegistration.Internal;
 
+// TODO: Can I split this in two classes somehow?
 public class LifetimeAndKeySelector<T> :
     ILifetimeSelector<T>,
     IHasKey<T>,
@@ -9,7 +10,9 @@ public class LifetimeAndKeySelector<T> :
     where T : IHasKeySelectorBase
 {
     private ServiceLifetime? _lifetime;
-    private Func<Type, Type, object>? _keySelector;
+    private bool _hasKey;
+    private Func<Type, object>? _serviceKeySelector;
+    private Func<Type, Type, object>? _implementationKeySelector;
 
     public ServiceLifetime Lifetime => _lifetime ?? throw new InvalidOperationException("No lifetime defined");
 
@@ -32,17 +35,26 @@ public class LifetimeAndKeySelector<T> :
     }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1201:Elements should appear in the correct order", Justification = "Group Key methods together")]
-    public T HasKey => (T)(IHasKeySelectorBase)this;
+    public T HasKey
+    {
+        get
+        {
+            _hasKey = true;
+            return (T)(IHasKeySelectorBase)this;
+        }
+    }
 
     public IValidRegistration Value(object key)
     {
-        _keySelector = (serviceType, implementationType) => key;
+        GuardAgainst.Null(key);
+
+        _serviceKeySelector = serviceType => key;
         return this;
     }
 
     public IValidRegistration ImplementationType()
     {
-        _keySelector = (serviceType, implementationType) => implementationType;
+        _implementationKeySelector = (serviceType, implementationType) => implementationType;
         return this;
     }
 
@@ -50,7 +62,17 @@ public class LifetimeAndKeySelector<T> :
     {
         GuardAgainst.Null(serviceType);
 
-        var key = _keySelector?.Invoke(serviceType, null!);
+        if (!_hasKey)
+        {
+            return null;
+        }
+
+        if (_serviceKeySelector == null)
+        {
+            throw new InvalidOperationException("HasKey without KeySelector");
+        }
+
+        var key = _serviceKeySelector.Invoke(serviceType);
         return key;
     }
 
@@ -59,7 +81,16 @@ public class LifetimeAndKeySelector<T> :
         GuardAgainst.Null(serviceType);
         GuardAgainst.Null(implementationType);
 
-        var key = _keySelector?.Invoke(serviceType, implementationType);
-        return key;
+        if (!_hasKey)
+        {
+            return null;
+        }
+
+        if (_implementationKeySelector != null)
+        {
+            return _implementationKeySelector.Invoke(serviceType, implementationType);
+        }
+
+        return FactoryKey(serviceType);
     }
 }
