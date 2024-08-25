@@ -14,5 +14,13 @@ public class KeyTests
             .WithServices.AllInterfaces()
             .Lifetime.Singleton()
             .HasKey.ImplementationType());
+
+        Assert.Single(tested);
+        Assert.All(tested, service =>
+        {
+            Assert.Equal(typeof(ISimpleService), service.ServiceType);
+            Assert.Equal(typeof(SimpleService), service.KeyedImplementationType);
+            Assert.Equal(typeof(SimpleService), service.ServiceKey);
+        });
     }
 }

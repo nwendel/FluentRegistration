@@ -42,7 +42,7 @@ public class LifetimeAndKeySelector<T> :
 
     public IValidRegistration ImplementationType()
     {
-        _keySelector = (serviceType, implementationType) => implementationType.Name;
+        _keySelector = (serviceType, implementationType) => implementationType;
         return this;
     }
 
