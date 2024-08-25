@@ -10,7 +10,7 @@ public class Registration : IRegistration
     public IComponentImplementationSelector<TService> For<TService>()
         where TService : class
     {
-        var registration = new ComponentRegistration<TService>(new[] { typeof(TService) });
+        var registration = new ComponentRegistration<TService>([typeof(TService)]);
         _register = registration;
         return registration;
     }
