@@ -1,24 +1,24 @@
 ﻿namespace FluentRegistration.Internal;
 
-public class ComponentFactoryRegistration<TFactory, TService> : ILifetime, IRegister
+public class ComponentFactoryRegistration<TFactory, TService> : ILifetime<IHasKeySelectorFactory>, IRegister
     where TFactory : class
     where TService : notnull
 {
     private readonly Func<TFactory, TService> _factoryMethod;
-    private readonly LifetimeAndKeySelector _lifetimeAndKeySelector = new();
+    private readonly LifetimeAndKeySelector<IHasKeySelectorFactory> _lifetimeAndKeySelector = new();
 
     public ComponentFactoryRegistration(Func<TFactory, TService> factoryMethod)
     {
         _factoryMethod = factoryMethod;
     }
 
-    public ILifetimeSelector Lifetime => _lifetimeAndKeySelector;
+    public ILifetimeSelector<IHasKeySelectorFactory> Lifetime => _lifetimeAndKeySelector;
 
     public void Register(IServiceCollection services)
     {
         var serviceDescriptor = new ServiceDescriptor(
             typeof(TService),
-            _lifetimeAndKeySelector.Key,
+            _lifetimeAndKeySelector.FactoryKey(typeof(TService)),
             (serviceProvider, serviceKey) =>
             {
                 var factory = serviceProvider.GetRequiredService<TFactory>();

@@ -1,6 +1,6 @@
 ﻿namespace FluentRegistration.Internal;
 
-public interface IHasKeySelector : IValidRegistration
+public interface IHasKeySelectorComponent : IHasKeySelectorBase
 {
     IValidRegistration ImplementationType();
 }

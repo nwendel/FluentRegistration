@@ -1,6 +1,7 @@
 ﻿namespace FluentRegistration.Internal;
 
-public interface IHasKey : IValidRegistration, IFluentInterface
+public interface IHasKey<T> : IValidRegistration, IFluentInterface
+    where T : IHasKeySelectorBase
 {
-    IHasKeySelector HasKey { get; }
+    T HasKey { get; }
 }
