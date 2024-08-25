@@ -54,17 +54,18 @@ public class ComponentImplementedByRegistration<TService, TImplementation> : ILi
             }
         }
 
+        var serviceKey = _lifetimeAndKeySelector.ComponentKey(_implementedByType, _implementedByType);
         if (_serviceTypes.Count() == 1)
         {
             var serviceType = _serviceTypes.First();
-            var serviceDescriptor = new ServiceDescriptor(serviceType, _lifetimeAndKeySelector.ComponentKey(serviceType, _implementedByType), _implementedByType, _lifetimeAndKeySelector.Lifetime);
+            var serviceDescriptor = new ServiceDescriptor(serviceType, serviceKey, _implementedByType, _lifetimeAndKeySelector.Lifetime);
             services.Add(serviceDescriptor);
         }
         else
         {
             // TODO: Workaround to solve problem with registering multiple implementation types under same shared interface.
             //       Since they should be resolved to same instance in case of singleton or scoped lifestyle.
-            var selfServiceDescriptor = new ServiceDescriptor(_implementedByType, _lifetimeAndKeySelector.ComponentKey(_implementedByType, _implementedByType), _implementedByType, _lifetimeAndKeySelector.Lifetime);
+            var selfServiceDescriptor = new ServiceDescriptor(_implementedByType, serviceKey, _implementedByType, _lifetimeAndKeySelector.Lifetime);
             services.Add(selfServiceDescriptor);
 
             foreach (var serviceType in _serviceTypes)
@@ -75,7 +76,7 @@ public class ComponentImplementedByRegistration<TService, TImplementation> : ILi
                     continue;
                 }
 
-                var serviceDescriptor = new ServiceDescriptor(serviceType, _lifetimeAndKeySelector.ComponentKey(serviceType, _implementedByType), (serviceProvider, serviceKey) => serviceProvider.GetRequiredService(_implementedByType), _lifetimeAndKeySelector.Lifetime);
+                var serviceDescriptor = new ServiceDescriptor(serviceType, serviceKey, (serviceProvider, serviceKey) => serviceProvider.GetRequiredKeyedService(_implementedByType, serviceKey), _lifetimeAndKeySelector.Lifetime);
                 services.Add(serviceDescriptor);
             }
         }

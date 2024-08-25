@@ -16,6 +16,7 @@ public class ComponentFactoryRegistration<TFactory, TService> : ILifetime<IHasKe
 
     public void Register(IServiceCollection services)
     {
+        // TODO: The GetRequiredService below how to deal with keys there?
         var serviceDescriptor = new ServiceDescriptor(
             typeof(TService),
             _lifetimeAndKeySelector.FactoryKey(typeof(TService)),
