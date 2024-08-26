@@ -3,26 +3,26 @@ using FluentRegistration.Options;
 
 namespace FluentRegistration.Internal;
 
-public class ComponentImplementedByRegistration<TService, TImplementation> : ILifetime<IHasKeySelectorComponent>, IRegister
+public class ComponentImplementedByRegistration<TService, TImplementation> : ILifetime<IHasServiceKeySelectorComponent>, IRegister
     where TImplementation : TService
 {
     private readonly IEnumerable<Type> _serviceTypes;
     private readonly Type _implementedByType;
-    private readonly LifetimeAndKeySelector<IHasKeySelectorComponent> _lifetimeAndKeySelector;
+    private readonly LifetimeAndServiceKeySelector<IHasServiceKeySelectorComponent> _lifetimeAndServiceKeySelector;
 
     public ComponentImplementedByRegistration(IEnumerable<Type> serviceTypes)
-        : this(serviceTypes, typeof(TImplementation), new LifetimeAndKeySelector<IHasKeySelectorComponent>())
+        : this(serviceTypes, typeof(TImplementation), new LifetimeAndServiceKeySelector<IHasServiceKeySelectorComponent>())
     {
     }
 
-    public ComponentImplementedByRegistration(IEnumerable<Type> serviceTypes, Type implementedByType, LifetimeAndKeySelector<IHasKeySelectorComponent> lifetimeSelector)
+    public ComponentImplementedByRegistration(IEnumerable<Type> serviceTypes, Type implementedByType, LifetimeAndServiceKeySelector<IHasServiceKeySelectorComponent> lifetimeAdnServiceKeySelector)
     {
         _serviceTypes = serviceTypes;
         _implementedByType = implementedByType;
-        _lifetimeAndKeySelector = lifetimeSelector;
+        _lifetimeAndServiceKeySelector = lifetimeAdnServiceKeySelector;
     }
 
-    public ILifetimeSelector<IHasKeySelectorComponent> Lifetime => _lifetimeAndKeySelector;
+    public ILifetimeSelector<IHasServiceKeySelectorComponent> Lifetime => _lifetimeAndServiceKeySelector;
 
     public void Register(IServiceCollection services)
     {
@@ -54,18 +54,18 @@ public class ComponentImplementedByRegistration<TService, TImplementation> : ILi
             }
         }
 
-        var serviceKey = _lifetimeAndKeySelector.ComponentKey(_implementedByType, _implementedByType);
+        var serviceKey = _lifetimeAndServiceKeySelector.GetComponentServiceKey(_implementedByType, _implementedByType);
         if (_serviceTypes.Count() == 1)
         {
             var serviceType = _serviceTypes.First();
-            var serviceDescriptor = new ServiceDescriptor(serviceType, serviceKey, _implementedByType, _lifetimeAndKeySelector.Lifetime);
+            var serviceDescriptor = new ServiceDescriptor(serviceType, serviceKey, _implementedByType, _lifetimeAndServiceKeySelector.Lifetime);
             services.Add(serviceDescriptor);
         }
         else
         {
             // TODO: Workaround to solve problem with registering multiple implementation types under same shared interface.
             //       Since they should be resolved to same instance in case of singleton or scoped lifestyle.
-            var selfServiceDescriptor = new ServiceDescriptor(_implementedByType, serviceKey, _implementedByType, _lifetimeAndKeySelector.Lifetime);
+            var selfServiceDescriptor = new ServiceDescriptor(_implementedByType, serviceKey, _implementedByType, _lifetimeAndServiceKeySelector.Lifetime);
             services.Add(selfServiceDescriptor);
 
             foreach (var serviceType in _serviceTypes)
@@ -76,7 +76,7 @@ public class ComponentImplementedByRegistration<TService, TImplementation> : ILi
                     continue;
                 }
 
-                var serviceDescriptor = new ServiceDescriptor(serviceType, serviceKey, (serviceProvider, serviceKey) => serviceProvider.GetRequiredKeyedService(_implementedByType, serviceKey), _lifetimeAndKeySelector.Lifetime);
+                var serviceDescriptor = new ServiceDescriptor(serviceType, serviceKey, (serviceProvider, serviceKey) => serviceProvider.GetRequiredKeyedService(_implementedByType, serviceKey), _lifetimeAndServiceKeySelector.Lifetime);
                 services.Add(serviceDescriptor);
             }
         }

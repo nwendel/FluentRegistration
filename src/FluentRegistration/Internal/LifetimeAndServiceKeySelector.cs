@@ -1,54 +1,54 @@
 ﻿namespace FluentRegistration.Internal;
 
 // TODO: Can I split this in two classes somehow?
-public class LifetimeAndKeySelector<T> :
+public class LifetimeAndServiceKeySelector<T> :
     ILifetimeSelector<T>,
-    IHasKey<T>,
-    IHasKeySelectorFactory,
-    IHasKeySelectorComponent,
+    IHasServiceKey<T>,
+    IHasServiceKeySelectorFactory,
+    IHasServiceKeySelectorComponent,
     IValidRegistration
-    where T : IHasKeySelectorBase
+    where T : IHasServiceKeySelectorBase
 {
     private ServiceLifetime? _lifetime;
-    private bool _hasKey;
+    private bool _hasServiceKey;
     private Func<Type, object>? _serviceKeySelector;
     private Func<Type, Type, object>? _implementationKeySelector;
 
     public ServiceLifetime Lifetime => _lifetime ?? throw new InvalidOperationException("No lifetime defined");
 
-    public IHasKey<T> Singleton()
+    public IHasServiceKey<T> Singleton()
     {
         _lifetime = ServiceLifetime.Singleton;
         return this;
     }
 
-    public IHasKey<T> Scoped()
+    public IHasServiceKey<T> Scoped()
     {
         _lifetime = ServiceLifetime.Scoped;
         return this;
     }
 
-    public IHasKey<T> Transient()
+    public IHasServiceKey<T> Transient()
     {
         _lifetime = ServiceLifetime.Transient;
         return this;
     }
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1201:Elements should appear in the correct order", Justification = "Group Key methods together")]
-    public T HasKey
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1201:Elements should appear in the correct order", Justification = "Group ServiceKey methods together")]
+    public T HasServiceKey
     {
         get
         {
-            _hasKey = true;
-            return (T)(IHasKeySelectorBase)this;
+            _hasServiceKey = true;
+            return (T)(IHasServiceKeySelectorBase)this;
         }
     }
 
-    public IValidRegistration Value(object key)
+    public IValidRegistration Value(object serviceKey)
     {
-        GuardAgainst.Null(key);
+        GuardAgainst.Null(serviceKey);
 
-        _serviceKeySelector = serviceType => key;
+        _serviceKeySelector = serviceType => serviceKey;
         return this;
     }
 
@@ -58,30 +58,30 @@ public class LifetimeAndKeySelector<T> :
         return this;
     }
 
-    public object? FactoryKey(Type serviceType)
+    public object? GetFactoryServiceKey(Type serviceType)
     {
         GuardAgainst.Null(serviceType);
 
-        if (!_hasKey)
+        if (!_hasServiceKey)
         {
             return null;
         }
 
         if (_serviceKeySelector == null)
         {
-            throw new InvalidOperationException("HasKey without KeySelector");
+            throw new InvalidOperationException("Cannot get ServiceKey without KeySelector");
         }
 
-        var key = _serviceKeySelector.Invoke(serviceType);
-        return key;
+        var serviceKey = _serviceKeySelector.Invoke(serviceType);
+        return serviceKey;
     }
 
-    public object? ComponentKey(Type serviceType, Type implementationType)
+    public object? GetComponentServiceKey(Type serviceType, Type implementationType)
     {
         GuardAgainst.Null(serviceType);
         GuardAgainst.Null(implementationType);
 
-        if (!_hasKey)
+        if (!_hasServiceKey)
         {
             return null;
         }
@@ -91,6 +91,6 @@ public class LifetimeAndKeySelector<T> :
             return _implementationKeySelector.Invoke(serviceType, implementationType);
         }
 
-        return FactoryKey(serviceType);
+        return GetFactoryServiceKey(serviceType);
     }
 }

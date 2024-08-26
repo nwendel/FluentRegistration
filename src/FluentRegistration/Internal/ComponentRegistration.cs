@@ -11,7 +11,7 @@ public class ComponentRegistration<TService> : IComponentImplementationSelector<
         _serviceTypes = serviceTypes;
     }
 
-    public ILifetime<IHasKeySelectorComponent> ImplementedBy<TImplementation>()
+    public ILifetime<IHasServiceKeySelectorComponent> ImplementedBy<TImplementation>()
         where TImplementation : TService
     {
         var implementedByRegistration = new ComponentImplementedByRegistration<TService, TImplementation>(_serviceTypes);
@@ -28,7 +28,7 @@ public class ComponentRegistration<TService> : IComponentImplementationSelector<
         return instanceRegistration;
     }
 
-    public ILifetime<IHasKeySelectorFactory> UsingFactory<TFactory>(Func<TFactory, TService> factoryMethod)
+    public ILifetime<IHasServiceKeySelectorFactory> UsingFactory<TFactory>(Func<TFactory, TService> factoryMethod)
         where TFactory : class
     {
         GuardAgainst.Null(factoryMethod);
@@ -38,14 +38,14 @@ public class ComponentRegistration<TService> : IComponentImplementationSelector<
         return factoryRegistration;
     }
 
-    public ILifetime<IHasKeySelectorFactory> UsingFactoryMethod(Func<TService> factoryMethod)
+    public ILifetime<IHasServiceKeySelectorFactory> UsingFactoryMethod(Func<TService> factoryMethod)
     {
         GuardAgainst.Null(factoryMethod);
 
         return UsingFactoryMethod(serviceProvider => factoryMethod());
     }
 
-    public ILifetime<IHasKeySelectorFactory> UsingFactoryMethod(Func<IServiceProvider, TService> factoryMethod)
+    public ILifetime<IHasServiceKeySelectorFactory> UsingFactoryMethod(Func<IServiceProvider, TService> factoryMethod)
     {
         GuardAgainst.Null(factoryMethod);
 

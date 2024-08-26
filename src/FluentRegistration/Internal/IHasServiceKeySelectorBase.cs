@@ -1,6 +1,6 @@
 ﻿namespace FluentRegistration.Internal;
 
-public interface IHasKeySelectorBase : IFluentInterface
+public interface IHasServiceKeySelectorBase : IFluentInterface
 {
     IValidRegistration Value(object key);
 }

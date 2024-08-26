@@ -2,10 +2,10 @@
 
 namespace FluentRegistration.Tests;
 
-public class KeyTests
+public class ServiceKeyTests
 {
     [Fact]
-    public void Asdf()
+    public void CanRegister()
     {
         var tested = new ServiceCollection();
 
@@ -13,7 +13,7 @@ public class KeyTests
             .ImplementedBy<SimpleService>()
             .WithServices.AllInterfaces()
             .Lifetime.Singleton()
-            .HasKey.ImplementationType());
+            .HasServiceKey.ImplementationType());
 
         Assert.Single(tested);
         Assert.All(tested, service =>

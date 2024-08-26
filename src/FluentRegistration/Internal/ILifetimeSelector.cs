@@ -1,11 +1,11 @@
 ﻿namespace FluentRegistration.Internal;
 
 public interface ILifetimeSelector<T> : IFluentInterface
-    where T : IHasKeySelectorBase
+    where T : IHasServiceKeySelectorBase
 {
-    IHasKey<T> Singleton();
+    IHasServiceKey<T> Singleton();
 
-    IHasKey<T> Scoped();
+    IHasServiceKey<T> Scoped();
 
-    IHasKey<T> Transient();
+    IHasServiceKey<T> Transient();
 }
