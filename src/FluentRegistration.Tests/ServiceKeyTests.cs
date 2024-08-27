@@ -23,4 +23,23 @@ public class ServiceKeyTests
             Assert.Equal(typeof(SimpleService), service.ServiceKey);
         });
     }
+
+    [Fact]
+    public void CanResolveSameInstance()
+    {
+        var tested = new ServiceCollection();
+
+        tested.Register(r => r
+            .ImplementedBy<TwoInterfacesService>()
+            .WithServices.AllInterfaces()
+            .Lifetime.Singleton()
+            .HasServiceKey.ImplementationType());
+
+        var provider = tested.BuildServiceProvider();
+
+        var instance1 = provider.GetRequiredKeyedService<IInterfaceOne>(typeof(TwoInterfacesService));
+        var instance2 = provider.GetRequiredKeyedService<IInterfaceTwo>(typeof(TwoInterfacesService));
+
+        Assert.Same(instance1, instance2);
+    }
 }
