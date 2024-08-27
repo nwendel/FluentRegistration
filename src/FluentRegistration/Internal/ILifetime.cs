@@ -1,6 +1,7 @@
 ﻿namespace FluentRegistration.Internal;
 
-public interface ILifetime
+public interface ILifetime<T>
+    where T : IHasServiceKeySelectorBase
 {
-    ILifetimeSelector Lifetime { get; }
+    ILifetimeSelector<T> Lifetime { get; }
 }

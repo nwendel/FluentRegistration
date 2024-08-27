@@ -2,15 +2,15 @@
 
 public interface IComponentImplementationSelector<TService> : IFluentInterface
 {
-    ILifetime ImplementedBy<TImplementation>()
+    ILifetime<IHasServiceKeySelectorComponent> ImplementedBy<TImplementation>()
         where TImplementation : TService;
 
     IValidRegistration Instance(TService instance);
 
-    ILifetime UsingFactory<TFactory>(Func<TFactory, TService> factoryMethod)
+    ILifetime<IHasServiceKeySelectorFactory> UsingFactory<TFactory>(Func<TFactory, TService> factoryMethod)
         where TFactory : class;
 
-    ILifetime UsingFactoryMethod(Func<TService> factoryMethod);
+    ILifetime<IHasServiceKeySelectorFactory> UsingFactoryMethod(Func<TService> factoryMethod);
 
-    ILifetime UsingFactoryMethod(Func<IServiceProvider, TService> factoryMethod);
+    ILifetime<IHasServiceKeySelectorFactory> UsingFactoryMethod(Func<IServiceProvider, TService> factoryMethod);
 }

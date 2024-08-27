@@ -1,29 +1,33 @@
 ﻿namespace FluentRegistration.Internal;
 
-public class ComponentFactoryRegistration<TFactory, TService> : ILifetime, IRegister
+public class ComponentFactoryRegistration<TFactory, TService> : ILifetime<IHasServiceKeySelectorFactory>, IRegister
     where TFactory : class
     where TService : notnull
 {
     private readonly Func<TFactory, TService> _factoryMethod;
-    private readonly LifetimeSelector _lifetimeSelector = new();
+    private readonly LifetimeAndServiceKeySelector<IHasServiceKeySelectorFactory> _lifetimeAndServiceKeySelector = new();
 
     public ComponentFactoryRegistration(Func<TFactory, TService> factoryMethod)
     {
         _factoryMethod = factoryMethod;
     }
 
-    public ILifetimeSelector Lifetime => _lifetimeSelector;
+    public ILifetimeSelector<IHasServiceKeySelectorFactory> Lifetime => _lifetimeAndServiceKeySelector;
 
     public void Register(IServiceCollection services)
     {
+        var serviceKey = _lifetimeAndServiceKeySelector.GetFactoryServiceKey(typeof(TService));
         var serviceDescriptor = new ServiceDescriptor(
             typeof(TService),
-            serviceProvider =>
+            serviceKey,
+            (serviceProvider, serviceKey) =>
             {
-                var factory = serviceProvider.GetRequiredService<TFactory>();
+                // TODO: Assumption is that the factory is also registered under the same key
+                //       Is this correct?
+                var factory = serviceProvider.GetRequiredKeyedService<TFactory>(serviceKey);
                 return _factoryMethod(factory);
             },
-            _lifetimeSelector.Lifetime);
+            _lifetimeAndServiceKeySelector.Lifetime);
         services.Add(serviceDescriptor);
     }
 }
