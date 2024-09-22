@@ -1,0 +1,70 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A1587995-4BA2-4169-9360-654117B95D11}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.github\workflows\build.yml = .github\workflows\build.yml
+		.github\dependabot.yml = .github\dependabot.yml
+		LICENSE = LICENSE
+		.github\workflows\publish-nuget.yml = .github\workflows\publish-nuget.yml
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6313C752-1B93-4AB5-B763-5186934ED1B6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{8905B18A-7F59-4405-B06C-C09FDE0C442D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentRegistration", "src\FluentRegistration\FluentRegistration.csproj", "{56668817-81C3-42B3-99C5-61712725475B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentRegistration.DependencyModel", "src\FluentRegistration.DependencyModel\FluentRegistration.DependencyModel.csproj", "{E3B088C2-1249-4EC7-80FD-C8B20300A859}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentRegistration.Tests", "tests\FluentRegistration.Tests\FluentRegistration.Tests.csproj", "{94B43C3C-81C7-41DC-A9B0-95367DEC894B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentRegistration.DependencyModel.Tests", "tests\FluentRegistration.DependencyModel.Tests\FluentRegistration.DependencyModel.Tests.csproj", "{6FF5FF05-E8A4-4AC8-9878-67ECDEB4CB18}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FluentRegistration.Tests.Issues", "tests\FluentRegistration.Tests.Issues\FluentRegistration.Tests.Issues.csproj", "{CAF57074-7269-4A54-B97A-0F3AEE4AB14F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{56668817-81C3-42B3-99C5-61712725475B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56668817-81C3-42B3-99C5-61712725475B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56668817-81C3-42B3-99C5-61712725475B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56668817-81C3-42B3-99C5-61712725475B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3B088C2-1249-4EC7-80FD-C8B20300A859}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3B088C2-1249-4EC7-80FD-C8B20300A859}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3B088C2-1249-4EC7-80FD-C8B20300A859}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3B088C2-1249-4EC7-80FD-C8B20300A859}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94B43C3C-81C7-41DC-A9B0-95367DEC894B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94B43C3C-81C7-41DC-A9B0-95367DEC894B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94B43C3C-81C7-41DC-A9B0-95367DEC894B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94B43C3C-81C7-41DC-A9B0-95367DEC894B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FF5FF05-E8A4-4AC8-9878-67ECDEB4CB18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FF5FF05-E8A4-4AC8-9878-67ECDEB4CB18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FF5FF05-E8A4-4AC8-9878-67ECDEB4CB18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FF5FF05-E8A4-4AC8-9878-67ECDEB4CB18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAF57074-7269-4A54-B97A-0F3AEE4AB14F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAF57074-7269-4A54-B97A-0F3AEE4AB14F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAF57074-7269-4A54-B97A-0F3AEE4AB14F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAF57074-7269-4A54-B97A-0F3AEE4AB14F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{56668817-81C3-42B3-99C5-61712725475B} = {6313C752-1B93-4AB5-B763-5186934ED1B6}
+		{E3B088C2-1249-4EC7-80FD-C8B20300A859} = {6313C752-1B93-4AB5-B763-5186934ED1B6}
+		{94B43C3C-81C7-41DC-A9B0-95367DEC894B} = {8905B18A-7F59-4405-B06C-C09FDE0C442D}
+		{6FF5FF05-E8A4-4AC8-9878-67ECDEB4CB18} = {8905B18A-7F59-4405-B06C-C09FDE0C442D}
+		{CAF57074-7269-4A54-B97A-0F3AEE4AB14F} = {8905B18A-7F59-4405-B06C-C09FDE0C442D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E84CDBAC-FF41-4078-A212-18B7EA6B7AA3}
+	EndGlobalSection
+EndGlobal

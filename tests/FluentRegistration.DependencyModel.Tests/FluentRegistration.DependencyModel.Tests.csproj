@@ -14,7 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <AdditionalFiles Include="..\stylecop.json" Link="Properties\stylecop.json" />
+    <AdditionalFiles Include="..\..\stylecop.json" Link="Properties\stylecop.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,7 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FluentRegistration.DependencyModel\FluentRegistration.DependencyModel.csproj" />
+    <ProjectReference Include="..\..\src\FluentRegistration.DependencyModel\FluentRegistration.DependencyModel.csproj" />
   </ItemGroup>
 
 </Project>
