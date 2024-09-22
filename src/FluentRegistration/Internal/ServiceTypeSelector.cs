@@ -7,6 +7,8 @@ public class ServiceTypeSelector : IWithServices
 
     public ILifetimeSelector<IHasServiceKeySelectorComponent> Lifetime => _lifetimeAndServiceKeySelector;
 
+    public LifetimeAndServiceKeySelector<IHasServiceKeySelectorComponent> LifetimeAndServiceKeySelector => _lifetimeAndServiceKeySelector;
+
     public IWithServices AllInterfaces()
     {
         _serviceTypeSelectors.Add(type => type.GetInterfaces());
@@ -28,7 +30,7 @@ public class ServiceTypeSelector : IWithServices
 
                 // TODO: Is "Contains" correct here?
                 //       Possibly EndWith?
-                return type.Name.Contains(name);
+                return type.Name.Contains(name, StringComparison.Ordinal);
             });
             return defaultInterfaces;
         });
@@ -52,6 +54,4 @@ public class ServiceTypeSelector : IWithServices
     {
         return _serviceTypeSelectors.SelectMany(selector => selector(type));
     }
-
-    public LifetimeAndServiceKeySelector<IHasServiceKeySelectorComponent> GetLifetimeSelector() => _lifetimeAndServiceKeySelector;
 }

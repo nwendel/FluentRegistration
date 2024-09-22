@@ -1,13 +1,13 @@
-﻿using FluentRegistration.Tests.Issues.Issue_3.Classes;
+﻿using FluentRegistration.Tests.Issues.Issue3.Classes;
 
-namespace FluentRegistration.Tests.Issues.Issue_3;
+namespace FluentRegistration.Tests.Issues.Issue3;
 
-public class Tests
+public class Issue3Tests
 {
     private readonly ServiceCollection _tested = new();
     private readonly IServiceProvider _serviceProvider;
 
-    public Tests()
+    public Issue3Tests()
     {
         _tested.Register(r => r
             .FromThisAssembly()

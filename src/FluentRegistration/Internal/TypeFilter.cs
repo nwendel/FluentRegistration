@@ -81,7 +81,7 @@ public class TypeFilter : ITypeFilter
         if (includeSubNamespaces)
         {
             return ImplementationType.Namespace != null &&
-                   ImplementationType.Namespace.StartsWith(@namespace + ".");
+                   ImplementationType.Namespace.StartsWith(@namespace + ".", StringComparison.Ordinal);
         }
 
         return false;

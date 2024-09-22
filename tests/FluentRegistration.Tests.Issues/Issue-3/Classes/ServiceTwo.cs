@@ -1,4 +1,4 @@
-﻿namespace FluentRegistration.Tests.Issues.Issue_3.Classes;
+﻿namespace FluentRegistration.Tests.Issues.Issue3.Classes;
 
 public class ServiceTwo : IInterfaceOne, IInterfaceTwo
 {

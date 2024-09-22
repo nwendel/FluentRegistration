@@ -13,6 +13,8 @@ public class ComponentInstanceRegistration : IValidRegistration, IRegister
 
     public void Register(IServiceCollection services)
     {
+        GuardAgainst.Null(services);
+
         foreach (var serviceType in _serviceTypes)
         {
             var serviceDescriptor = new ServiceDescriptor(serviceType, _instance);

@@ -16,6 +16,8 @@ public class ComponentFactoryRegistration<TFactory, TService> : ILifetime<IHasSe
 
     public void Register(IServiceCollection services)
     {
+        GuardAgainst.Null(services);
+
         var serviceKey = _lifetimeAndServiceKeySelector.GetFactoryServiceKey(typeof(TService));
         var serviceDescriptor = new ServiceDescriptor(
             typeof(TService),

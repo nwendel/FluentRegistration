@@ -2,5 +2,5 @@
 
 public interface IHasServiceKeySelectorBase : IFluentInterface
 {
-    IValidRegistration Value(object key);
+    IValidRegistration Value(object serviceKey);
 }

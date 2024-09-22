@@ -1,8 +1,8 @@
-﻿using FluentRegistration.Tests.Issues.Issue_2.Classes;
+﻿using FluentRegistration.Tests.Issues.Issue2.Classes;
 
-namespace FluentRegistration.Tests.Issues.Issue_2;
+namespace FluentRegistration.Tests.Issues.Issue2;
 
-public class Tests
+public class Issue2Tests
 {
     [Fact(Skip = "Something is strange with open generic types of open generic types")]
     public void CanInstantiate()

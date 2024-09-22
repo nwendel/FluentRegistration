@@ -15,6 +15,8 @@ public class ComponentFactoryMethodRegistration<TService> : ILifetime<IHasServic
 
     public void Register(IServiceCollection services)
     {
+        GuardAgainst.Null(services);
+
         var serviceDescriptor = new ServiceDescriptor(typeof(TService), _lifetimeAndServiceKeySelector.GetFactoryServiceKey(typeof(TService)), (serviceProvider, serviceKey) => _factoryMethod(serviceProvider), _lifetimeAndServiceKeySelector.Lifetime);
         services.Add(serviceDescriptor);
     }

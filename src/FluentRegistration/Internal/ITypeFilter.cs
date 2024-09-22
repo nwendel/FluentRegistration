@@ -8,6 +8,7 @@ public interface ITypeFilter : IFluentInterface
 
     bool AssignableTo<T>();
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "Parameter name is good")]
     bool InNamespace(string @namespace);
 
     bool InSameNamespaceAs(Type type);

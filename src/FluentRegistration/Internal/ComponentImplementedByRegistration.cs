@@ -26,6 +26,8 @@ public class ComponentImplementedByRegistration<TService, TImplementation> : ILi
 
     public void Register(IServiceCollection services)
     {
+        GuardAgainst.Null(services);
+
         if (services.Any(x => x.ImplementationType == _implementedByType))
         {
             // Already registered

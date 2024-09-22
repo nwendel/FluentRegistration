@@ -50,7 +50,7 @@ public abstract class AbstractTypeSelector : ITypeSelector, IRegister
         foreach (var type in filteredTypes)
         {
             var serviceTypes = _serviceTypeSelector.GetServicesFor(type);
-            var serviceLifetimeSelector = _serviceTypeSelector.GetLifetimeSelector();
+            var serviceLifetimeSelector = _serviceTypeSelector.LifetimeAndServiceKeySelector;
 
             var componentRegistration = new ComponentImplementedByRegistration<object, object>(serviceTypes, type, serviceLifetimeSelector);
             componentRegistration.Register(services);
