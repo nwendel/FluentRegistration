@@ -13,11 +13,9 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/nwendel/fluentregistration</RepositoryUrl>
     <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>  
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <NoWarn>1701;1702;1591</NoWarn>
-  	<ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>

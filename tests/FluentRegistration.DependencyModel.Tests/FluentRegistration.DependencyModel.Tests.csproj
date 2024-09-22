@@ -2,13 +2,7 @@
 
   <PropertyGroup>
     <IsPackable>false</IsPackable>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>1701;1702;1591</NoWarn>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
