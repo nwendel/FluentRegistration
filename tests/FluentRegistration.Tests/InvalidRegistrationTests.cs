@@ -10,13 +10,13 @@ public class InvalidRegistrationTests
         var tested = new ServiceCollection();
 
         Assert.Throws<ArgumentNullException>("registrationAction", () =>
-            tested.Register(null));
+            tested.Register(null!));
     }
 
     [Fact]
     public void ThrowsOnNullServiceCollection()
     {
-        ServiceCollection tested = null;
+        ServiceCollection tested = null!;
 
         Assert.Throws<ArgumentNullException>("self", () =>
             tested.Register(r => r
@@ -32,7 +32,7 @@ public class InvalidRegistrationTests
 
         Assert.Throws<ArgumentNullException>("type", () =>
             tested.Register(c => c
-                .For((Type)null)
+                .For((Type)null!)
                 .ImplementedBy<SimpleService>()
                 .Lifetime.Singleton()));
     }
@@ -56,7 +56,7 @@ public class InvalidRegistrationTests
 
         Assert.Throws<ArgumentNullException>("assembly", () =>
             tested.Register(r => r
-                .FromAssembly(null)
+                .FromAssembly(null!)
                 .WithServices.AllInterfaces()
                 .Lifetime.Singleton()));
     }

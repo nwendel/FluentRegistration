@@ -58,6 +58,6 @@ public class InstallTests
         var tested = new ServiceCollection();
 
         Assert.Throws<ArgumentNullException>("assembly", () =>
-            tested.Install(i => i.FromAssembly(null)));
+            tested.Install(i => i.FromAssembly(null!)));
     }
 }

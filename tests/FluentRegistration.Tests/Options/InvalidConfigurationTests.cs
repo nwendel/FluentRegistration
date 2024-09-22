@@ -5,7 +5,7 @@ public class InvalidConfigurationTests
     [Fact]
     public void ThrowsOnNullServiceCollection()
     {
-        ServiceCollection tested = null;
+        ServiceCollection tested = null!;
 
         Assert.Throws<ArgumentNullException>("self", () => tested.Configure(o => { }));
     }
@@ -15,6 +15,6 @@ public class InvalidConfigurationTests
     {
         var tested = new ServiceCollection();
 
-        Assert.Throws<ArgumentNullException>("optionsAction", () => tested.Configure(null));
+        Assert.Throws<ArgumentNullException>("optionsAction", () => tested.Configure(null!));
     }
 }

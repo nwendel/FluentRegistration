@@ -31,6 +31,6 @@ public class ComponentForInstanceTests
         Assert.Throws<ArgumentNullException>("instance", () =>
             tested.Register(r => r
                 .For<ISimpleService>()
-                .Instance(null)));
+                .Instance(null!)));
     }
 }

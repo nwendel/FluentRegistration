@@ -5,9 +5,9 @@ public class InvalidInstallTests
     [Fact]
     public void ThrowsOnNullServiceCollection()
     {
-        ServiceCollection tested = null;
+        ServiceCollection tested = null!;
 
-        Assert.Throws<ArgumentNullException>("self", () => tested.Install(null));
+        Assert.Throws<ArgumentNullException>("self", () => tested.Install(null!));
     }
 
     [Fact]
@@ -15,6 +15,6 @@ public class InvalidInstallTests
     {
         var tested = new ServiceCollection();
 
-        Assert.Throws<ArgumentNullException>("installationAction", () => tested.Install(null));
+        Assert.Throws<ArgumentNullException>("installationAction", () => tested.Install(null!));
     }
 }

@@ -10,7 +10,7 @@ public class FromAssemblyContainingTests
         Assert.Throws<ArgumentNullException>(
             "type",
             () => tested.Register(r => r
-                .FromAssemblyContaining(null)
+                .FromAssemblyContaining(null!)
                 .WithServices.Self()
                 .Lifetime.Singleton()));
     }
@@ -22,6 +22,6 @@ public class FromAssemblyContainingTests
 
         Assert.Throws<ArgumentNullException>(
             "type",
-            () => tested.Install(i => i.FromAssemblyContaining(null)));
+            () => tested.Install(i => i.FromAssemblyContaining(null!)));
     }
 }

@@ -12,7 +12,7 @@ public class FactoryTests
         Assert.Throws<ArgumentNullException>("factoryMethod", () =>
             tested.Register(c => c
             .For<ISimpleService>()
-            .UsingFactory<SimpleServiceServiceFactory>(null)
+            .UsingFactory<SimpleServiceServiceFactory>(null!)
             .Lifetime.Singleton()));
     }
 
@@ -59,7 +59,7 @@ public class FactoryTests
         Assert.Throws<ArgumentNullException>("factoryMethod", () =>
             tested.Register(c => c
                 .For<ISimpleService>()
-                .UsingFactoryMethod((Func<ISimpleService>)null)
+                .UsingFactoryMethod((Func<ISimpleService>)null!)
                 .Lifetime.Singleton()));
     }
 
@@ -71,7 +71,7 @@ public class FactoryTests
         Assert.Throws<ArgumentNullException>("factoryMethod", () =>
             tested.Register(c => c
                 .For<ISimpleService>()
-                .UsingFactoryMethod((Func<IServiceProvider, ISimpleService>)null)
+                .UsingFactoryMethod((Func<IServiceProvider, ISimpleService>)null!)
                 .Lifetime.Singleton()));
     }
 }

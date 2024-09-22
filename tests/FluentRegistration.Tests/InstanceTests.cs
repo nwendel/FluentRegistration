@@ -11,7 +11,7 @@ public class InstanceTests
 
         Assert.Throws<ArgumentNullException>("instance", () =>
             tested.Register(r => r
-                .Instance<SimpleService>(null)
+                .Instance<SimpleService>(null!)
                 .WithServices.AllInterfaces()
                 .Lifetime.Singleton()));
     }

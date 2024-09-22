@@ -10,7 +10,7 @@ public class TypeFilterTests
     {
         var tested = new TypeFilter(typeof(SimpleService));
 
-        Assert.Throws<ArgumentNullException>("@namespace", () => tested.InNamespace(null));
+        Assert.Throws<ArgumentNullException>("@namespace", () => tested.InNamespace(null!));
     }
 
     [Fact]
@@ -18,7 +18,7 @@ public class TypeFilterTests
     {
         var tested = new TypeFilter(typeof(SimpleService));
 
-        Assert.Throws<ArgumentNullException>("type", () => tested.AssignableTo(null));
+        Assert.Throws<ArgumentNullException>("type", () => tested.AssignableTo(null!));
     }
 
     [Fact]
