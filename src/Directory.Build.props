@@ -4,7 +4,7 @@
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
 
   <PropertyGroup>
-    <Version>3.1.0</Version>
+    <Version>3.1.1</Version>
     <Copyright>Niklas Wendel 2016-2024</Copyright>
     <Authors>Niklas Wendel</Authors>
     <PackageTags>Dependency;Injection;Fluent;Registration;DI;Assembly;Scanning;Conventions</PackageTags>
