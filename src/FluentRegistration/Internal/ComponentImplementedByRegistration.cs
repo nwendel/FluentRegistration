@@ -39,7 +39,7 @@ public class ComponentImplementedByRegistration<TService, TImplementation> : ILi
                 case MultipleRegistrationsBehavior.Register:
                     break;
                 case MultipleRegistrationsBehavior.ThrowException:
-                    throw new RegistrationException($"Implementation of type {_implementedByType.FullName} already registered");
+                    throw new FluentRegistrationException($"Implementation of type {_implementedByType.FullName} already registered");
             }
         }
 
@@ -52,7 +52,7 @@ public class ComponentImplementedByRegistration<TService, TImplementation> : ILi
                 case RegistrationsWithoutServicesBehavior.Ignore:
                     return;
                 case RegistrationsWithoutServicesBehavior.ThrowException:
-                    throw new RegistrationException($"No services found for implementation of type {_implementedByType.FullName}");
+                    throw new FluentRegistrationException($"No services found for implementation of type {_implementedByType.FullName}");
             }
         }
 

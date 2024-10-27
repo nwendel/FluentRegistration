@@ -40,7 +40,7 @@ public class RegistrationsWithoutServicesBehaviourTests
         var tested = new ServiceCollection();
         tested.Configure(o => o.RegistrationsWithoutServicesBehavior = RegistrationsWithoutServicesBehavior.ThrowException);
 
-        Assert.Throws<RegistrationException>(() =>
+        Assert.Throws<FluentRegistrationException>(() =>
             tested.Register(r => r
                 .FromAssemblyContaining<RegistrationsWithoutServicesBehaviourTests>()
                 .Where(c => c.ImplementationType == typeof(NoInterfaceService))

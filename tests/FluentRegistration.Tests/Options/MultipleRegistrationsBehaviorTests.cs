@@ -87,7 +87,7 @@ public class MultipleRegistrationsBehaviorTests
             .ImplementedBy<SimpleService>()
             .Lifetime.Singleton());
 
-        Assert.Throws<RegistrationException>(() =>
+        Assert.Throws<FluentRegistrationException>(() =>
             tested.Register(c => c
                 .For<ISimpleService>()
                 .ImplementedBy<SimpleService>()

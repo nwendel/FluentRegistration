@@ -66,14 +66,14 @@ public class LifetimeAndServiceKeySelector<T> :
         {
             if (!typeof(IServiceKeyAware).IsAssignableFrom(implementationType))
             {
-                throw new RegistrationException($"Implementation type {implementationType.FullName} does not implement {nameof(IServiceKeyAware)}");
+                throw new FluentRegistrationException($"Implementation type {implementationType.FullName} does not implement {nameof(IServiceKeyAware)}");
             }
 
             var genericMethod = GetType()
                 .GetMethods(BindingFlags.NonPublic | BindingFlags.Static)
                 .Single(x => x.Name == nameof(FromHasServiceKey));
             var method = genericMethod.MakeGenericMethod(implementationType);
-            var serviceKey = method.Invoke(null, null) ?? throw new RegistrationException($"ServiceKey for {implementationType.FullName} cannot be null");
+            var serviceKey = method.Invoke(null, null) ?? throw new FluentRegistrationException($"ServiceKey for {implementationType.FullName} cannot be null");
             return serviceKey;
         };
         return this;

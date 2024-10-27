@@ -128,19 +128,19 @@ public class TypeFilter : ITypeFilter
         var stackFrame = stackTrace.GetFrame(2);
         if (stackFrame == null)
         {
-            throw new RegistrationException($"Unable to get callstack");
+            throw new FluentRegistrationException($"Unable to get callstack");
         }
 
         var method = stackFrame.GetMethod();
         if (method == null)
         {
-            throw new RegistrationException($"Unable to get method");
+            throw new FluentRegistrationException($"Unable to get method");
         }
 
         var declaringType = method.DeclaringType;
         if (declaringType == null)
         {
-            throw new RegistrationException($"Unable to determine declaring type for method {method.Name}");
+            throw new FluentRegistrationException($"Unable to determine declaring type for method {method.Name}");
         }
 
         var @namespace = declaringType.Namespace;
