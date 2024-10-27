@@ -42,4 +42,21 @@ public class ServiceKeyTests
 
         Assert.Same(instance1, instance2);
     }
+
+    [Fact]
+    public void CanRegisterFromImplementation()
+    {
+        var tested = new ServiceCollection();
+
+        tested.Register(r => r
+            .ImplementedBy<WithServiceKey>()
+            .WithServices.AllInterfaces()
+            .Lifetime.Singleton()
+            .HasServiceKey.FromImplementation());
+
+        var provider = tested.BuildServiceProvider();
+
+        var instance = provider.GetRequiredKeyedService<IWithServiceKey>(WithServiceKey.ServiceKey);
+        Assert.NotNull(instance);
+    }
 }

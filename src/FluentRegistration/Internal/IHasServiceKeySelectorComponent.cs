@@ -4,4 +4,6 @@
 public interface IHasServiceKeySelectorComponent : IHasServiceKeySelectorBase
 {
     IValidRegistration ImplementationType();
+
+    IValidRegistration FromImplementation();
 }

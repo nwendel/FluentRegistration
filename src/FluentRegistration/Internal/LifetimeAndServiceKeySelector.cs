@@ -1,4 +1,6 @@
-﻿namespace FluentRegistration.Internal;
+﻿using System.Reflection;
+
+namespace FluentRegistration.Internal;
 
 // TODO: Can I split this in two classes somehow?
 public class LifetimeAndServiceKeySelector<T> :
@@ -58,6 +60,25 @@ public class LifetimeAndServiceKeySelector<T> :
         return this;
     }
 
+    public IValidRegistration FromImplementation()
+    {
+        _implementationKeySelector = (serviceType, implementationType) =>
+        {
+            if (!typeof(IServiceKeyAware).IsAssignableFrom(implementationType))
+            {
+                throw new RegistrationException($"Implementation type {implementationType.FullName} does not implement {nameof(IServiceKeyAware)}");
+            }
+
+            var genericMethod = GetType()
+                .GetMethods(BindingFlags.NonPublic | BindingFlags.Static)
+                .Single(x => x.Name == nameof(FromHasServiceKey));
+            var method = genericMethod.MakeGenericMethod(implementationType);
+            var serviceKey = method.Invoke(null, null) ?? throw new RegistrationException($"ServiceKey for {implementationType.FullName} cannot be null");
+            return serviceKey;
+        };
+        return this;
+    }
+
     public object? GetFactoryServiceKey(Type serviceType)
     {
         GuardAgainst.Null(serviceType);
@@ -93,4 +114,8 @@ public class LifetimeAndServiceKeySelector<T> :
 
         return GetFactoryServiceKey(serviceType);
     }
+
+    private static object FromHasServiceKey<TServiceKey>()
+        where TServiceKey : IServiceKeyAware
+        => TServiceKey.ServiceKey;
 }
